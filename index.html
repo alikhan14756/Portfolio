@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Ali — Frontend Developer & Digital Creator</title>
+  <meta name="description" content="Muhammad Ali is a Frontend Developer & Digital Creator who builds modern, fast and responsive websites that help businesses grow online and deliver exceptional user experiences." />
+  <meta name="keywords" content="Muhammad Ali, WordPress, Elementor, Web Developer, JavaScript, Portfolio" />
+  <meta property="og:title" content="Muhammad Ali — Frontend Developer & Digital Creator" />
+  <meta property="og:description" content="Building modern, fast and responsive websites that help businesses grow online." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Particle Canvas Background -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-logo">Ali<span>.</span></div>
+      <div class="preloader-bar"><div class="preloader-fill"></div></div>
+      <p class="preloader-text">Loading Portfolio...</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" id="nav-logo-link">
+        <img src="logo.png" alt="Ali Logo" class="nav-logo-img" />
+        <span class="logo-text">Ali<span class="logo-dot">.</span></span>
+      </a>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#blog" class="nav-link">Blog</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#testimonials" class="nav-link">Testimonials</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#" class="btn-resume" id="resume-btn">
+          <i class="fas fa-file-alt"></i> Resume
+        </a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="mobile-nav-content">
+      <a href="#home" class="mobile-nav-link">Home</a>
+      <a href="#about" class="mobile-nav-link">About</a>
+      <a href="#projects" class="mobile-nav-link">Projects</a>
+      <a href="#services" class="mobile-nav-link">Services</a>
+      <a href="#blog" class="mobile-nav-link">Blog</a>
+      <a href="#experience" class="mobile-nav-link">Experience</a>
+      <a href="#testimonials" class="mobile-nav-link">Testimonials</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
+  </div>
+
+  <main>
+
+  <!-- ═══════════════ HERO SECTION ═══════════════ -->
+<section class="hero" id="home">
+  <div class="hero-container">
+    <div class="hero-left">
+      <div class="hero-badge reveal-up">
+        <span class="badge-dot"></span>
+        Frontend Developer & Digital Creator
+      </div>
+      
+      <h1 class="hero-title reveal-up">
+        Hi, I'm <br />
+        <span class="hero-name">Muhammad <span class="highlight">Ali</span></span>
+      </h1>
+      
+      <p class="hero-subtitle reveal-up">
+        I build modern, fast and responsive websites that help businesses grow online and deliver exceptional user experiences.
+      </p>
+      
+      <div class="hero-ctas reveal-up">
+        <a href="#contact" class="btn-primary" id="hire-btn">
+          <span>Hire Me</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <a href="#projects" class="btn-secondary" id="work-btn">
+          <span>View My Work</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <!-- Hero Stats -->
+      <div class="hero-stats reveal-up">
+        <div class="stat-item">
+          <div class="stat-value">
+            <span class="stat-number" data-target="10">0</span>
+            <span class="stat-plus">+</span>
+          </div>
+          <p>Projects Completed</p>
+        </div>
+
+        <div class="stat-divider"></div>
+
+        <div class="stat-item">
+          <div class="stat-value">
+            <span class="stat-number" data-target="100">0</span>
+            <span class="stat-plus">%</span>
+          </div>
+          <p>Client Satisfaction</p>
+        </div>
+
+        <div class="stat-divider"></div>
+
+        <div class="stat-item">
+          <div class="stat-value">
+            <span class="stat-number" data-target="2">0</span>
+            <span class="stat-plus">+</span>
+          </div>
+          <p>Years Experience</p>
+        </div>
+
+        <div class="stat-divider"></div>
+
+        <div class="stat-item">
+          <div class="stat-value">
+            <span class="stat-number" data-target="8">0</span>
+            <span class="stat-plus">+</span>
+          </div>
+          <p>Technologies</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right reveal-right">
+      <div class="hero-image-wrapper">
+        <div class="hero-glow"></div>
+        <div class="hero-ring ring-1"></div>
+        <div class="hero-ring ring-2"></div>
+        <div class="hero-ring ring-3"></div>
+        
+        <img src="hero.png" alt="Muhammad Ali - Frontend Developer" class="hero-img" id="hero-photo" />
+        
+        <!-- Floating Tech Tags -->
+        <div class="float-tag float-html">
+          <span class="float-icon">&lt;/&gt;</span> HTML
+        </div>
+        <div class="float-tag float-css">
+          <span class="float-icon">🎨</span> CSS
+        </div>
+        <div class="float-tag float-wordpress">
+          <span class="float-icon"><i class="fab fa-wordpress"></i></span> WordPress
+        </div>
+        <div class="float-tag float-elementor">
+          <span class="float-icon"><i class="fab fa-elementor"></i></span> Elementor
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+      <!-- Scroll Down Indicator -->
+      <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+        <span>Scroll Down</span>
+      </div>
+    </section>
+
+    <!-- ═══════════════ TECH STACK TICKER ═══════════════ -->
+    <section class="tech-stack" id="about">
+      <div class="ticker-label">I WORK WITH</div>
+      <div class="ticker-wrapper">
+        <div class="ticker-track" id="ticker-track">
+          <div class="ticker-item"><i class="fab fa-html5" style="color:#E44D26"></i><span>HTML5</span></div>
+          <div class="ticker-item"><i class="fab fa-css3-alt" style="color:#264DE4"></i><span>CSS3</span></div>
+          <div class="ticker-item"><i class="fab fa-js-square" style="color:#F7DF1E"></i><span>JavaScript</span></div>
+          <div class="ticker-item"><i class="fab fa-wordpress" style="color:#21759b"></i><span>WordPress</span></div>
+          <div class="ticker-item"><i class="fab fa-elementor" style="color:#92064c"></i><span>Elementor</span></div>
+          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind" /><span>Tailwind</span></div>
+          <div class="ticker-item"><i class="fab fa-git-alt" style="color:#F05032"></i><span>Git</span></div>
+          <div class="ticker-item"><i class="fab fa-github" style="color:#fff"></i><span>GitHub</span></div>
+          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/woocommerce/woocommerce-original.svg" alt="WooCommerce" style="width:24px;height:24px;" /><span>WooCommerce</span></div>
+          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma" /><span>Figma</span></div>
+          <!-- Duplicate for infinite loop -->
+          <div class="ticker-item"><i class="fab fa-html5" style="color:#E44D26"></i><span>HTML5</span></div>
+          <div class="ticker-item"><i class="fab fa-css3-alt" style="color:#264DE4"></i><span>CSS3</span></div>
+          <div class="ticker-item"><i class="fab fa-js-square" style="color:#F7DF1E"></i><span>JavaScript</span></div>
+          <div class="ticker-item"><i class="fab fa-wordpress" style="color:#21759b"></i><span>WordPress</span></div>
+          <div class="ticker-item"><i class="fab fa-elementor" style="color:#92064c"></i><span>Elementor</span></div>
+          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind" /><span>Tailwind</span></div>
+          <div class="ticker-item"><i class="fab fa-git-alt" style="color:#F05032"></i><span>Git</span></div>
+          <div class="ticker-item"><i class="fab fa-github" style="color:#fff"></i><span>GitHub</span></div>
+          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/woocommerce/woocommerce-original.svg" alt="WooCommerce" style="width:24px;height:24px;" /><span>WooCommerce</span></div>
+          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma" /><span>Figma</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ FEATURED PROJECT ═══════════════ -->
+    <section class="featured-project section-padding" id="featured">
+      <div class="container">
+        <div class="section-tag reveal-up">FEATURED PROJECT</div>
+        <h2 class="section-title reveal-up">Arshad Tiles Website</h2>
+        <p class="section-subtitle reveal-up">A modern business website for a tiles and sanitary products brand to establish a strong online presence.</p>
+
+        <div class="featured-grid reveal-up">
+          <div class="featured-info">
+            <div class="featured-block challenge">
+              <div class="featured-block-icon"><i class="fas fa-exclamation-circle"></i></div>
+              <div>
+                <h4>Challenge</h4>
+                <p>The business had no digital presence and customers couldn't explore products online.</p>
+              </div>
+            </div>
+            <div class="featured-block solution">
+              <div class="featured-block-icon"><i class="fas fa-lightbulb"></i></div>
+              <div>
+                <h4>Solution</h4>
+                <p>Built a fast, responsive website with product showcase, inquiry system and WhatsApp integration.</p>
+              </div>
+            </div>
+            <div class="featured-metrics">
+              <div class="metric"><span class="metric-value">40%</span><span class="metric-label">Increase in Inquiries</span></div>
+              <div class="metric"><span class="metric-value">2.1s</span><span class="metric-label">Average Load Time</span></div>
+              <div class="metric"><span class="metric-value">100%</span><span class="metric-label">Mobile Friendly</span></div>
+            </div>
+            <div class="featured-btns">
+              <a href="https://alikhan14756.github.io/Arshad-Tiles/index.html" target="_blank" class="btn-primary" id="live-demo-btn"><span>Live Demo</span><i class="fas fa-external-link-alt"></i></a>
+              <a href="https://github.com/alikhan14756/Arshad-Tiles" target="_blank" class="btn-secondary" id="case-study-btn"><span>GitHub Repo</span><i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="featured-mockup">
+            <div class="mockup-browser">
+              <div class="browser-bar">
+                <span class="browser-dot red"></span>
+                <span class="browser-dot yellow"></span>
+                <span class="browser-dot green"></span>
+                <div class="browser-url">arshadtiles.com</div>
+              </div>
+              <img  src="WhatsApp Image 2026-06-05 at 10.41.22 PM (1).jpeg" alt="">
+              <!-- <div class="browser-content">
+                <div class="mock-hero-section">
+                  <div class="mock-nav"> </div>
+                  <div class="mock-hero-text">
+                    <div class="mock-line wide"></div>
+                    <div class="mock-line medium orange"></div>
+                    <div class="mock-line narrow"></div>
+                    <div class="mock-btn"></div>
+                  </div> -->
+                  <!-- <div class="mock-hero-img tiles-preview">
+                    <div class="tile-grid">
+                      <div class="tile t1"></div><div class="tile t2"></div>
+                      <div class="tile t3"></div><div class="tile t4"></div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MORE PROJECTS ═══════════════ -->
+    <section class="projects section-padding" id="projects">
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div class="section-tag">ALL PROJECTS</div>
+          <h2 class="section-title">More Projects I've Built</h2>
+          <a href="#" class="view-all-link" id="view-all-btn">View All Projects <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="projects-grid">
+          <div class="project-card reveal-up" id="project-vetcare">
+            <div class="project-img-wrap">
+              <img src="project_veterinary.png" alt="Malik Hassan Veterinary Website Mockup" class="project-card-img" />
+              <div class="project-overlay">
+                <a href="https://alikhan14756.github.io/Malik-Hassan-Veternary/index.html" target="_blank" class="project-link" aria-label="View Malik Hassan Veterinary"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/alikhan14756/Malik-Hassan-Veternary" target="_blank" class="project-link" aria-label="GitHub Malik Hassan Veterinary"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-tag">WordPress &amp; Elementor</span>
+              <h3>Malik Hassan Veterinary</h3>
+              <p>Professional Veterinary Website</p>
+              <div class="project-metrics">
+                <span><i class="fas fa-arrow-up"></i> 35% Bookings</span>
+                <span><i class="fas fa-clock"></i> 1.8s Load Time</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card reveal-up" id="project-quiz">
+            <div class="project-img-wrap">
+              <img src="project_quiz.png" alt="Quiz App Screen Mockup" class="project-card-img" />
+              <div class="project-overlay">
+                <a href="https://alikhan14756.github.io/Quiz-App/" target="_blank" class="project-link" aria-label="View Quiz App"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/alikhan14756/Quiz-App" target="_blank" class="project-link" aria-label="GitHub Quiz App"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-tag">Web Application</span>
+              <h3>Quiz-App</h3>
+              <p>Interactive Quiz Platform</p>
+              <div class="project-metrics">
+                <span><i class="fas fa-users"></i> 500+ Users</span>
+                <span><i class="fas fa-star"></i> 95% Score</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card reveal-up" id="project-calculator">
+            <div class="project-img-wrap">
+              <img src="project_calculator.png" alt="Calculator App Screen Mockup" class="project-card-img" />
+              <div class="project-overlay">
+                <a href="https://alikhan14756.github.io/Calculator-App/" target="_blank" class="project-link" aria-label="View Calculator"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/alikhan14756/Calculator-App" target="_blank" class="project-link" aria-label="GitHub Calculator"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-tag">JavaScript App</span>
+              <h3>Calculator-App</h3>
+              <p>Modern Web Calculator</p>
+              <div class="project-metrics">
+                <span><i class="fas fa-calculator"></i> 1000+ Ops</span>
+                <span><i class="fas fa-check"></i> 99.9% Accuracy</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card reveal-up" id="project-animation">
+            <div class="project-img-wrap">
+              <div class="project-img-interactive anim-demo">
+                <div class="anim-circle c1"></div>
+                <div class="anim-circle c2"></div>
+                <div class="anim-circle c3"></div>
+                <div class="anim-code-overlay">CSS Animation Showcase</div>
+              </div>
+              <div class="project-overlay">
+                <a href="https://alikhan14756.github.io/Animation/" target="_blank" class="project-link" aria-label="View Animation"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/alikhan14756/Animation" target="_blank" class="project-link" aria-label="GitHub Animation"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-tag">CSS Animation</span>
+              <h3>Animation</h3>
+              <p>Creative Micro-interactions</p>
+              <div class="project-metrics">
+                <span><i class="fas fa-tachometer-alt"></i> 98 Perf Score</span>
+                <span><i class="fas fa-layer-group"></i> 20+ Effects</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card reveal-up" id="project-ball">
+            <div class="project-img-wrap">
+              <div class="project-img-interactive ball-demo">
+                <div class="bouncing-ball b1"></div>
+                <div class="bouncing-ball b2"></div>
+                <div class="bouncing-ball b3"></div>
+                <div class="ball-floor"></div>
+                <div class="anim-code-overlay">Canvas Physics Simulation</div>
+              </div>
+              <div class="project-overlay">
+                <a href="https://alikhan14756.github.io/Ball-Bounce/" target="_blank" class="project-link" aria-label="View Ball Bounce"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/alikhan14756/Ball-bounce" target="_blank" class="project-link" aria-label="GitHub Ball Bounce"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-tag">JavaScript Physics</span>
+              <h3>Ball-bounce</h3>
+              <p>Dynamic Canvas Physics Animation</p>
+              <div class="project-metrics">
+                <span><i class="fas fa-film"></i> 60 FPS</span>
+                <span><i class="fas fa-infinity"></i> Interactions</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card reveal-up" id="project-qrcode">
+            <div class="project-img-wrap">
+              <div class="project-img-interactive qr-demo">
+                <i class="fas fa-qrcode qr-icon-glowing"></i>
+                <div class="qr-scan-line"></div>
+                <div class="anim-code-overlay">QR Utility Tool</div>
+              </div>
+              <div class="project-overlay">
+                <a href="https://alikhan14756.github.io/QR-Code/" target="_blank" class="project-link" aria-label="View QR Code Generator"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/alikhan14756/QR-Code" target="_blank" class="project-link" aria-label="GitHub QR Code Generator"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-tag">JavaScript Tool</span>
+              <h3>QR-Code</h3>
+              <p>Custom QR Code Generator &amp; Scanner</p>
+              <div class="project-metrics">
+                <span><i class="fas fa-check-circle"></i> Fast Generation</span>
+                <span><i class="fas fa-mobile-alt"></i> Fully Responsive</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card reveal-up" id="project-shahsweet">
+            <div class="project-img-wrap">
+              <div class="project-img-interactive sweet-demo">
+                <i class="fas fa-cookie-bite sweet-icon-glowing"></i>
+                <div class="sweet-deco s1"></div>
+                <div class="sweet-deco s2"></div>
+                <div class="anim-code-overlay">Shah-Sweet Store Showcase</div>
+              </div>
+              <div class="project-overlay">
+                <a href="https://alikhan14756.github.io/Shah-Sweet/" target="_blank" class="project-link" aria-label="View Shah Sweet"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/alikhan14756/Shah-Sweet" target="_blank" class="project-link" aria-label="GitHub Shah Sweet"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-tag">WordPress &amp; Elementor</span>
+              <h3>Shah-Sweet</h3>
+              <p>Sweet Shop Business Showcase</p>
+              <div class="project-metrics">
+                <span><i class="fas fa-shopping-basket"></i> Product Catalog</span>
+                <span><i class="fas fa-star"></i> Modern Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SERVICES ═══════════════ -->
+    <section class="services section-padding" id="services">
+      <div class="container">
+        <div class="section-tag reveal-up">WHAT I DO</div>
+        <h2 class="section-title reveal-up">My Services</h2>
+
+        <div class="services-grid">
+          <div class="service-card reveal-up" id="service-web">
+            <div class="service-icon-wrap">
+              <i class="fas fa-code"></i>
+              <div class="service-glow"></div>
+            </div>
+            <h3>Website Development</h3>
+            <p>Custom responsive websites built with clean code.</p>
+            <div class="service-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+          </div>
+
+          <div class="service-card reveal-up" id="service-landing">
+            <div class="service-icon-wrap">
+              <i class="fas fa-rocket"></i>
+              <div class="service-glow"></div>
+            </div>
+            <h3>Landing Pages</h3>
+            <p>High-converting landing pages for great results.</p>
+            <div class="service-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+          </div>
+
+          <div class="service-card reveal-up" id="service-redesign">
+            <div class="service-icon-wrap">
+              <i class="fas fa-paint-brush"></i>
+              <div class="service-glow"></div>
+            </div>
+            <h3>Website Redesign</h3>
+            <p>Systematic redesign of outdated websites.</p>
+            <div class="service-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+          </div>
+
+          <div class="service-card reveal-up" id="service-ui">
+            <div class="service-icon-wrap">
+              <i class="fas fa-layer-group"></i>
+              <div class="service-glow"></div>
+            </div>
+            <h3>UI Development</h3>
+            <p>Pixel perfect frontend implementation.</p>
+            <div class="service-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SKILLS + EXPERIENCE ═══════════════ -->
+    <section class="skills-experience section-padding" id="experience">
+      <div class="container skills-exp-grid">
+
+        <!-- Skills -->
+        <div class="skills-col">
+          <div class="section-tag reveal-up">MY SKILLS</div>
+          <h2 class="section-title reveal-up">Skills &amp; Expertise</h2>
+
+          <div class="skills-list">
+            <div class="skill-item reveal-up">
+              <div class="skill-header">
+                <span class="skill-name">WordPress Development</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="90"></div>
+              </div>
+            </div>
+            <div class="skill-item reveal-up">
+              <div class="skill-header">
+                <span class="skill-name">Elementor Page Builder</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="90"></div>
+              </div>
+            </div>
+            <div class="skill-item reveal-up">
+              <div class="skill-header">
+                <span class="skill-name">Responsive Design</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="90"></div>
+              </div>
+            </div>
+            <div class="skill-item reveal-up">
+              <div class="skill-header">
+                <span class="skill-name">Frontend Development (HTML/CSS)</span>
+                <span class="skill-percent">85%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="85"></div>
+              </div>
+            </div>
+            <div class="skill-item reveal-up">
+              <div class="skill-header">
+                <span class="skill-name">JavaScript</span>
+                <span class="skill-percent">80%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="80"></div>
+              </div>
+            </div>
+            <div class="skill-item reveal-up">
+              <div class="skill-header">
+                <span class="skill-name">UI/UX Design &amp; Speed Optimization</span>
+                <span class="skill-percent">88%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-width="88"></div>
+              </div>
+            </div>
+          </div>
+
+          <a href="#" class="btn-primary download-cv-btn reveal-up" id="download-cv-btn">
+            <i class="fas fa-download"></i> Download Resume
+          </a>
+        </div>
+
+        <!-- Journey Timeline -->
+        <div class="journey-col">
+          <div class="section-tag reveal-up">EXPERIENCE</div>
+          <h2 class="section-title reveal-up">My Journey</h2>
+
+          <div class="timeline">
+            <div class="timeline-item reveal-left" id="tl-2024a">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-year">2024</span>
+                <h4>Started Frontend Development</h4>
+                <p>Began my journey with HTML, CSS &amp; JavaScript and built my first websites.</p>
+              </div>
+            </div>
+            <div class="timeline-item reveal-left" id="tl-2024b">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-year">2024</span>
+                <h4>Created Different Websites</h4>
+                <p>Created different websites and web applications to improve my skills.</p>
+              </div>
+            </div>
+            <div class="timeline-item reveal-left" id="tl-2025a">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-year">2025</span>
+                <h4>Started Freelancing</h4>
+                <p>Begin working with clients and delivering professional results.</p>
+              </div>
+            </div>
+            <div class="timeline-item reveal-left" id="tl-2025b">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-year">2025</span>
+                <h4>Created Business Websites</h4>
+                <p>Built professional websites for businesses, helping them grow.</p>
+              </div>
+            </div>
+            <div class="timeline-item reveal-left" id="tl-2026">
+              <div class="timeline-dot active"></div>
+              <div class="timeline-content active">
+                <span class="timeline-year">2026</span>
+                <h4>Building My Brand</h4>
+                <p>Creating high quality solutions and establishing my brand online site.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ BLOG ═══════════════ -->
+    <section class="blog section-padding" id="blog">
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div>
+            <div class="section-tag">LATEST ARTICLES</div>
+            <h2 class="section-title">My Latest Insights</h2>
+          </div>
+          <a href="#" class="view-all-link" id="view-all-articles-btn">View All Articles <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="blog-grid">
+          <article class="blog-card reveal-up" id="blog-1">
+            <div class="blog-img-wrap">
+              <img src="blog_wordpress_speed.png" alt="WordPress Speed Optimization" class="blog-card-img" />
+              <span class="blog-category">WordPress</span>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span><i class="fas fa-calendar"></i> May 18, 2026</span>
+                <span><i class="fas fa-clock"></i> 5 min read</span>
+              </div>
+              <h3>How to Optimize WordPress Site Speed for Google PageSpeed Insights</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0 16px;">Discover critical steps to hit a 90+ mobile speed score, including advanced CSS caching, image WebP conversion, and database cleanups.</p>
+              <a href="https://github.com/alikhan14756" target="_blank" class="blog-read-more" id="blog-read-1">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <article class="blog-card reveal-up" id="blog-2">
+            <div class="blog-img-wrap">
+              <img src="blog_elementor_design.png" alt="Elementor Design Templates" class="blog-card-img" />
+              <span class="blog-category">Elementor</span>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span><i class="fas fa-calendar"></i> May 10, 2026</span>
+                <span><i class="fas fa-clock"></i> 8 min read</span>
+              </div>
+              <h3>Mastering Elementor: A Guide to Custom Templates &amp; Dynamic Content</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0 16px;">Learn how to leverage dynamic templates, custom post types, and ACF loops to build fully dynamic WordPress client projects.</p>
+              <a href="https://github.com/alikhan14756" target="_blank" class="blog-read-more" id="blog-read-2">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <article class="blog-card reveal-up" id="blog-3">
+            <div class="blog-img-wrap">
+              <img src="blog_css_animations.png" alt="CSS Animations and Clean Code" class="blog-card-img" />
+              <span class="blog-category">Development</span>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span><i class="fas fa-calendar"></i> Apr 28, 2026</span>
+                <span><i class="fas fa-clock"></i> 6 min read</span>
+              </div>
+              <h3>Creating Immersive Scroll Animations with HTML, CSS, and JS</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0 16px;">Boost your user engagement rates by implementing custom intersection observers, parallax scrolling effects, and fluid CSS transitions.</p>
+              <a href="https://github.com/alikhan14756" target="_blank" class="blog-read-more" id="blog-read-3">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+    <section class="testimonials section-padding" id="testimonials">
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div>
+            <div class="section-tag">TESTIMONIALS</div>
+            <h2 class="section-title">What Clients Say</h2>
+          </div>
+          <div class="testimonial-controls">
+            <button class="testi-btn" id="testi-prev" aria-label="Previous testimonial"><i class="fas fa-chevron-left"></i></button>
+            <button class="testi-btn" id="testi-next" aria-label="Next testimonial"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <div class="testimonials-slider" id="testimonials-slider">
+          <div class="testi-card reveal-up" id="testi-1">
+            <div class="testi-stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p class="testi-text">"Ali delivered an excellent website for our business. He understood our requirements perfectly and the result we exceeded our expectations."</p>
+            <div class="testi-author">
+              <div class="testi-avatar">AK</div>
+              <div>
+                <strong>Arshad Khan</strong>
+                <span>Business Owner <i class="fab fa-linkedin" style="color:#0077B5"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card reveal-up" id="testi-2">
+            <div class="testi-stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p class="testi-text">"Great communication and very professional work. The website is fast, responsive and looks amazing on all devices."</p>
+            <div class="testi-author">
+              <div class="testi-avatar">DU</div>
+              <div>
+                <strong>Dr. Usman</strong>
+                <span>Veterinarian <i class="fab fa-linkedin" style="color:#0077B5"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card reveal-up" id="testi-3">
+            <div class="testi-stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p class="testi-text">"Highly skilled developer! He completed the project on time and helped me achieve my business goals."</p>
+            <div class="testi-author">
+              <div class="testi-avatar">HA</div>
+              <div>
+                <strong>Hamza Aqib</strong>
+                <span>Entrepreneur <i class="fab fa-linkedin" style="color:#0077B5"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-dots" id="testi-dots">
+          <span class="testi-dot active" data-index="0"></span>
+          <span class="testi-dot" data-index="1"></span>
+          <span class="testi-dot" data-index="2"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ CTA CONTACT ═══════════════ -->
+   <section class="cta-section section-padding" id="contact">
+  <div class="container">
+    <div class="cta-inner reveal-up">
+      <div class="cta-left">
+        <div class="cta-tag">LET'S WORK TOGETHER</div>
+        <h2>Have a Project Idea?</h2>
+        <p>Let's turn your ideas into real solutions. I'm available for freelance work.</p>
+        
+        <div class="cta-details">
+          <div class="cta-detail-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <span>Email</span>
+              <a href="mailto:alikhanwebdeveloper@gmail.com?subject=Hello%20There&body=Type%20your%20message%20here">alikhanwebdeveloper@gmail.com</a>
+            </div>
+          </div>
+          
+          <div class="cta-detail-item">
+            <i class="fab fa-whatsapp"></i>
+            <div>
+              <span>WhatsApp</span>
+              <a href="https://wa.me/923055389967" target="_blank" rel="noopener">+92 305 5389967</a>
+            </div>
+          </div>
+          
+          <div class="cta-detail-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <span>Location</span>
+              <p>Pakistan</p>
+            </div>
+          </div>
+          
+          <div class="cta-detail-item">
+            <i class="fas fa-circle-check"></i>
+            <div>
+              <span>Availability</span>
+              <p class="available">Available for Freelance</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-right">
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Ali Khan" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" name="email" placeholder="ali@example.com" required />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Project Inquiry" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          
+          <button type="submit" class="btn-primary full-width" id="send-message-btn">
+            <span>Send Message</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#home" class="nav-logo footer-logo">
+            <img src="logo.png" alt="Ali Logo" class="nav-logo-img" />
+            <span class="logo-text">Ali<span class="logo-dot">.</span></span>
+          </a>
+          <p>Frontend Developer &amp; Digital Creator. Building modern websites and digital experiences.</p>
+          <div class="footer-socials">
+            <a href="https://github.com/alikhan14756" target="_blank" class="social-link" id="footer-github" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://wa.me/923055389967" target="_blank" class="social-link" id="footer-whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:alikhan1475623a@gmail.com" class="social-link" id="footer-email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#services">Services</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Website Development</a></li>
+            <li><a href="#services">Website Redesign</a></li>
+            <li><a href="#services">Landing Pages</a></li>
+            <li><a href="#services">Testimonials</a></li>
+            <li><a href="#services">UI Development</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="mailto:alikhan1475623a@gmail.com">alikhan1475623a@gmail.com</a></li>
+            <li><a href="https://wa.me/923055389967" target="_blank">+92 305 5389967</a></li>
+            <li><a href="#">Pakistan</a></li>
+          </ul>
+          <div class="newsletter">
+            <h4>Subscribe to Newsletter</h4>
+            <div class="newsletter-form">
+              <input type="email" id="newsletter-email" placeholder="your@email.com" aria-label="Newsletter email" />
+              <button type="button" id="newsletter-btn" aria-label="Subscribe"><i class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Muhammad Ali. Built with <span class="heart">❤️</span> by Ali.</p>
+        <p class="footer-credit"><a href="https://github.com/alikhan14756" target="_blank">github.com/alikhan14756</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
