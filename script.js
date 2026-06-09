@@ -334,17 +334,20 @@ function initCounters() {
   const isMobile = () => window.innerWidth < 900;
 
   function updateSlider(idx) {
-    if (!isMobile()) return;
-    cards.forEach((c, i) => {
-      c.style.opacity = i === idx ? '1' : '0.3';
-      c.style.transform = i === idx ? 'scale(1)' : 'scale(0.95)';
-    });
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    // Remove all active classes
+    cards.forEach(c => c.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    
+    // Add active to current
+    cards[idx].classList.add('active');
+    dots[idx].classList.add('active');
   }
 
   function goTo(idx) {
     current = (idx + cards.length) % cards.length;
-    updateSlider(current);
+    if (isMobile()) {
+      updateSlider(current);
+    }
   }
 
   prevBtn?.addEventListener('click', () => goTo(current - 1));
@@ -355,43 +358,40 @@ function initCounters() {
   });
 
   // Auto slide
-  function startAuto() { autoSlide = setInterval(() => goTo(current + 1), 4000); }
+  function startAuto() { 
+    autoSlide = setInterval(() => goTo(current + 1), 4000); 
+  }
   function stopAuto() { clearInterval(autoSlide); }
 
   slider.addEventListener('mouseenter', stopAuto);
   slider.addEventListener('mouseleave', startAuto);
 
-  if (isMobile()) { updateSlider(0); startAuto(); }
-  window.addEventListener('resize', () => {
-    if (!isMobile()) {
-      cards.forEach(c => { c.style.opacity = ''; c.style.transform = ''; });
+  // Initialize
+  function init() {
+    if (isMobile()) {
+      // Mobile: show only first, start auto
+      cards.forEach((c, i) => {
+        c.classList.toggle('active', i === 0);
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === 0);
+      });
+      startAuto();
+    } else {
+      // Desktop: show all, stop auto
+      cards.forEach(c => c.classList.add('active'));
+      dots.forEach(d => d.classList.remove('active'));
       stopAuto();
-    } else { updateSlider(current); startAuto(); }
+    }
+  }
+
+  init();
+  
+  window.addEventListener('resize', () => {
+    init();
   });
 })();
 
-/* ──────────────────────────────────────
-   9. THEME TOGGLE
-────────────────────────────────────── */
-(function initTheme() {
-  const toggle = document.getElementById('theme-toggle');
-  const icon = document.getElementById('theme-icon');
-  const html = document.documentElement;
-
-  const saved = localStorage.getItem('ali-theme') || 'dark';
-  html.setAttribute('data-theme', saved);
-  icon.className = saved === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-
-  toggle?.addEventListener('click', () => {
-    const isDark = html.getAttribute('data-theme') === 'dark';
-    const next = isDark ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    icon.className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-    localStorage.setItem('ali-theme', next);
-    icon.style.transform = 'rotate(360deg)';
-    setTimeout(() => icon.style.transform = '', 400);
-  });
-})();
 
 /* ──────────────────────────────────────
    10. CONTACT FORM
@@ -625,7 +625,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     `;
     card.appendChild(shine);
 
-    card.addEventListener('mouseenter', () => { shine.style.left = '150%'; });
+       card.addEventListener('mouseenter', () => { shine.style.left = '150%'; });
     card.addEventListener('mouseleave', () => { shine.style.left = '-100%'; });
   });
 })();
