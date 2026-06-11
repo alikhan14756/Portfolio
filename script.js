@@ -24,6 +24,31 @@ window.addEventListener('load', () => {
 });
 
 /* ──────────────────────────────────────
+   1.5. THEME TOGGLE
+────────────────────────────────────── */
+(function initTheme() {
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  if (!themeToggle || !themeIcon) return;
+
+  // Sync icon class with document theme (already set by head inline script)
+  const syncIcon = () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    themeIcon.className = currentTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+  };
+
+  syncIcon();
+
+  themeToggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    syncIcon();
+  });
+})();
+
+/* ──────────────────────────────────────
    2. PARTICLE BACKGROUND
 ────────────────────────────────────── */
 (function initParticles() {
@@ -323,106 +348,155 @@ function initCounters() {
 (function initTestimonials() {
   const cards = document.querySelectorAll('.testi-card');
   const dots = document.querySelectorAll('.testi-dot');
-  const prevBtn = document.getElementById('testi-prev');
-  const nextBtn = document.getElementById('testi-next');
   const slider = document.getElementById('testimonials-slider');
 
   if (!slider || cards.length === 0) return;
 
-  let current = 0;
-  let autoSlide;
   const isMobile = () => window.innerWidth < 900;
 
-  function updateSlider(idx) {
-    // Remove all active classes
-    cards.forEach(c => c.classList.remove('active'));
-    dots.forEach(d => d.classList.remove('active'));
+  function updateDots() {
+    if (!isMobile()) return;
+    const scrollPos = slider.scrollLeft;
+    const cardWidth = cards[0].offsetWidth;
+    const gap = 24;
+    const idx = Math.round(scrollPos / (cardWidth + gap));
     
-    // Add active to current
-    cards[idx].classList.add('active');
-    dots[idx].classList.add('active');
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
   }
 
   function goTo(idx) {
-    current = (idx + cards.length) % cards.length;
     if (isMobile()) {
-      updateSlider(current);
+      const cardWidth = cards[0].offsetWidth;
+      const gap = 24;
+      slider.scrollTo({
+        left: idx * (cardWidth + gap),
+        behavior: 'smooth'
+      });
     }
   }
 
-  prevBtn?.addEventListener('click', () => goTo(current - 1));
-  nextBtn?.addEventListener('click', () => goTo(current + 1));
+  slider.addEventListener('scroll', updateDots);
 
   dots.forEach(dot => {
-    dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index)));
+    dot.addEventListener('click', () => {
+      goTo(parseInt(dot.dataset.index));
+    });
   });
 
   // Auto slide
+  let autoSlide;
   function startAuto() { 
-    autoSlide = setInterval(() => goTo(current + 1), 4000); 
+    if (!isMobile()) return;
+    autoSlide = setInterval(() => {
+      const scrollPos = slider.scrollLeft;
+      const cardWidth = cards[0].offsetWidth;
+      const gap = 24;
+      let idx = Math.round(scrollPos / (cardWidth + gap));
+      idx = (idx + 1) % cards.length;
+      goTo(idx);
+    }, 4000); 
   }
   function stopAuto() { clearInterval(autoSlide); }
 
+  slider.addEventListener('touchstart', stopAuto);
+  slider.addEventListener('touchend', startAuto);
   slider.addEventListener('mouseenter', stopAuto);
   slider.addEventListener('mouseleave', startAuto);
 
-  // Initialize
   function init() {
     if (isMobile()) {
-      // Mobile: show only first, start auto
-      cards.forEach((c, i) => {
-        c.classList.toggle('active', i === 0);
-      });
-      dots.forEach((d, i) => {
-        d.classList.toggle('active', i === 0);
-      });
       startAuto();
     } else {
-      // Desktop: show all, stop auto
-      cards.forEach(c => c.classList.add('active'));
-      dots.forEach(d => d.classList.remove('active'));
       stopAuto();
     }
   }
 
   init();
-  
   window.addEventListener('resize', () => {
+    stopAuto();
     init();
   });
 })();
 
 
 /* ──────────────────────────────────────
-   10. CONTACT FORM
+   10. CONTACT FORM — DUAL BUTTONS
 ────────────────────────────────────── */
 (function initContactForm() {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
+  const waBtn = document.getElementById('whatsapp-btn');
+  const emailBtn = document.getElementById('email-btn');
 
-    const btn = form.querySelector('button[type="submit"] span');
-    const originalText = btn.textContent;
+  function getFormData() {
+    const name = document.getElementById('name')?.value?.trim() || '';
+    const email = document.getElementById('email')?.value?.trim() || '';
+    const subject = document.getElementById('subject')?.value?.trim() || '';
+    const message = document.getElementById('message')?.value?.trim() || '';
+    return { name, email, subject, message };
+  }
 
-    btn.textContent = 'Redirecting to WhatsApp...';
+  function validateForm() {
+    const { name, email, subject, message } = getFormData();
+    if (!name || !email || !subject || !message) {
+      // Trigger native validation
+      form.reportValidity();
+      return false;
+    }
+    return true;
+  }
 
-    // Format WhatsApp message
+  function showSuccess(btn, text) {
+    const span = btn.querySelector('span');
+    const original = span.textContent;
+    span.textContent = text;
+    btn.style.opacity = '0.8';
+    form.reset();
+    setTimeout(() => {
+      span.textContent = original;
+      btn.style.opacity = '1';
+    }, 3000);
+  }
+
+  // WhatsApp handler
+  waBtn?.addEventListener('click', () => {
+    if (!validateForm()) return;
+    const { name, email, subject, message } = getFormData();
+
+    const waSpan = waBtn.querySelector('span');
+    waSpan.textContent = 'Opening WhatsApp...';
+
     const formattedText = `*New Portfolio Message*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A*Subject:* ${encodeURIComponent(subject)}%0A*Message:* ${encodeURIComponent(message)}`;
     const waUrl = `https://wa.me/923055389967?text=${formattedText}`;
 
     setTimeout(() => {
       window.open(waUrl, '_blank');
-      btn.textContent = '✓ Opened WhatsApp!';
-      form.reset();
-      setTimeout(() => { btn.textContent = originalText; }, 3000);
-    }, 1200);
+      showSuccess(waBtn, '✓ Opened WhatsApp!');
+    }, 600);
   });
+
+  // Email handler
+  emailBtn?.addEventListener('click', () => {
+    if (!validateForm()) return;
+    const { name, email, subject, message } = getFormData();
+
+    const emSpan = emailBtn.querySelector('span');
+    emSpan.textContent = 'Opening Email...';
+
+    const body = `Hi Muhammad Ali,%0A%0AMy name is ${encodeURIComponent(name)} (${encodeURIComponent(email)}).%0A%0A${encodeURIComponent(message)}%0A%0ABest regards,%0A${encodeURIComponent(name)}`;
+    const mailUrl = `mailto:alikhan1475623a@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+    setTimeout(() => {
+      window.location.href = mailUrl;
+      showSuccess(emailBtn, '✓ Opened Email!');
+    }, 600);
+  });
+
+  // Prevent default form submit
+  form.addEventListener('submit', e => e.preventDefault());
 })();
 
 /* ──────────────────────────────────────

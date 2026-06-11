@@ -811,14 +811,17 @@ input, textarea { font-family: var(--font); }
 }
 
 [data-theme="light"] .float-tag {
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  color: #0f172a;
+  border-color: rgba(0,0,0,0.12);
 }
 
 .float-html { top: 30px; left: -20px; animation-duration: 4s; animation-delay: 0s; border-color: rgba(228,77,38,0.4); }
 .float-css  { bottom: 60px; left: -30px; animation-duration: 5s; animation-delay: 1s; border-color: rgba(38,77,228,0.4); }
 .float-wordpress { top: 80px; right: -20px; animation-duration: 4.5s; animation-delay: 0.5s; border-color: rgba(33,117,155,0.4); }
 .float-elementor { bottom: 80px; right: -10px; animation-duration: 5.5s; animation-delay: 1.5s; border-color: rgba(146,6,76,0.4); }
+.float-js { top: 140px; left: -10px; animation-duration: 5s; animation-delay: 0.8s; border-color: rgba(247,223,30,0.4); }
 
 .float-icon { font-size: 1rem; }
 
@@ -1942,6 +1945,63 @@ input, textarea { font-family: var(--font); }
 
 .full-width { width: 100%; justify-content: center; }
 
+/* Contact Form Buttons */
+.form-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn-whatsapp,
+.btn-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-whatsapp {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.45);
+}
+
+.btn-whatsapp i { font-size: 1.1rem; }
+
+.btn-email {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+.btn-email:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.45);
+}
+
+.btn-email i { font-size: 1rem; }
+
+@media (max-width: 480px) {
+  .form-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ─── FOOTER ─── */
 .footer {
   background: var(--bg-secondary);
@@ -2095,7 +2155,7 @@ input, textarea { font-family: var(--font); }
   .ring-3 { width: 340px; height: 340px; }
   .float-html { left: -10px; }
   .float-css { left: -20px; }
-  .float-js { right: -10px; }
+  .float-js { right: -10px; left: auto; }
   .float-react { right: 0; }
 
   .nav-links { display: none; }
@@ -2120,43 +2180,37 @@ input, textarea { font-family: var(--font); }
   .ring-1 { width: 240px; height: 240px; }
   .ring-2 { width: 200px; height: 200px; }
   .ring-3 { width: 280px; height: 280px; }
-  .float-html, .float-css, .float-js, .float-react { display: none; }
+  .float-html, .float-css, .float-elementor { display: none; }
   body { cursor: auto; }
   .cursor-dot, .cursor-ring { display: none; }
 }
 
 
-.float-js { 
-  top: 140px; 
-  left: -10px; 
-  animation-duration: 5s; 
-  animation-delay: 0.8s; 
-  border-color: rgba(247,223,30,0.4); 
-}
 
 
-/* Mobile: show only active card */
+
+/* Mobile: native scroll slider */
 .testimonials-slider {
   display: flex;
-  overflow: hidden;
-  position: relative;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 24px;
+  padding-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.testimonials-slider::-webkit-scrollbar {
+  display: none;
 }
 
 .testi-card {
   flex: 0 0 100%;
   max-width: 100%;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateX(100%);
-}
-
-.testi-card.active {
-  opacity: 1;
-  transform: translateX(0);
+  scroll-snap-align: center;
   position: relative;
+  opacity: 1;
+  transform: none;
 }
 
 /* Desktop: show all cards in grid */
@@ -2168,6 +2222,10 @@ input, textarea { font-family: var(--font); }
     position: static;
   }
   
+  .testimonial-controls, .testi-dots {
+    display: none;
+  }
+
   .testi-card {
     position: relative;
     opacity: 1;

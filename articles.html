@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Articles — Muhammad Ali</title>
+  <meta name="description" content="Read the latest articles by Muhammad Ali on WordPress optimization, Elementor mastery, and modern web development techniques." />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       ARTICLES PAGE — SPECIFIC STYLES
+       ═══════════════════════════════════════ */
+
+    body {
+      cursor: auto;
+    }
+    button { cursor: pointer; }
+
+    /* ─── HERO BANNER ─── */
+    .articles-hero {
+      position: relative;
+      padding: 160px 0 80px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .articles-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(249,115,22,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .articles-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--bg-primary));
+      pointer-events: none;
+    }
+
+    .articles-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb a {
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .breadcrumb .separator {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
+
+    .breadcrumb .current {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .articles-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: heroFadeIn 1s ease forwards;
+    }
+
+    .articles-hero-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 560px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      animation: heroFadeIn 1s ease 0.2s both;
+    }
+
+    .articles-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.25);
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      animation: heroFadeIn 1s ease 0.4s both;
+    }
+
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── BACK BUTTON ─── */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      margin-bottom: 40px;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background: rgba(249,115,22,0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateX(-4px);
+    }
+
+    .back-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .back-btn:hover i {
+      transform: translateX(-4px);
+    }
+
+    /* ─── ARTICLES GRID ─── */
+    .articles-section {
+      padding: 40px 0 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .articles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    /* ─── ARTICLE CARD (Glassmorphic) ─── */
+    .article-card {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition-slow);
+      opacity: 0;
+      transform: translateY(40px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .article-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .article-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 80px rgba(249,115,22,0.08), 0 0 0 1px rgba(249,115,22,0.1);
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.035);
+    }
+
+    .article-card.visible:hover {
+      transform: translateY(-4px);
+    }
+
+    /* ─── Article Image ─── */
+    .article-card-image {
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+    }
+
+    .article-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .article-card:hover .article-card-image img {
+      transform: scale(1.05);
+    }
+
+    .article-card-image .article-category {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 6px 14px;
+      background: rgba(249,115,22,0.9);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border-radius: 100px;
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .article-card-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(249,115,22,0.05), transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ─── Article Body ─── */
+    .article-card-body {
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 16px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .article-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .article-meta i {
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    .article-card-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      transition: var(--transition);
+    }
+
+    .article-card:hover .article-card-title {
+      color: var(--accent);
+    }
+
+    .article-card-text {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.8;
+      flex: 1;
+    }
+
+    .article-card-text p {
+      margin-bottom: 16px;
+    }
+
+    .article-card-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .article-card-text h4 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 24px 0 12px;
+      position: relative;
+      padding-left: 16px;
+    }
+
+    .article-card-text h4::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent-dark));
+      border-radius: 2px;
+    }
+
+    .article-card-text ul {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 16px;
+    }
+
+    .article-card-text ul li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .article-card-text ul li::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: 50%;
+    }
+
+    .article-card-text strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .article-card-text code {
+      background: rgba(249,115,22,0.1);
+      color: var(--accent-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-family: 'Fira Code', 'Courier New', monospace;
+    }
+
+    /* ─── DIVIDER ─── */
+    .article-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--accent-glow), var(--border), transparent);
+      margin: 8px 0;
+      border: none;
+    }
+
+    /* ─── NAVBAR for articles page ─── */
+    .articles-navbar {
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    [data-theme="light"] .articles-navbar {
+      background: rgba(248,250,252,0.9);
+    }
+
+    /* ─── FOOTER for articles ─── */
+    .articles-footer {
+      border-top: 1px solid var(--border);
+      padding: 60px 0 30px;
+      background: var(--bg-secondary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .articles-footer .footer-inner {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .articles-footer .footer-brand p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 12px;
+      max-width: 300px;
+    }
+
+    .articles-footer .footer-socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .articles-footer .social-link {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .articles-footer .social-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px var(--accent-glow);
+    }
+
+    .articles-footer .footer-links h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .articles-footer .footer-links ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .articles-footer .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .articles-footer .footer-links a {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      transition: var(--transition);
+    }
+
+    .articles-footer .footer-links a:hover {
+      color: var(--accent);
+      padding-left: 4px;
+    }
+
+    .articles-footer .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .articles-footer .footer-bottom p {
+      color: var(--text-muted);
+      font-size: 0.83rem;
+    }
+
+    .articles-footer .footer-bottom a {
+      color: var(--accent);
+      transition: var(--transition);
+    }
+
+    .articles-footer .footer-bottom a:hover {
+      color: var(--accent-light);
+    }
+
+    .articles-footer .footer-bottom .heart {
+      color: #ef4444;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 968px) {
+      .article-card {
+        grid-template-columns: 1fr;
+      }
+
+      .article-card-image {
+        min-height: 260px;
+        max-height: 320px;
+      }
+
+      .article-card-body {
+        padding: 28px 24px;
+      }
+
+      .article-card-title {
+        font-size: 1.3rem;
+      }
+
+      .articles-footer .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .articles-hero {
+        padding: 130px 0 50px;
+      }
+
+      .article-card-image {
+        min-height: 200px;
+        max-height: 260px;
+      }
+
+      .article-card-body {
+        padding: 20px 18px;
+      }
+
+      .article-card-title {
+        font-size: 1.15rem;
+      }
+
+      .article-card-text {
+        font-size: 0.87rem;
+      }
+
+      .articles-list {
+        gap: 32px;
+      }
+
+      .breadcrumb {
+        font-size: 0.8rem;
+      }
+
+      .articles-footer .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* ─── SCROLL PROGRESS BAR ─── */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      z-index: 9999;
+      transition: width 0.05s linear;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* ─── Floating Gradient Orbs ─── */
+    .gradient-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+      opacity: 0.4;
+    }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: rgba(249,115,22,0.06);
+      top: 20%;
+      right: -100px;
+      animation: orbFloat1 15s ease-in-out infinite;
+    }
+
+    .orb-2 {
+      width: 350px;
+      height: 350px;
+      background: rgba(59,130,246,0.05);
+      bottom: 30%;
+      left: -80px;
+      animation: orbFloat2 20s ease-in-out infinite;
+    }
+
+    @keyframes orbFloat1 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-40px, 30px); }
+    }
+
+    @keyframes orbFloat2 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, -40px); }
+    }
+
+    [data-theme="light"] .gradient-orb { opacity: 0.2; }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Floating Gradient Orbs -->
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <header class="navbar articles-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.png" alt="Ali Logo" class="nav-logo-img" />
+        <span class="logo-text">Ali<span class="logo-dot">.</span></span>
+      </a>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html#home" class="nav-link">Home</a>
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#projects" class="nav-link">Projects</a>
+        <a href="index.html#services" class="nav-link">Services</a>
+        <a href="index.html#blog" class="nav-link active">Blog</a>
+        <a href="index.html#experience" class="nav-link">Experience</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="mobile-nav-content">
+      <a href="index.html#home" class="mobile-nav-link">Home</a>
+      <a href="index.html#about" class="mobile-nav-link">About</a>
+      <a href="index.html#projects" class="mobile-nav-link">Projects</a>
+      <a href="index.html#services" class="mobile-nav-link">Services</a>
+      <a href="index.html#blog" class="mobile-nav-link">Blog</a>
+      <a href="index.html#experience" class="mobile-nav-link">Experience</a>
+      <a href="index.html#contact" class="mobile-nav-link">Contact</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════ HERO BANNER ═══════════════ -->
+    <section class="articles-hero">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="index.html"><i class="fas fa-home"></i> Home</a>
+          <span class="separator"><i class="fas fa-chevron-right"></i></span>
+          <a href="index.html#blog">Blog</a>
+          <span class="separator"><i class="fas fa-chevron-right"></i></span>
+          <span class="current">All Articles</span>
+        </nav>
+        <h1 class="articles-hero-title">All Articles</h1>
+        <p class="articles-hero-subtitle">Deep dives into WordPress performance, Elementor workflows, and modern frontend development techniques.</p>
+        <div class="articles-count">
+          <i class="fas fa-newspaper"></i>
+          3 Articles Published
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ ARTICLES LIST ═══════════════ -->
+    <section class="articles-section">
+      <div class="container">
+
+        <a href="index.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i>
+          Back to Portfolio
+        </a>
+
+        <div class="articles-list">
+
+          <!-- ═══ ARTICLE 1: WordPress Speed Optimization ═══ -->
+          <article class="article-card" id="article-1">
+            <div class="article-card-image">
+              <img src="blog_wordpress_speed.png" alt="WordPress Speed Optimization — Tips for Google PageSpeed Insights" />
+              <span class="article-category">WordPress</span>
+            </div>
+            <div class="article-card-body">
+              <div class="article-meta">
+                <span><i class="fas fa-calendar-alt"></i> May 18, 2026</span>
+                <span><i class="fas fa-clock"></i> 5 min read</span>
+                <span><i class="fas fa-user"></i> Muhammad Ali</span>
+              </div>
+              <h2 class="article-card-title">How to Optimize WordPress Site Speed for Google PageSpeed Insights</h2>
+              <div class="article-card-text">
+                <p>Site speed is no longer optional — it is a core ranking factor that directly affects your Google search visibility, bounce rate, and overall user experience. If your WordPress site takes longer than three seconds to load, you risk losing nearly half of your visitors before they even see your content. In this guide, I will walk you through every proven optimization strategy to push your Google PageSpeed Insights score above 90 on both mobile and desktop.</p>
+
+                <h4>Choose a Lightweight Theme</h4>
+                <p>Your theme is the foundation of your website's performance. Bloated multipurpose themes loaded with dozens of unused features can add hundreds of kilobytes of CSS and JavaScript to every single page load. Instead, choose a lightweight, performance-first theme such as <strong>GeneratePress</strong>, <strong>Astra</strong>, or <strong>Kadence</strong>. These themes are built with clean, modular code and typically weigh under 50KB, which gives you a massive speed advantage right from the start. Avoid themes that bundle sliders, page builders, and heavy libraries unless you truly need them.</p>
+
+                <h4>Optimize Images with WebP Format</h4>
+                <p>Images are usually the largest assets on any web page, often accounting for 60–80% of total page weight. Converting your images from PNG or JPEG to the modern <strong>WebP format</strong> can reduce file sizes by 25–35% with virtually no visible loss in quality. Use plugins like <strong>ShortPixel</strong>, <strong>Imagify</strong>, or <strong>EWWW Image Optimizer</strong> to automatically convert and compress images on upload. Additionally, always specify explicit width and height attributes on your <code>&lt;img&gt;</code> tags to prevent Cumulative Layout Shift (CLS) issues.</p>
+
+                <h4>Implement Browser Caching &amp; CDN</h4>
+                <p>Browser caching instructs returning visitors' browsers to store static resources locally so they do not need to be downloaded again on subsequent visits. You can set cache headers through your <code>.htaccess</code> file or use a plugin like <strong>W3 Total Cache</strong> or <strong>WP Super Cache</strong> to manage this automatically. Pair caching with a <strong>Content Delivery Network (CDN)</strong> like Cloudflare or BunnyCDN to serve your static files from edge servers located geographically closer to your visitors, reducing latency dramatically — especially for international audiences.</p>
+
+                <h4>Minify CSS and JavaScript</h4>
+                <p>Every extra character in your CSS and JavaScript files adds to download time. Minification removes all unnecessary whitespace, comments, and formatting from your code without changing its functionality. Plugins like <strong>Autoptimize</strong> or <strong>WP Rocket</strong> can handle minification, concatenation, and deferring of render-blocking scripts with just a few clicks. Be sure to test your site thoroughly after enabling these features, as aggressive minification can occasionally break JavaScript-dependent functionality.</p>
+
+                <h4>Database Cleanup with WP-Optimize</h4>
+                <p>Over time, your WordPress database accumulates post revisions, transient options, spam comments, trashed posts, and orphaned metadata that slow down queries. Install <strong>WP-Optimize</strong> to schedule regular database cleanups, remove old revisions, and optimize database tables. A clean, lean database responds faster to queries, which directly improves your server response time — a critical metric in PageSpeed Insights called Time to First Byte (TTFB).</p>
+
+                <h4>Enable Lazy Loading</h4>
+                <p>Lazy loading defers the loading of off-screen images and iframes until the user scrolls near them. WordPress 5.5 and later versions include native lazy loading via the <code>loading="lazy"</code> attribute, but you can enhance this further with plugins like <strong>Perfmatters</strong> or <strong>WP Rocket</strong> that add lazy loading for background images, videos, and iframes. This significantly reduces initial page load time and conserves bandwidth for mobile users on slower connections.</p>
+
+                <h4>Optimize Server Response Time</h4>
+                <p>No amount of frontend optimization can compensate for a slow server. If your hosting provider delivers TTFB values above 600ms, consider upgrading to a quality managed WordPress host like <strong>Cloudways</strong>, <strong>SiteGround</strong>, or <strong>Kinsta</strong>. These hosts use server-level caching, PHP workers optimized for WordPress, and SSD storage to deliver sub-200ms TTFB. Also ensure you are running the latest version of PHP (8.2 or higher), which is significantly faster than older versions.</p>
+
+                <h4>Measure and Iterate</h4>
+                <p>Finally, run your site through <strong>Google PageSpeed Insights</strong>, <strong>GTmetrix</strong>, and <strong>WebPageTest</strong> regularly to track your progress. Focus on Core Web Vitals: Largest Contentful Paint (LCP), First Input Delay (FID), and Cumulative Layout Shift (CLS). Each optimization you make compounds over time, and with consistent effort, achieving a 90+ score on mobile is absolutely within reach for any WordPress site.</p>
+              </div>
+            </div>
+          </article>
+
+          <hr class="article-divider" />
+
+          <!-- ═══ ARTICLE 2: Mastering Elementor ═══ -->
+          <article class="article-card" id="article-2">
+            <div class="article-card-image">
+              <img src="blog_elementor_design.png" alt="Mastering Elementor — Custom Templates and Dynamic Content" />
+              <span class="article-category">Elementor</span>
+            </div>
+            <div class="article-card-body">
+              <div class="article-meta">
+                <span><i class="fas fa-calendar-alt"></i> May 10, 2026</span>
+                <span><i class="fas fa-clock"></i> 8 min read</span>
+                <span><i class="fas fa-user"></i> Muhammad Ali</span>
+              </div>
+              <h2 class="article-card-title">Mastering Elementor: A Guide to Custom Templates &amp; Dynamic Content</h2>
+              <div class="article-card-text">
+                <p>Elementor has transformed how we build WordPress websites — but most developers barely scratch the surface of its true potential. If you are still building pages by dragging widgets one by one, you are missing out on the powerful template system and dynamic content features that can turn Elementor into a full-fledged web application framework. This guide covers everything you need to master Elementor at a professional level and deliver client-ready websites faster than ever.</p>
+
+                <h4>Creating Custom Templates</h4>
+                <p>The heart of Elementor's power lies in its <strong>template system</strong>. Instead of designing every page from scratch, you can create reusable templates for sections, pages, and even entire site layouts. Navigate to <strong>Templates → Saved Templates</strong> and build modular sections — hero blocks, testimonial carousels, pricing tables, call-to-action strips — that you can insert into any page with one click. Save entire page layouts as templates and export them across different client projects, building your own design library over time.</p>
+
+                <h4>Using Theme Builder</h4>
+                <p>Elementor's <strong>Theme Builder</strong> is what separates casual users from professional developers. With Theme Builder, you gain full control over every part of your WordPress site — the header, footer, single post layout, archive pages, search results, and even 404 error pages. Create a custom header with a sticky transparent navbar, design a single post template with author bio and related posts, or build archive templates with advanced grid layouts. Each template can have <strong>display conditions</strong> so it only applies to specific pages, categories, or post types.</p>
+
+                <h4>Working with Dynamic Content &amp; ACF</h4>
+                <p>Dynamic content is what transforms a static website into a truly data-driven application. Combined with <strong>Advanced Custom Fields (ACF)</strong>, you can create custom fields for any post type — team member bios, product specifications, project portfolios — and pull that data directly into your Elementor designs using dynamic tags. For example, create a "Team Members" custom post type with fields for role, photo, LinkedIn URL, and bio, then design a single template that automatically renders each team member's page using those fields. This approach means clients can update content from the WordPress dashboard without ever touching the design.</p>
+
+                <h4>Building Reusable Sections &amp; Global Widgets</h4>
+                <p>Efficiency is everything when you are building websites for clients. Elementor's <strong>Global Widgets</strong> feature lets you create a widget once and reuse it across multiple pages — change it in one place, and it updates everywhere. This is perfect for newsletter signup forms, contact information blocks, or promotional banners. Combine this with saved sections to build a consistent design system across the entire site. When the client wants to update the phone number in the footer, you update one global widget instead of editing twenty pages.</p>
+
+                <h4>Optimizing Elementor for Performance</h4>
+                <p>One common criticism of Elementor is its impact on performance, but this can be mitigated with the right settings. In <strong>Elementor → Settings → Performance</strong>, enable CSS Print Method as "Internal Embedding" for smaller sites or "External File" for larger ones. Enable the improved asset loading feature to only load widget CSS and JS when those widgets are actually used on the page. Use <strong>Elementor's built-in Optimize and Cache options</strong>, avoid excessive use of heavy widgets like carousels and video backgrounds on mobile, and always test your pages with Lighthouse after designing them.</p>
+
+                <h4>Responsive Design Best Practices</h4>
+                <p>Elementor provides <strong>device-specific controls</strong> for virtually every setting — padding, margins, font sizes, column widths, visibility, and more. Use the responsive mode toggle in the editor's bottom bar to preview and fine-tune your design for desktop, tablet, and mobile independently. Set breakpoints that match your audience's most common devices. Hide desktop-only decorative elements on mobile using Elementor's <strong>Responsive Visibility</strong> controls to keep mobile pages lightweight and fast. Always design mobile-first for critical content sections.</p>
+
+                <h4>Motion Effects &amp; Animations</h4>
+                <p>Subtle animations make websites feel alive and premium. Elementor includes built-in <strong>entrance animations</strong> (fade in, slide up, zoom in) that you can apply to any widget or section. For more advanced effects, use <strong>Motion Effects</strong> to add parallax scrolling, horizontal scrolling, rotate on scroll, and scale effects to elements as users scroll down the page. Use these tastefully — a gentle fade-up on section entry or a subtle parallax on a background image creates polish, while excessive animations create visual noise and slow page rendering.</p>
+
+                <h4>Delivering Client-Ready Websites</h4>
+                <p>Professional Elementor development is about more than just design — it is about delivering a site the client can manage independently. Use <strong>Elementor's Role Manager</strong> to restrict editing capabilities so clients cannot accidentally break layouts. Lock critical sections and template structures so only administrators can modify them. Provide clear documentation, set up proper user roles, and configure ACF fields with intuitive labels and instructions. A truly professional website is one that looks stunning and empowers the client to update content confidently without developer assistance.</p>
+              </div>
+            </div>
+          </article>
+
+          <hr class="article-divider" />
+
+          <!-- ═══ ARTICLE 3: Scroll Animations ═══ -->
+          <article class="article-card" id="article-3">
+            <div class="article-card-image">
+              <img src="blog_css_animations.png" alt="Creating Immersive Scroll Animations with HTML, CSS, and JavaScript" />
+              <span class="article-category">Development</span>
+            </div>
+            <div class="article-card-body">
+              <div class="article-meta">
+                <span><i class="fas fa-calendar-alt"></i> Apr 28, 2026</span>
+                <span><i class="fas fa-clock"></i> 6 min read</span>
+                <span><i class="fas fa-user"></i> Muhammad Ali</span>
+              </div>
+              <h2 class="article-card-title">Creating Immersive Scroll Animations with HTML, CSS, and JS</h2>
+              <div class="article-card-text">
+                <p>Scroll-driven animations are one of the most impactful ways to create engaging, modern web experiences. When done right, they guide the user's attention through your content, create a sense of depth and narrative, and make your site feel premium and polished. In this article, I will break down the core techniques — from the Intersection Observer API to CSS transforms and parallax effects — so you can implement beautiful scroll animations that are smooth, performant, and accessible.</p>
+
+                <h4>The Intersection Observer API</h4>
+                <p>The <strong>Intersection Observer API</strong> is the modern, performant way to detect when elements enter or leave the viewport. Unlike the old approach of listening to scroll events and checking <code>getBoundingClientRect()</code> on every frame, Intersection Observer is asynchronous and handled by the browser at a native level, making it far more efficient. Create an observer with a threshold (e.g., 0.2 means the callback fires when 20% of the element is visible), then observe your target elements. When they intersect the viewport, add a CSS class that triggers your animation. This is exactly how the "reveal on scroll" effects on this portfolio site work.</p>
+
+                <h4>CSS Transitions and Transforms</h4>
+                <p>The actual visual magic happens with <strong>CSS transitions and transforms</strong>. Transforms like <code>translateY()</code>, <code>translateX()</code>, <code>scale()</code>, and <code>rotate()</code> are GPU-accelerated by the browser, meaning they run smoothly at 60fps without triggering expensive layout recalculations. The key pattern is: set the initial state of the element (e.g., <code>opacity: 0; transform: translateY(40px);</code>) and define a transition on those properties. When the Intersection Observer adds the "revealed" class, the element smoothly transitions to its final state (<code>opacity: 1; transform: translateY(0);</code>). Use <code>cubic-bezier</code> easing functions for natural, organic-feeling motion rather than basic linear or ease-in-out timing.</p>
+
+                <h4>Parallax Scrolling Effects</h4>
+                <p>Parallax creates an illusion of depth by moving background elements at a different speed than foreground content. The simplest CSS-only parallax uses <code>background-attachment: fixed</code>, but for more refined control, use JavaScript to calculate the scroll position and apply proportional <code>translateY</code> transforms to different layers. For example, a background image that moves at 50% of the scroll speed creates a subtle depth effect. Pair multiple layers — far background at 30%, mid-ground at 60%, foreground at 100% — to build truly immersive visual experiences. Keep parallax subtle; excessive parallax causes motion sickness for sensitive users.</p>
+
+                <h4>Scroll-Triggered Animations</h4>
+                <p>Beyond simple reveal effects, you can create complex <strong>scroll-triggered sequences</strong> where multiple elements animate in choreographed order. Use staggered delays — the first element fades in immediately, the second after 100ms, the third after 200ms — to create a "cascade" effect that feels dynamic and intentional. You can achieve this by assigning incremental <code>transition-delay</code> values via CSS custom properties or by using <code>data-delay</code> attributes that your JavaScript reads. For timeline-based sequences, consider the <strong>Web Animations API</strong> which gives you programmatic keyframe control directly in JavaScript.</p>
+
+                <h4>Performance Considerations</h4>
+                <p>Performance is the difference between animations that feel magical and animations that feel janky. Follow these golden rules: only animate <strong>transform</strong> and <strong>opacity</strong> properties (they are composited on the GPU); never animate width, height, margin, or top/left (these trigger expensive layout recalculations). Use <code>will-change: transform</code> sparingly on elements that will animate to hint the browser to promote them to their own compositing layer. Always test on low-end mobile devices — an animation that runs beautifully on your desktop may stutter on a mid-range Android phone.</p>
+
+                <h4>Using requestAnimationFrame</h4>
+                <p>For scroll-linked animations that need to update continuously (like parallax or progress indicators), use <code>requestAnimationFrame</code> instead of directly handling the scroll event. Set a flag when the scroll event fires, then use <code>requestAnimationFrame</code> to process the animation update on the next frame. This ensures your animation updates are synchronized with the browser's rendering cycle, preventing frame drops. Here is the pattern: store the scroll position in a variable on the scroll event, then read and apply it inside the <code>requestAnimationFrame</code> callback. This decouples the high-frequency scroll events from the render updates.</p>
+
+                <h4>Reveal-on-Scroll Effects</h4>
+                <p>The most universally effective scroll animation is the <strong>reveal-on-scroll</strong> pattern. Elements start invisible and slightly offset (translated down 30–50px), then smoothly transition to their final position as they enter the viewport. This works beautifully for headings, cards, images, and entire sections. Variations include sliding in from the left or right, scaling up from 90%, or fading in with a slight rotation. The key to making this feel polished is using generous transition durations (0.6–0.8 seconds) with ease-out easing, and triggering the animation slightly before the element is fully visible (threshold of 0.1–0.2) so users see the motion happening, not the result.</p>
+
+                <h4>Smooth Scroll Behavior</h4>
+                <p>Finally, implement <strong>smooth scroll behavior</strong> for anchor links and navigation. The simplest approach is adding <code>scroll-behavior: smooth</code> to your HTML element in CSS, which makes all anchor link clicks scroll smoothly instead of jumping. For more control, use <code>element.scrollIntoView({ behavior: 'smooth', block: 'start' })</code> in JavaScript. Combine smooth scrolling with a <code>scroll-padding-top</code> value equal to your fixed navbar height to prevent content from hiding behind the header. These small touches create a cohesive, premium-feeling user experience that elevates the entire website.</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="articles-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo footer-logo">
+            <img src="logo.png" alt="Ali Logo" class="nav-logo-img" />
+            <span class="logo-text">Ali<span class="logo-dot">.</span></span>
+          </a>
+          <p>Frontend Developer &amp; Digital Creator. Building modern websites and digital experiences.</p>
+          <div class="footer-socials">
+            <a href="https://github.com/alikhan14756" target="_blank" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://wa.me/923055389967" target="_blank" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:alikhan1475623a@gmail.com" class="social-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#blog">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="mailto:alikhan1475623a@gmail.com">alikhan1475623a@gmail.com</a></li>
+            <li><a href="https://wa.me/923055389967" target="_blank">+92 305 5389967</a></li>
+            <li><a href="https://github.com/alikhan14756" target="_blank">github.com/alikhan14756</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Muhammad Ali. Built with <span class="heart">❤️</span> by Ali.</p>
+        <p><a href="https://github.com/alikhan14756" target="_blank">github.com/alikhan14756</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script>
+    // ─── Theme Toggle ───
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const html = document.documentElement;
+
+    // Initialize theme icon from current document attribute (set by head script)
+    const currentTheme = html.getAttribute('data-theme') || 'dark';
+    themeIcon.className = currentTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+
+    themeToggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      themeIcon.className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+    });
+
+    // ─── Hamburger Menu ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileOverlay = document.getElementById('mobile-nav-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileOverlay.classList.toggle('open');
+      document.body.style.overflow = mobileOverlay.classList.contains('open') ? 'hidden' : '';
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ─── Scroll Progress Bar ───
+    const progressBar = document.getElementById('scroll-progress');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
+    });
+
+    // ─── Back to Top ───
+    const backToTop = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ─── Article Cards Reveal on Scroll ───
+    const articleCards = document.querySelectorAll('.article-card');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 150);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    articleCards.forEach(card => observer.observe(card));
+
+    // ─── Navbar scroll state ───
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+
+</body>
+</html>

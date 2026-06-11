@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Muhammad Ali — Frontend Developer & Digital Creator</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
   <meta name="description" content="Muhammad Ali is a Frontend Developer & Digital Creator who builds modern, fast and responsive websites that help businesses grow online and deliver exceptional user experiences." />
   <meta name="keywords" content="Muhammad Ali, WordPress, Elementor, Web Developer, JavaScript, Portfolio" />
   <meta property="og:title" content="Muhammad Ali — Frontend Developer & Digital Creator" />
@@ -110,7 +117,7 @@
           <i class="fas fa-arrow-right"></i>
         </a>
       </div>
-"
+
       <!-- Hero Stats -->
       <div class="hero-stats reveal-up">
         <div class="stat-item">
@@ -170,14 +177,14 @@
           <span class="float-icon">🎨</span> CSS
         </div>
         <div class="float-tag float-wordpress">
-          <span class="float-icon"><i class="fab fa-wordpress"></i></span> WordPress
+          <span class="float-icon"><i class="fab fa-wordpress" style="color:#21759b"></i></span> WordPress
         </div>
         <div class="float-tag float-elementor">
-          <span class="float-icon"><i class="fab fa-elementor"></i></span> Elementor
+          <span class="float-icon"><i class="fab fa-elementor" style="color:#92064c"></i></span> Elementor
         </div> 
         <div class="float-tag float-js">
-  <span class="float-icon"><i class="fab fa-js"></i></span> JavaScript
-</div>
+          <span class="float-icon"><i class="fab fa-js-square" style="color:#F7DF1E"></i></span> JS
+        </div>
       </div>
     </div>
   </div>
@@ -260,23 +267,8 @@
                 <span class="browser-dot green"></span>
                 <div class="browser-url">arshadtiles.com</div>
               </div>
-              <img  src="WhatsApp Image 2026-06-05 at 10.41.22 PM (1).jpeg" alt="">
-              <!-- <div class="browser-content">
-                <div class="mock-hero-section">
-                  <div class="mock-nav"> </div>
-                  <div class="mock-hero-text">
-                    <div class="mock-line wide"></div>
-                    <div class="mock-line medium orange"></div>
-                    <div class="mock-line narrow"></div>
-                    <div class="mock-btn"></div>
-                  </div> -->
-                  <!-- <div class="mock-hero-img tiles-preview">
-                    <div class="tile-grid">
-                      <div class="tile t1"></div><div class="tile t2"></div>
-                      <div class="tile t3"></div><div class="tile t4"></div>
-                    </div> -->
-                  </div>
-                </div>
+              <div class="browser-content">
+                <img src="arshad_tiles.png" alt="Arshad Tiles Website Preview" style="width:100%;height:auto;display:block;border-radius:0 0 12px 12px;" />
               </div>
             </div>
           </div>
@@ -566,7 +558,7 @@
             </div>
           </div>
 
-          <a href="https://drive.google.com/uc?export=download&id=1ywrasR6eFGvB5I8JN3iZ2JCnAwwzBQZ6" class="btn-primary download-cv-btn reveal-up" id="download-cv-btn">
+          <a href="#" class="btn-primary download-cv-btn reveal-up" id="download-cv-btn">
             <i class="fas fa-download"></i> Download Resume
           </a>
         </div>
@@ -630,7 +622,7 @@
             <div class="section-tag">LATEST ARTICLES</div>
             <h2 class="section-title">My Latest Insights</h2>
           </div>
-          <a href="#" class="view-all-link" id="view-all-articles-btn">View All Articles <i class="fas fa-arrow-right"></i></a>
+          <a href="articles.html" class="view-all-link" id="view-all-articles-btn">View All Articles <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="blog-grid">
@@ -646,7 +638,7 @@
               </div>
               <h3>How to Optimize WordPress Site Speed for Google PageSpeed Insights</h3>
               <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0 16px;">Discover critical steps to hit a 90+ mobile speed score, including advanced CSS caching, image WebP conversion, and database cleanups.</p>
-              <a href="https://github.com/alikhan14756" target="_blank" class="blog-read-more" id="blog-read-1">Read More <i class="fas fa-arrow-right"></i></a>
+              <a href="articles.html#article-1" class="blog-read-more" id="blog-read-1">Read More <i class="fas fa-arrow-right"></i></a>
             </div>
           </article>
 
@@ -662,7 +654,7 @@
               </div>
               <h3>Mastering Elementor: A Guide to Custom Templates &amp; Dynamic Content</h3>
               <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0 16px;">Learn how to leverage dynamic templates, custom post types, and ACF loops to build fully dynamic WordPress client projects.</p>
-              <a href="https://github.com/alikhan14756" target="_blank" class="blog-read-more" id="blog-read-2">Read More <i class="fas fa-arrow-right"></i></a>
+              <a href="articles.html#article-2" class="blog-read-more" id="blog-read-2">Read More <i class="fas fa-arrow-right"></i></a>
             </div>
           </article>
 
@@ -678,7 +670,7 @@
               </div>
               <h3>Creating Immersive Scroll Animations with HTML, CSS, and JS</h3>
               <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 8px 0 16px;">Boost your user engagement rates by implementing custom intersection observers, parallax scrolling effects, and fluid CSS transitions.</p>
-              <a href="https://github.com/alikhan14756" target="_blank" class="blog-read-more" id="blog-read-3">Read More <i class="fas fa-arrow-right"></i></a>
+              <a href="articles.html#article-3" class="blog-read-more" id="blog-read-3">Read More <i class="fas fa-arrow-right"></i></a>
             </div>
           </article>
         </div>
@@ -773,7 +765,7 @@
             <i class="fab fa-whatsapp"></i>
             <div>
               <span>WhatsApp</span>
-              <a href="https://wa.me/923055389967" target="_blank" rel="noopener">+92 305 5389967</a>
+              <a href="https://wa.me/923055389967" target="_blank">+92 305 5389967</a>
             </div>
           </div>
 
@@ -818,10 +810,16 @@
             <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
           </div>
 
-          <button type="submit" class="btn-primary full-width" id="send-message-btn">
-            <span>Send Message</span>
-            <i class="fas fa-paper-plane"></i>
-          </button>
+          <div class="form-buttons">
+            <button type="button" class="btn-whatsapp" id="whatsapp-btn">
+              <i class="fab fa-whatsapp"></i>
+              <span>Send via WhatsApp</span>
+            </button>
+            <button type="button" class="btn-email" id="email-btn">
+              <i class="fas fa-envelope"></i>
+              <span>Send via Email</span>
+            </button>
+          </div>
         </form>
       </div>
     </div>
