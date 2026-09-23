@@ -28,17 +28,26 @@ const isTouchDevice = () =>
 /* ─────────────────────────────────────────────
    2. PRELOADER
    ───────────────────────────────────────────── */
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
       preloader.classList.add('hidden');
       setTimeout(() => preloader.remove(), 700);
     }
-    initSplitText();
-    initCounters();
-  }, 2300);
+    try { initSplitText(); } catch(e){}
+    try { initCounters(); } catch(e){}
+  }, 1200);
 });
+// Fallback just in case
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    preloader.classList.add('hidden');
+    setTimeout(() => preloader.remove(), 700);
+  }
+});
+
 
 /* ─────────────────────────────────────────────
    3. THEME TOGGLE
