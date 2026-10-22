@@ -168,7 +168,7 @@ const INITIAL_MESSAGES: JarvisMessage[] = [
 export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
   ...DEFAULT_PRESET,
   viewMode: "portfolio",
-  isPreloaderActive: true,
+  isPreloaderActive: false,
   activeDrawerProject: null,
   isCustomizerOpen: false,
 

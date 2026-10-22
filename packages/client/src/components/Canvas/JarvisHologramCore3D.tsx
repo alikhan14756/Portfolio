@@ -424,6 +424,44 @@ function HologramScene({ primaryColor, secondaryColor, isSpeaking, intensity }: 
   );
 }
 
+interface ErrorBoundaryProps {
+  primaryColor: string;
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class HologramErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any) {
+    console.warn("Holographic 3D Canvas error caught and handled gracefully:", error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="relative w-44 h-44 flex items-center justify-center">
+          <div className="absolute inset-0 rounded-full border-2 border-dashed border-[var(--accent-primary)]/50 animate-spin" />
+          <div className="w-20 h-20 rounded-full bg-[var(--badge-bg)] border border-[var(--border-color)] flex items-center justify-center shadow-[0_0_20px_var(--accent-primary)]">
+            <div className="w-8 h-8 rounded-full bg-[var(--accent-primary)] animate-ping opacity-75" />
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export const JarvisHologramCore3D: React.FC = () => {
   const theme = usePortfolioStore((s) => s.theme);
   const accentOverride = usePortfolioStore((s) => s.accentOverride);
@@ -469,24 +507,26 @@ export const JarvisHologramCore3D: React.FC = () => {
 
   return (
     <div className="relative w-full h-full min-h-[300px] sm:min-h-[360px] md:min-h-[400px] flex items-center justify-center cursor-grab active:cursor-grabbing select-none">
-      <Canvas
-        camera={{ position: [0, 0, 4.2], fov: 42 }}
-        dpr={[1, 2]} // 4K Retina hardware antialiasing
-        gl={{
-          antialias: true,
-          alpha: true,
-          powerPreference: "high-performance",
-          depth: true
-        }}
-        className="w-full h-full"
-      >
-        <HologramScene
-          primaryColor={primaryColor}
-          secondaryColor={secondaryColor}
-          isSpeaking={isSpeaking}
-          intensity={animationIntensity}
-        />
-      </Canvas>
+      <HologramErrorBoundary primaryColor={primaryColor}>
+        <Canvas
+          camera={{ position: [0, 0, 4.2], fov: 42 }}
+          dpr={[1, 2]} // 4K Retina hardware antialiasing
+          gl={{
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance",
+            depth: true
+          }}
+          className="w-full h-full"
+        >
+          <HologramScene
+            primaryColor={primaryColor}
+            secondaryColor={secondaryColor}
+            isSpeaking={isSpeaking}
+            intensity={animationIntensity}
+          />
+        </Canvas>
+      </HologramErrorBoundary>
 
       {/* Interactive Drag & Shockwave Hint */}
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 pointer-events-none text-[9px] font-mono tracking-widest text-[var(--accent-primary)]/70 uppercase bg-[var(--badge-bg)] px-2.5 py-0.5 rounded-full border border-[var(--border-color)]/50">
