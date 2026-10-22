@@ -106,12 +106,14 @@ export const JarvisAssistant: React.FC = () => {
   };
 
   const samplePrompts = [
-    "Open Ivana Studio case study",
-    "Show Nexcurex case study",
-    "Explain spatial multiplayer architecture",
-    "Switch theme to Cyberpunk",
-    "Turn off animations",
-    "How can I contact Ali?"
+    "👋 Hello JARVIS",
+    "💼 Tell me about Ivana Studio",
+    "🛍️ What was Ali's role on Nexcurex?",
+    "💰 What are Ali's website pricing rates?",
+    "⚡ How fast can Ali deliver a site?",
+    "🛠️ What technologies does Ali use?",
+    "🎨 Switch theme to Cyberpunk",
+    "📱 How can I contact Ali directly?"
   ];
 
   return (

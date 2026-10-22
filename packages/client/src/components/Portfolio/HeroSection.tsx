@@ -193,7 +193,7 @@ export const HeroSection: React.FC = () => {
             transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 flex justify-center"
           >
-            <div className="relative w-full max-w-md aspect-square rounded-3xl hud-panel p-6 sm:p-7 flex flex-col justify-between overflow-hidden shadow-2xl">
+            <div className="relative w-full max-w-lg min-h-[460px] rounded-3xl hud-panel border-beam p-6 sm:p-7 flex flex-col justify-between overflow-hidden shadow-2xl">
               {/* Corner Sci-Fi Brackets */}
               <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[var(--accent-primary)]/70" />
               <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[var(--accent-primary)]/70" />
@@ -210,7 +210,7 @@ export const HeroSection: React.FC = () => {
               </div>
 
               {/* Central 3D Holographic Quantum Core */}
-              <div className="relative my-auto w-full h-56 sm:h-64 flex items-center justify-center">
+              <div className="relative my-auto w-full h-72 sm:h-80 md:h-[340px] flex items-center justify-center">
                 {orbStyle !== "off" ? (
                   <JarvisHologramCore3D />
                 ) : (

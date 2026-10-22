@@ -3,6 +3,8 @@
 :root,
 [data-theme="jarvis-core"] {
   --theme-id: "jarvis-core";
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #040914;
   --bg-secondary: #071224;
   --bg-card: rgba(8, 20, 38, 0.78);
@@ -14,7 +16,13 @@
   --text-primary: #f0f9ff;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --hud-glow: 0 0 20px rgba(56, 189, 248, 0.25);
+  --hud-glow: 0 0 24px rgba(56, 189, 248, 0.25);
+  --card-radius: 24px;
+  --card-border: 1px solid rgba(56, 189, 248, 0.28);
+  --card-shadow: 0 0 25px rgba(56, 189, 248, 0.14);
+  --card-clip: none;
+  --bg-pattern: radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.12) 0%, transparent 60%), linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+  --bg-pattern-size: 100% 100%, 36px 36px, 36px 36px;
   --grid-line: rgba(56, 189, 248, 0.05);
   --badge-bg: rgba(56, 189, 248, 0.12);
 }
@@ -22,18 +30,26 @@
 [data-theme="iron-red"],
 [data-theme="iron-man"] {
   --theme-id: "iron-red";
+  --font-display: 'Orbitron', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #120406;
   --bg-secondary: #1f080c;
-  --bg-card: rgba(36, 10, 16, 0.82);
-  --border-color: rgba(239, 68, 68, 0.35);
-  --border-glow: rgba(245, 158, 11, 0.65);
+  --bg-card: rgba(36, 10, 16, 0.84);
+  --border-color: rgba(239, 68, 68, 0.38);
+  --border-glow: rgba(245, 158, 11, 0.7);
   --accent-primary: #ef4444;
   --accent-secondary: #f59e0b;
   --accent-tertiary: #38bdf8;
   --text-primary: #fff1f2;
   --text-secondary: #fda4af;
   --text-muted: #9f1239;
-  --hud-glow: 0 0 20px rgba(239, 68, 68, 0.3);
+  --hud-glow: 0 0 24px rgba(239, 68, 68, 0.32);
+  --card-radius: 16px;
+  --card-border: 1px solid rgba(239, 68, 68, 0.45);
+  --card-shadow: 0 0 28px rgba(239, 68, 68, 0.22);
+  --card-clip: none;
+  --bg-pattern: radial-gradient(circle at 50% 30%, rgba(239, 68, 68, 0.16) 0%, transparent 60%), repeating-linear-gradient(45deg, rgba(239, 68, 68, 0.03) 0px, rgba(239, 68, 68, 0.03) 1px, transparent 1px, transparent 16px);
+  --bg-pattern-size: 100% 100%, auto;
   --grid-line: rgba(239, 68, 68, 0.06);
   --badge-bg: rgba(239, 68, 68, 0.15);
 }
@@ -41,184 +57,264 @@
 [data-theme="cyberpunk-neon"],
 [data-theme="cyberpunk"] {
   --theme-id: "cyberpunk-neon";
+  --font-display: 'Orbitron', monospace;
+  --font-mono: 'Orbitron', monospace;
   --bg-primary: #0a0515;
   --bg-secondary: #130924;
-  --bg-card: rgba(22, 10, 42, 0.85);
-  --border-color: rgba(234, 179, 8, 0.4);
-  --border-glow: rgba(236, 72, 153, 0.7);
+  --bg-card: rgba(22, 10, 42, 0.88);
+  --border-color: rgba(250, 204, 21, 0.5);
+  --border-glow: rgba(236, 72, 153, 0.85);
   --accent-primary: #facc15;
   --accent-secondary: #ec4899;
   --accent-tertiary: #06b6d4;
   --text-primary: #fef08a;
   --text-secondary: #f472b6;
-  --text-muted: #831843;
-  --hud-glow: 0 0 22px rgba(250, 204, 21, 0.3);
+  --text-muted: #9d174d;
+  --hud-glow: 0 0 28px rgba(250, 204, 21, 0.35);
+  --card-radius: 6px;
+  --card-border: 1.5px solid #facc15;
+  --card-shadow: 0 0 25px rgba(250, 204, 21, 0.25), 0 0 45px rgba(236, 72, 153, 0.15);
+  --card-clip: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  --bg-pattern: radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.18) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(250, 204, 21, 0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, rgba(236, 72, 153, 0.03) 0px, rgba(236, 72, 153, 0.03) 1px, transparent 1px, transparent 20px);
+  --bg-pattern-size: 100% 100%, 100% 100%, auto;
   --grid-line: rgba(236, 72, 153, 0.08);
-  --badge-bg: rgba(250, 204, 21, 0.15);
+  --badge-bg: rgba(250, 204, 21, 0.16);
 }
 
 [data-theme="matrix-terminal"],
 [data-theme="matrix"] {
   --theme-id: "matrix-terminal";
+  --font-display: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #020804;
   --bg-secondary: #051408;
-  --bg-card: rgba(4, 22, 9, 0.88);
-  --border-color: rgba(34, 197, 94, 0.35);
-  --border-glow: rgba(74, 222, 128, 0.65);
+  --bg-card: rgba(4, 22, 9, 0.92);
+  --border-color: rgba(34, 197, 94, 0.45);
+  --border-glow: rgba(74, 222, 128, 0.75);
   --accent-primary: #22c55e;
   --accent-secondary: #4ade80;
   --accent-tertiary: #16a34a;
   --text-primary: #dcfce7;
   --text-secondary: #86efac;
   --text-muted: #14532d;
-  --hud-glow: 0 0 20px rgba(34, 197, 94, 0.3);
+  --hud-glow: 0 0 25px rgba(34, 197, 94, 0.35);
+  --card-radius: 4px;
+  --card-border: 1px solid rgba(34, 197, 94, 0.5);
+  --card-shadow: inset 0 0 15px rgba(34, 197, 94, 0.15), 0 0 22px rgba(34, 197, 94, 0.22);
+  --card-clip: none;
+  --bg-pattern: linear-gradient(rgba(34, 197, 94, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 197, 94, 0.07) 1px, transparent 1px);
+  --bg-pattern-size: 24px 24px, 24px 24px;
   --grid-line: rgba(34, 197, 94, 0.07);
-  --badge-bg: rgba(34, 197, 94, 0.12);
+  --badge-bg: rgba(34, 197, 94, 0.14);
 }
 
 [data-theme="arctic-glass"] {
   --theme-id: "arctic-glass";
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #06101c;
   --bg-secondary: #0b1a2d;
   --bg-card: rgba(18, 38, 62, 0.65);
-  --border-color: rgba(186, 230, 253, 0.32);
-  --border-glow: rgba(224, 242, 254, 0.7);
+  --border-color: rgba(186, 230, 253, 0.38);
+  --border-glow: rgba(224, 242, 254, 0.8);
   --accent-primary: #bae6fd;
   --accent-secondary: #7dd3fc;
   --accent-tertiary: #e0f2fe;
   --text-primary: #f0f9ff;
   --text-secondary: #bfdbfe;
   --text-muted: #60a5fa;
-  --hud-glow: 0 0 25px rgba(186, 230, 253, 0.25);
+  --hud-glow: 0 0 28px rgba(186, 230, 253, 0.3);
+  --card-radius: 28px;
+  --card-border: 1px solid rgba(186, 230, 253, 0.38);
+  --card-shadow: 0 10px 35px rgba(186, 230, 253, 0.18);
+  --card-clip: none;
+  --bg-pattern: radial-gradient(circle at 30% 20%, rgba(186, 230, 253, 0.16) 0%, transparent 55%), radial-gradient(circle at 70% 80%, rgba(56, 189, 248, 0.12) 0%, transparent 55%);
+  --bg-pattern-size: 100% 100%, 100% 100%;
   --grid-line: rgba(186, 230, 253, 0.08);
-  --badge-bg: rgba(186, 230, 253, 0.14);
+  --badge-bg: rgba(186, 230, 253, 0.15);
 }
 
 [data-theme="midnight-purple"] {
   --theme-id: "midnight-purple";
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #090314;
   --bg-secondary: #130728;
-  --bg-card: rgba(24, 9, 48, 0.82);
-  --border-color: rgba(168, 85, 247, 0.35);
-  --border-glow: rgba(192, 132, 252, 0.65);
+  --bg-card: rgba(24, 9, 48, 0.85);
+  --border-color: rgba(168, 85, 247, 0.38);
+  --border-glow: rgba(192, 132, 252, 0.75);
   --accent-primary: #c084fc;
   --accent-secondary: #a855f7;
   --accent-tertiary: #f43f5e;
   --text-primary: #faf5ff;
   --text-secondary: #d8b4fe;
   --text-muted: #7e22ce;
-  --hud-glow: 0 0 22px rgba(168, 85, 247, 0.3);
+  --hud-glow: 0 0 26px rgba(168, 85, 247, 0.35);
+  --card-radius: 22px;
+  --card-border: 1px solid rgba(168, 85, 247, 0.38);
+  --card-shadow: 0 0 32px rgba(168, 85, 247, 0.25);
+  --card-clip: none;
+  --bg-pattern: radial-gradient(circle at 50% 30%, rgba(192, 132, 252, 0.18) 0%, transparent 60%), radial-gradient(circle at 80% 80%, rgba(244, 63, 94, 0.12) 0%, transparent 50%);
+  --bg-pattern-size: 100% 100%, 100% 100%;
   --grid-line: rgba(168, 85, 247, 0.06);
-  --badge-bg: rgba(168, 85, 247, 0.15);
+  --badge-bg: rgba(168, 85, 247, 0.16);
 }
 
 [data-theme="emerald-professional"],
 [data-theme="emerald-pro"] {
   --theme-id: "emerald-professional";
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #03100e;
   --bg-secondary: #071f1b;
-  --bg-card: rgba(8, 36, 31, 0.82);
-  --border-color: rgba(52, 211, 153, 0.3);
-  --border-glow: rgba(16, 185, 129, 0.65);
+  --bg-card: rgba(8, 36, 31, 0.86);
+  --border-color: rgba(52, 211, 153, 0.35);
+  --border-glow: rgba(16, 185, 129, 0.7);
   --accent-primary: #34d399;
   --accent-secondary: #10b981;
   --accent-tertiary: #38bdf8;
   --text-primary: #ecfdf5;
   --text-secondary: #a7f3d0;
   --text-muted: #047857;
-  --hud-glow: 0 0 20px rgba(52, 211, 153, 0.25);
+  --hud-glow: 0 0 22px rgba(52, 211, 153, 0.28);
+  --card-radius: 20px;
+  --card-border: 1px solid rgba(52, 211, 153, 0.35);
+  --card-shadow: 0 0 25px rgba(52, 211, 153, 0.16);
+  --card-clip: none;
+  --bg-pattern: radial-gradient(circle at 50% 20%, rgba(52, 211, 153, 0.14) 0%, transparent 60%), linear-gradient(rgba(52, 211, 153, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(52, 211, 153, 0.03) 1px, transparent 1px);
+  --bg-pattern-size: 100% 100%, 32px 32px, 32px 32px;
   --grid-line: rgba(52, 211, 153, 0.06);
-  --badge-bg: rgba(52, 211, 153, 0.12);
+  --badge-bg: rgba(52, 211, 153, 0.14);
 }
 
 [data-theme="solar-gold"] {
   --theme-id: "solar-gold";
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #120b02;
   --bg-secondary: #1f1405;
-  --bg-card: rgba(38, 24, 7, 0.85);
-  --border-color: rgba(245, 158, 11, 0.35);
-  --border-glow: rgba(251, 191, 36, 0.65);
+  --bg-card: rgba(38, 24, 7, 0.88);
+  --border-color: rgba(245, 158, 11, 0.4);
+  --border-glow: rgba(251, 191, 36, 0.7);
   --accent-primary: #fbbf24;
   --accent-secondary: #f59e0b;
   --accent-tertiary: #ea580c;
   --text-primary: #fffbeb;
   --text-secondary: #fde68a;
   --text-muted: #b45309;
-  --hud-glow: 0 0 22px rgba(245, 158, 11, 0.3);
+  --hud-glow: 0 0 26px rgba(245, 158, 11, 0.35);
+  --card-radius: 20px;
+  --card-border: 1px solid rgba(245, 158, 11, 0.4);
+  --card-shadow: 0 0 30px rgba(245, 158, 11, 0.25);
+  --card-clip: none;
+  --bg-pattern: radial-gradient(circle at 50% 20%, rgba(251, 191, 36, 0.18) 0%, transparent 60%), linear-gradient(135deg, rgba(251, 191, 36, 0.04) 25%, transparent 25%);
+  --bg-pattern-size: 100% 100%, 40px 40px;
   --grid-line: rgba(245, 158, 11, 0.07);
-  --badge-bg: rgba(245, 158, 11, 0.15);
+  --badge-bg: rgba(245, 158, 11, 0.16);
 }
 
 [data-theme="ocean-blue"] {
   --theme-id: "ocean-blue";
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #020d1a;
   --bg-secondary: #05162a;
-  --bg-card: rgba(6, 27, 52, 0.82);
-  --border-color: rgba(14, 165, 233, 0.35);
-  --border-glow: rgba(56, 189, 248, 0.65);
+  --bg-card: rgba(6, 27, 52, 0.86);
+  --border-color: rgba(14, 165, 233, 0.38);
+  --border-glow: rgba(56, 189, 248, 0.7);
   --accent-primary: #0ea5e9;
   --accent-secondary: #38bdf8;
   --accent-tertiary: #2dd4bf;
   --text-primary: #f0f9ff;
   --text-secondary: #bae6fd;
   --text-muted: #0369a1;
-  --hud-glow: 0 0 20px rgba(14, 165, 233, 0.28);
+  --hud-glow: 0 0 24px rgba(14, 165, 233, 0.3);
+  --card-radius: 22px;
+  --card-border: 1px solid rgba(14, 165, 233, 0.38);
+  --card-shadow: 0 0 28px rgba(14, 165, 233, 0.18);
+  --card-clip: none;
+  --bg-pattern: radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.16) 0%, transparent 60%), linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(14, 165, 233, 0.04) 1px, transparent 1px);
+  --bg-pattern-size: 100% 100%, 36px 36px, 36px 36px;
   --grid-line: rgba(14, 165, 233, 0.07);
-  --badge-bg: rgba(14, 165, 233, 0.14);
+  --badge-bg: rgba(14, 165, 233, 0.15);
 }
 
 [data-theme="rose-neon"] {
   --theme-id: "rose-neon";
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #120309;
   --bg-secondary: #220712;
-  --bg-card: rgba(40, 8, 22, 0.85);
-  --border-color: rgba(244, 63, 94, 0.35);
-  --border-glow: rgba(251, 113, 133, 0.65);
+  --bg-card: rgba(40, 8, 22, 0.88);
+  --border-color: rgba(244, 63, 94, 0.38);
+  --border-glow: rgba(251, 113, 133, 0.7);
   --accent-primary: #fb7185;
   --accent-secondary: #f43f5e;
   --accent-tertiary: #e11d48;
   --text-primary: #fff1f2;
   --text-secondary: #fecdd3;
   --text-muted: #9f1239;
-  --hud-glow: 0 0 22px rgba(244, 63, 94, 0.3);
+  --hud-glow: 0 0 26px rgba(244, 63, 94, 0.35);
+  --card-radius: 22px;
+  --card-border: 1px solid rgba(244, 63, 94, 0.38);
+  --card-shadow: 0 0 30px rgba(244, 63, 94, 0.22);
+  --card-clip: none;
+  --bg-pattern: radial-gradient(circle at 60% 20%, rgba(244, 63, 94, 0.18) 0%, transparent 60%), radial-gradient(circle at 20% 80%, rgba(251, 113, 133, 0.12) 0%, transparent 60%);
+  --bg-pattern-size: 100% 100%, 100% 100%;
   --grid-line: rgba(244, 63, 94, 0.07);
-  --badge-bg: rgba(244, 63, 94, 0.14);
+  --badge-bg: rgba(244, 63, 94, 0.15);
 }
 
 [data-theme="paper-studio"] {
   --theme-id: "paper-studio";
-  --bg-primary: #f5f4f0;
-  --bg-secondary: #ebe8e1;
-  --bg-card: rgba(255, 255, 255, 0.92);
-  --border-color: rgba(30, 41, 59, 0.18);
-  --border-glow: rgba(30, 41, 59, 0.35);
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --bg-primary: #f6f5f0;
+  --bg-secondary: #eeebe3;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --border-color: rgba(15, 23, 42, 0.16);
+  --border-glow: rgba(15, 23, 42, 0.35);
   --accent-primary: #0f172a;
   --accent-secondary: #334155;
   --accent-tertiary: #64748b;
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
-  --hud-glow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --hud-glow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --card-radius: 14px;
+  --card-border: 1px solid rgba(15, 23, 42, 0.14);
+  --card-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+  --card-clip: none;
+  --bg-pattern: radial-gradient(rgba(15, 23, 42, 0.12) 0.8px, transparent 0.8px);
+  --bg-pattern-size: 24px 24px;
   --grid-line: rgba(15, 23, 42, 0.05);
-  --badge-bg: rgba(15, 23, 42, 0.08);
+  --badge-bg: rgba(15, 23, 42, 0.07);
 }
 
 [data-theme="monochrome"] {
   --theme-id: "monochrome";
+  --font-display: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg-primary: #09090b;
   --bg-secondary: #141417;
-  --bg-card: rgba(24, 24, 27, 0.88);
-  --border-color: rgba(212, 212, 216, 0.25);
-  --border-glow: rgba(244, 244, 245, 0.55);
+  --bg-card: rgba(24, 24, 27, 0.9);
+  --border-color: rgba(212, 212, 216, 0.3);
+  --border-glow: rgba(244, 244, 245, 0.65);
   --accent-primary: #f43f5e;
   --accent-secondary: #e4e4e7;
   --accent-tertiary: #a1a1aa;
   --text-primary: #fafafa;
   --text-secondary: #d4d4d8;
   --text-muted: #71717a;
-  --hud-glow: 0 0 20px rgba(255, 255, 255, 0.15);
+  --hud-glow: 0 0 24px rgba(255, 255, 255, 0.18);
+  --card-radius: 8px;
+  --card-border: 1px solid rgba(212, 212, 216, 0.3);
+  --card-shadow: 0 0 22px rgba(255, 255, 255, 0.09);
+  --card-clip: none;
+  --bg-pattern: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  --bg-pattern-size: 32px 32px, 32px 32px;
   --grid-line: rgba(255, 255, 255, 0.04);
-  --badge-bg: rgba(255, 255, 255, 0.1);
+  --badge-bg: rgba(255, 255, 255, 0.12);
 }
 
 /* Typography Overrides */

@@ -138,7 +138,73 @@ async function startServer() {
         message: z.string().min(1).max(500)
       });
       const { message } = schema.parse(request.body);
-      const lower = message.toLowerCase();
+      const lower = message.toLowerCase().trim();
+
+      // 1. GREETINGS & CASUAL CONVERSATION
+      if (/^(hi|hello|hey|hiya|howdy|sup|yo|salam|assalam|aoa|good\s*(morning|afternoon|evening|day)|greetings)\b/i.test(lower)) {
+        return reply.send({
+          success: true,
+          reply: "Greetings! I am J.A.R.V.I.S., the autonomous AI assistant for Muhammad Ali (Peshawar, Pakistan). How may I assist your mission today? You can ask me about Ali's client projects (Ivana Studio, Nexcurex, Arshad Tiles), review his technical stack, website pricing, turnaround times, or connect directly on WhatsApp (+92 305 5389967).",
+          actionTag: "GREETING",
+          isAiGenerated: true
+        });
+      }
+
+      if (lower.includes("how are you") || lower.includes("how r u") || lower.includes("how's it going")) {
+        return reply.send({
+          success: true,
+          reply: "All neural telemetry channels and Fastify simulation clusters are nominal at 25 Hz. Thank you for asking! How can I assist with your project or technical review today?",
+          actionTag: "STATUS_NOMINAL",
+          isAiGenerated: true
+        });
+      }
+
+      if (lower.includes("who are you") || lower.includes("what are you") || lower.includes("who made you")) {
+        return reply.send({
+          success: true,
+          reply: "I am J.A.R.V.I.S., the custom AI interactive core engineered for Muhammad Ali's portfolio. I can answer inquiries about his commercial client work, explain his technical architecture, calibrate themes, or route you directly to his WhatsApp.",
+          actionTag: "IDENTITY_JARVIS",
+          isAiGenerated: true
+        });
+      }
+
+      if (lower.includes("who is ali") || lower.includes("who is muhammad ali") || lower.includes("tell me about ali")) {
+        return reply.send({
+          success: true,
+          reply: "Muhammad Ali is a professional Frontend Developer and Digital Creator based in Peshawar, Pakistan, with 2+ years of verified commercial experience. He specializes in high-converting custom WordPress websites, Elementor Pro, responsive UI/UX, and performance optimization (sub-2s loads).",
+          actionTag: "INFO_ALI",
+          isAiGenerated: true
+        });
+      }
+
+      // 2. PRICING & TURNAROUND FAQ
+      if (lower.includes("price") || lower.includes("cost") || lower.includes("rate") || lower.includes("budget") || lower.includes("how much")) {
+        return reply.send({
+          success: true,
+          reply: "Ali offers flexible, competitive project rates tailored to scope: High-converting landing pages typically range from $150–$350, full custom business WordPress sites with Elementor Pro range from $300–$600, and comprehensive WooCommerce e-commerce stores range from $500–$1,200+. Reach out on WhatsApp (+92 305 5389967) for an exact quote within 1 hour.",
+          actionTag: "FAQ_PRICING",
+          isAiGenerated: true
+        });
+      }
+
+      if (lower.includes("fast") || lower.includes("how long") || lower.includes("timeline") || lower.includes("turnaround")) {
+        return reply.send({
+          success: true,
+          reply: "Ali delivers rapid, high-quality turnarounds: Single landing pages are typically delivered within 2–4 business days, full multi-page business websites within 5–9 days, and e-commerce stores within 10–14 days. Express rush delivery is available upon request.",
+          actionTag: "FAQ_TIMELINE",
+          isAiGenerated: true
+        });
+      }
+
+      // 3. SERVICES & CONTACT
+      if (lower.includes("contact") || lower.includes("hire") || lower.includes("whatsapp") || lower.includes("email")) {
+        return reply.send({
+          success: true,
+          reply: "You can connect with Muhammad Ali immediately: WhatsApp: +92 305 5389967 (Fastest Response) | Email: alikhanwebdeveloper@gmail.com | Based in Peshawar, Pakistan 🇵🇰 (working with global clients across US, UK, and European timezones).",
+          actionTag: "NAV_CONTACT",
+          isAiGenerated: true
+        });
+      }
 
       // Check for theme switches
       const themeMatches = [
@@ -216,7 +282,7 @@ async function startServer() {
       // Default contextual response
       return reply.send({
         success: true,
-        reply: "Muhammad Ali is a Frontend Developer & Digital Creator based in Peshawar, Pakistan. He has delivered 15+ websites for businesses like Ivana Studio, Nexcurex, and Arshad Tiles with 100% satisfaction.",
+        reply: "Understood. I am here to assist you with Muhammad Ali's portfolio. You can ask about his commercial projects (Ivana Studio, Nexcurex, Arshad Tiles), website pricing, delivery timelines, services offered, or contact him directly on WhatsApp at +92 305 5389967.",
         actionTag: "INFO_DEFAULT",
         isAiGenerated: true
       });

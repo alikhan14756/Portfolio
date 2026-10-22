@@ -94,6 +94,9 @@ export const Navbar: React.FC = () => {
           <button onClick={() => scrollTo("experience")} className="hover:text-[var(--accent-primary)] transition-colors">
             JOURNEY
           </button>
+          <button onClick={() => scrollTo("faq")} className="hover:text-[var(--accent-primary)] transition-colors">
+            FAQ
+          </button>
           <button onClick={() => scrollTo("contact")} className="hover:text-[var(--accent-primary)] transition-colors">
             CONTACT
           </button>
@@ -202,3 +205,4 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+

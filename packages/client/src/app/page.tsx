@@ -17,6 +17,7 @@ import { WorkflowSection } from "../components/Portfolio/WorkflowSection";
 import { ExperienceSection } from "../components/Portfolio/ExperienceSection";
 import { TestimonialsSection } from "../components/Portfolio/TestimonialsSection";
 import { ContactSection } from "../components/Portfolio/ContactSection";
+import { FAQSection } from "../components/Portfolio/FAQSection";
 import { CaseStudyDrawer } from "../components/Portfolio/CaseStudyDrawer";
 import { ThemeCustomizerModal } from "../components/Portfolio/ThemeCustomizerModal";
 import { JarvisAssistant } from "../components/Jarvis/JarvisAssistant";
@@ -121,6 +122,7 @@ export default function Home() {
             <WorkflowSection />
             <ExperienceSection />
             <TestimonialsSection />
+            <FAQSection />
             <ContactSection />
           </div>
 

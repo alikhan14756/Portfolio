@@ -552,15 +552,170 @@ function saveUserPrefs() {
 }
 
 /**
- * Deterministic local fallback knowledge engine answering queries about Muhammad Ali
+ * Intelligent deterministic knowledge & conversational FAQ engine answering queries about Muhammad Ali
  */
 function generateDeterministicAnswer(
   prompt: string,
   store: PortfolioStore
 ): { text: string; actionTag?: string; isAiGenerated: boolean } {
-  const p = prompt.toLowerCase();
+  const p = prompt.toLowerCase().trim();
 
-  // Navigation commands
+  // 1. GREETINGS & CASUAL CONVERSATION (Exact & Partial Matches)
+  const isGreeting =
+    /^(hi|hello|hey|hiya|howdy|sup|yo|salam|assalam|aoa|assalam o alaikum|good\s*(morning|afternoon|evening|day)|greetings)\b/i.test(p);
+  
+  if (isGreeting) {
+    return {
+      text: "Greetings! I am J.A.R.V.I.S., the autonomous AI assistant for Muhammad Ali (Peshawar, Pakistan). How may I assist your mission today? You can ask me about Ali's commercial client projects (Ivana Studio, Nexcurex, Arshad Tiles), review his technical skills, website pricing, turnaround times, or connect directly on WhatsApp (+92 305 5389967).",
+      actionTag: "GREETING",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("how are you") || p.includes("how r u") || p.includes("how do you do") || p.includes("how's it going") || p.includes("whats up") || p.includes("what's up")) {
+    return {
+      text: "All telemetry channels, 25 Hz Fastify simulation clusters, and neural nodes are operating at peak 100% capacity. Thank you for asking! How can I assist you with your project or technical review today?",
+      actionTag: "STATUS_NOMINAL",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("who are you") || p.includes("what are you") || p.includes("your name") || p.includes("who made you")) {
+    return {
+      text: "I am J.A.R.V.I.S. (Just A Rather Very Intelligent System), the custom AI interactive core engineered for Muhammad Ali's portfolio. I can answer inquiries about his commercial client work, explain his technical architecture, calibrate themes, or route you directly to his WhatsApp.",
+      actionTag: "IDENTITY_JARVIS",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("who is ali") || p.includes("who is muhammad ali") || p.includes("tell me about ali") || p.includes("about ali") || p.includes("about muhammad ali")) {
+    return {
+      text: "Muhammad Ali is a professional Frontend Developer and Digital Creator based in Peshawar, Pakistan, with 2+ years of verified commercial experience. He specializes in high-converting custom WordPress websites, Elementor Pro, responsive UI/UX, and performance optimization (sub-2s loads).",
+      actionTag: "INFO_ALI",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("salam") || p.includes("assalam") || p.includes("aoa")) {
+    return {
+      text: "Wa Alaikum Assalam! Welcome to Muhammad Ali's digital terminal. How can I assist you with your web project, portfolio exploration, or direct inquiry today?",
+      actionTag: "GREETING_SALAM",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("thank") || p.includes("thanks") || p.includes("thx") || p.includes("appreciate")) {
+    return {
+      text: "You're very welcome! It is my pleasure. Let me know if you would like to explore Ali's client case studies, view his code repositories, or initiate a project.",
+      actionTag: "THANK_YOU",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("bye") || p.includes("goodbye") || p.includes("see you") || p.includes("cya")) {
+    return {
+      text: "Farewell! Have a great day ahead. Muhammad Ali's portfolio and direct WhatsApp line (+92 305 5389967) are always open for your next digital build.",
+      actionTag: "FAREWELL",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("joke") || p.includes("funny") || p.includes("humor")) {
+    return {
+      text: "Why do frontend developers prefer dark mode? Because light attracts bugs! Fortunately, Muhammad Ali ensures bug-free code across both our 11 dark themes and our light Paper Studio mode.",
+      actionTag: "JOKE",
+      isAiGenerated: false
+    };
+  }
+
+  // 2. PRICING, BUDGET & RATES FAQ
+  if (p.includes("price") || p.includes("cost") || p.includes("rate") || p.includes("how much") || p.includes("budget") || p.includes("quote") || p.includes("fee") || p.includes("charge")) {
+    return {
+      text: "Ali offers flexible, competitive project rates tailored to scope: High-converting landing pages typically range from $150–$350, full custom business WordPress sites with Elementor Pro range from $300–$600, and comprehensive WooCommerce e-commerce stores range from $500–$1,200+. Reach out on WhatsApp (+92 305 5389967) for an exact quote within 1 hour.",
+      actionTag: "FAQ_PRICING",
+      isAiGenerated: false
+    };
+  }
+
+  // 3. TURNAROUND TIME & DELIVERY FAQ
+  if (p.includes("fast") || p.includes("how long") || p.includes("turnaround") || p.includes("delivery") || p.includes("timeline") || p.includes("duration") || p.includes("timeframe") || p.includes("deadline")) {
+    return {
+      text: "Ali delivers rapid, high-quality turnarounds: Single landing pages are typically delivered within 2–4 business days, full multi-page business websites within 5–9 days, and e-commerce stores within 10–14 days. Express rush delivery is available upon request.",
+      actionTag: "FAQ_TIMELINE",
+      isAiGenerated: false
+    };
+  }
+
+  // 4. SERVICES & E-COMMERCE FAQ
+  if (p.includes("ecommerce") || p.includes("woocommerce") || p.includes("store") || p.includes("shop") || p.includes("sell online")) {
+    return {
+      text: "Yes! Ali builds complete, secure WooCommerce and Shopify e-commerce platforms featuring product catalog management, shopping cart, checkout, payment gateway integration, and discount engine (like Nexcurex at nexcurex.com).",
+      actionTag: "FAQ_ECOMMERCE",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("speed") || p.includes("slow") || p.includes("performance") || p.includes("pagespeed") || p.includes("optimize")) {
+    return {
+      text: "Ali specializes in Web Vitals optimization: reducing load times to sub-2 seconds, optimizing image compression, minifying assets, and achieving 90+ scores on Google PageSpeed Insights (as proven on Arshad Tiles and VetCarePlus).",
+      actionTag: "FAQ_SPEED",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("services") || p.includes("what can ali do") || p.includes("offer") || p.includes("hire for")) {
+    return {
+      text: "Ali offers 5 core commercial services: 1) Custom WordPress Development (Elementor Pro), 2) High-Converting Landing Pages, 3) Full E-Commerce Stores (WooCommerce), 4) Website Speed & SEO Optimization (90+ PageSpeed score), and 5) Modern Frontend Web Apps (React 19 & Next.js 15).",
+      actionTag: "FAQ_SERVICES",
+      isAiGenerated: false
+    };
+  }
+
+  // 5. WORKFLOW, PROCESS & REVISIONS FAQ
+  if (p.includes("process") || p.includes("workflow") || p.includes("steps") || p.includes("how it works")) {
+    return {
+      text: "Ali follows a 4-stage client workflow: 1) Discovery & Strategy (understanding your business and audience), 2) Wireframe & UI/UX Design (modern, responsive prototypes), 3) Full Development & Speed Optimization, and 4) Quality Assurance, Client Review & Final Launch.",
+      actionTag: "FAQ_PROCESS",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("support") || p.includes("revision") || p.includes("warranty") || p.includes("after launch") || p.includes("maintenance")) {
+    return {
+      text: "Ali provides unlimited revisions during the active design phase until you are 100% satisfied, plus 30 days of complimentary post-launch technical support and maintenance to ensure flawless operation.",
+      actionTag: "FAQ_SUPPORT",
+      isAiGenerated: false
+    };
+  }
+
+  // 6. CONTACT & WHATSAPP
+  if (p.includes("contact") || p.includes("hire") || p.includes("email") || p.includes("whatsapp") || p.includes("phone") || p.includes("call") || p.includes("message")) {
+    return {
+      text: "You can connect with Muhammad Ali immediately: WhatsApp: +92 305 5389967 (Fastest Response) | Email: alikhanwebdeveloper@gmail.com | Based in Peshawar, Pakistan 🇵🇰 (working with global clients across US, UK, and European timezones).",
+      actionTag: "NAV_CONTACT",
+      isAiGenerated: false
+    };
+  }
+
+  // 7. LOCATION & REMOTE WORK
+  if (p.includes("location") || p.includes("where") || p.includes("country") || p.includes("city") || p.includes("peshawar") || p.includes("pakistan")) {
+    return {
+      text: "Muhammad Ali is located in Peshawar, Khyber Pakhtunkhwa, Pakistan 🇵🇰. He works remotely with commercial clients and agency partners worldwide across flexible timezones.",
+      actionTag: "FAQ_LOCATION",
+      isAiGenerated: false
+    };
+  }
+
+  // 8. RESUME / CV
+  if (p.includes("cv") || p.includes("resume") || p.includes("download cv") || p.includes("pdf")) {
+    return {
+      text: "You can download Muhammad Ali's verified PDF resume directly from the header, the Hero section, or by clicking the 'Download Resume' button. It documents 2+ years of experience, client case studies, education, and technical certifications.",
+      actionTag: "DOWNLOAD_CV",
+      isAiGenerated: false
+    };
+  }
+
+  // 9. Navigation commands
   if (p.includes("biosphere") || p.includes("canvas") || p.includes("simulation") || p.includes("2.5d")) {
     store.setViewMode("biosphere");
     return {
@@ -579,15 +734,7 @@ function generateDeterministicAnswer(
     };
   }
 
-  if (p.includes("contact") || p.includes("hire") || p.includes("email") || p.includes("whatsapp")) {
-    return {
-      text: "Muhammad Ali is available for freelance projects and full-stack engagements. You can reach him on WhatsApp at +92 305 5389967 or email at alikhanwebdeveloper@gmail.com.",
-      actionTag: "NAV_CONTACT",
-      isAiGenerated: false
-    };
-  }
-
-  // Theme switches via voice or chat
+  // 10. Theme switches via voice or chat
   const themeMap: Record<string, ThemeType> = {
     "iron red": "iron-red",
     "iron man": "iron-red",
@@ -615,7 +762,7 @@ function generateDeterministicAnswer(
     }
   }
 
-  // Projects deep-dive
+  // 11. Projects deep-dive
   if (p.includes("ivana") || p.includes("ivanalexx")) {
     const proj = PORTFOLIO_DATA.projects.find((pr) => pr.id === "ivanalexx");
     if (proj) store.openCaseStudy(proj);
@@ -676,8 +823,8 @@ function generateDeterministicAnswer(
     };
   }
 
-  // Skills & Education
-  if (p.includes("skill") || p.includes("tech") || p.includes("stack") || p.includes("wordpress") || p.includes("elementor")) {
+  // 12. Skills & Education
+  if (p.includes("skill") || p.includes("tech") || p.includes("stack") || p.includes("wordpress") || p.includes("elementor") || p.includes("react")) {
     return {
       text: "Muhammad Ali specializes in WordPress (90%), Elementor Pro (90%), Responsive Web Design (90%), HTML5/CSS3 (85%), UI/UX Design (88%), and JavaScript (80%), with active expansion into React 19, Next.js 15, and Three.js.",
       actionTag: "SHOW_SKILLS",
@@ -685,15 +832,15 @@ function generateDeterministicAnswer(
     };
   }
 
-  if (p.includes("education") || p.includes("dit") || p.includes("college") || p.includes("peshawar")) {
+  if (p.includes("education") || p.includes("dit") || p.includes("college")) {
     return {
-      text: "Muhammad Ali is based in Peshawar, Pakistan. He completed his FSc (Pre-Medical) at Peshawar Model Degree College (2025) and is currently pursuing his Diploma of Information Technology (DIT, 2025–Present).",
+      text: "Muhammad Ali completed his FSc (Pre-Medical) at Peshawar Model Degree College (2025) and is currently completing his Diploma of Information Technology (DIT, 2025–Present).",
       actionTag: "SHOW_EDUCATION",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("codevibe") || p.includes("instagram") || p.includes("content")) {
+  if (p.includes("codevibe") || p.includes("instagram") || p.includes("content") || p.includes("tutorial")) {
     return {
       text: "Muhammad Ali runs CodeVibe (@codevibe.anim on Instagram & TikTok), creating coding tutorials focused on creative CSS animations, JavaScript micro-interactions, and 2.5D web experiments.",
       actionTag: "SHOW_CODEVIBE",
@@ -703,7 +850,7 @@ function generateDeterministicAnswer(
 
   // Default fallback
   return {
-    text: "Understood. Muhammad Ali is a Frontend Developer & Digital Creator specializing in custom WordPress development, landing pages, and UI development. You can ask me to open any case study (Ivana Studio, Nexcurex, Arshad Tiles, VetCarePlus), calibrate themes, or contact Ali directly via WhatsApp.",
+    text: "Understood. I am here to help you evaluate or hire Muhammad Ali. You can ask about his commercial client projects (Ivana Studio, Nexcurex, Arshad Tiles), website pricing, delivery timelines, services offered, or contact him directly on WhatsApp at +92 305 5389967.",
     actionTag: "INFO_DEFAULT",
     isAiGenerated: false
   };
