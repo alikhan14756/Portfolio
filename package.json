@@ -1,0 +1,18 @@
+{
+  "name": "aetheria-platform",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter @aetheria/client dev",
+    "build": "pnpm --filter @aetheria/common build && pnpm --filter @aetheria/client build",
+    "build:server": "pnpm --filter @aetheria/server build",
+    "dev:server": "pnpm --filter @aetheria/server dev",
+    "test": "pnpm --filter @aetheria/server test",
+    "lint": "pnpm -r lint"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
