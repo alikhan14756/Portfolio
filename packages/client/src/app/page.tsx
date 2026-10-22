@@ -2,9 +2,11 @@
 
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
-import { usePortfolioStore } from "../stores/usePortfolioStore";
+import { usePortfolioStore, loadUserPrefs } from "../stores/usePortfolioStore";
 import { Preloader } from "../components/Portfolio/Preloader";
 import { Navbar } from "../components/Portfolio/Navbar";
+import { QuickThemeBar } from "../components/Portfolio/QuickThemeBar";
+import { ScrollTelemetryBar } from "../components/Portfolio/ScrollTelemetryBar";
 import { HeroSection } from "../components/Portfolio/HeroSection";
 import { AboutSection } from "../components/Portfolio/AboutSection";
 import { FlagshipRoadmapSection } from "../components/Portfolio/FlagshipRoadmapSection";
@@ -44,9 +46,20 @@ export default function Home() {
   const showScanlines = usePortfolioStore((s) => s.showScanlines);
   const showGridLines = usePortfolioStore((s) => s.showGridLines);
 
-  // Sync theme attribute to HTML tag on mount
+  // Restore persisted preferences & sync theme attributes
+  useEffect(() => {
+    loadUserPrefs();
+  }, []);
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    if (theme === "paper-studio") {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.add("light");
+    } else {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    }
   }, [theme]);
 
   // Map typography font classes
@@ -63,6 +76,9 @@ export default function Home() {
     <main
       className={`min-h-screen w-full relative bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 ${fontClass}`}
     >
+      {/* 4K Top Scroll Telemetry & Progress Indicator */}
+      <ScrollTelemetryBar />
+
       {/* Preloader with skip & reduced-motion fallback */}
       <Preloader />
 
@@ -76,6 +92,9 @@ export default function Home() {
 
       {/* 1. Global Navigation Bar */}
       <Navbar />
+
+      {/* 2. Prominent Quick UI Style Switcher Bar (12 Distinct Themes) */}
+      <QuickThemeBar />
 
       {viewMode === "portfolio" ? (
         /* --- MODE 1: JARVIS DEVELOPER PORTFOLIO --- */

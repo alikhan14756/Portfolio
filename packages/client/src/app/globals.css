@@ -4,40 +4,86 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  overflow-y: scroll !important;
+  scroll-behavior: smooth;
+  scrollbar-width: auto;
+  scrollbar-color: var(--accent-primary) var(--bg-secondary);
+}
+
 body {
   color: var(--text-primary);
   background: var(--bg-primary);
-  font-family: var(--font-body, system-ui, sans-serif);
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
   overflow-x: hidden;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  min-height: 100vh;
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Glassmorphic Card Helper */
+/* Glassmorphic & 4K Surface Panel Styling */
 .hud-panel {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--border-color);
   box-shadow: var(--hud-glow);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hud-panel:hover {
   border-color: var(--border-glow);
+  box-shadow: var(--hud-glow-hover, var(--hud-glow));
 }
 
-/* Custom subtle scrollbar */
+/* High-Tech JARVIS 4K Prominent Visible Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 12px !important;
+  height: 12px !important;
+  display: block !important;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: var(--bg-secondary) !important;
+  border-left: 1px solid var(--border-color) !important;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 3px;
+  background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary)) !important;
+  border-radius: 9999px !important;
+  border: 2px solid var(--bg-secondary) !important;
+  box-shadow: 0 0 12px var(--accent-primary) !important;
+  min-height: 48px !important;
+  transition: all 0.25s ease;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-primary);
+  background: var(--accent-primary) !important;
+  box-shadow: 0 0 20px var(--accent-primary) !important;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg-secondary) !important;
+}
+
+/* Dynamic Ambient Glow Behind Hero */
+.ambient-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+  opacity: 0.12;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 4K Visual Enhancement Utilities */
+@media (min-width: 1920px) {
+  .text-4k-sharp {
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
+  }
 }

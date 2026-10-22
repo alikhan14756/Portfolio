@@ -475,12 +475,49 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
 function applyThemeToDOM(theme: ThemeType, customAccent?: string) {
   if (typeof document === "undefined") return;
   document.documentElement.setAttribute("data-theme", theme);
+  if (theme === "paper-studio") {
+    document.documentElement.classList.remove("dark");
+    document.documentElement.classList.add("light");
+  } else {
+    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("light");
+  }
   if (customAccent && /^#[0-9A-Fa-f]{6}$/.test(customAccent)) {
     document.documentElement.style.setProperty("--accent-primary", customAccent);
     document.documentElement.style.setProperty("--border-glow", `${customAccent}99`);
   } else {
     document.documentElement.style.removeProperty("--accent-primary");
     document.documentElement.style.removeProperty("--border-glow");
+  }
+}
+
+export function loadUserPrefs() {
+  if (typeof window === "undefined") return;
+  try {
+    const raw = localStorage.getItem("ali_jarvis_prefs_v2");
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (!data || data.version !== 2) return;
+    const store = usePortfolioStore.getState();
+    if (data.theme) store.setTheme(data.theme);
+    if (data.accentOverride !== undefined) store.setAccentOverride(data.accentOverride);
+    if (data.layout) store.setLayout(data.layout);
+    if (data.typography) store.setTypography(data.typography);
+    if (data.borderRadius) store.setBorderRadius(data.borderRadius);
+    if (data.panelOpacity) store.setPanelOpacity(data.panelOpacity);
+    if (data.glowStrength) store.setGlowStrength(data.glowStrength);
+    if (data.particleEffect) store.setParticleEffect(data.particleEffect);
+    if (data.particleDensity) store.setParticleDensity(data.particleDensity);
+    if (data.animationIntensity) store.setAnimationIntensity(data.animationIntensity);
+    if (data.animationSpeed) store.setAnimationSpeed(data.animationSpeed);
+    if (data.orbStyle) store.setOrbStyle(data.orbStyle);
+    if (data.showGridLines !== undefined) store.setShowGridLines(data.showGridLines);
+    if (data.showScanlines !== undefined) store.setShowScanlines(data.showScanlines);
+    if (data.cursorSpotlight !== undefined) store.setCursorSpotlight(data.cursorSpotlight);
+    if (data.soundEnabled !== undefined) store.setSoundEnabled(data.soundEnabled);
+    if (data.masterMute !== undefined) store.setMasterMute(data.masterMute);
+  } catch {
+    // Ignore storage issues
   }
 }
 

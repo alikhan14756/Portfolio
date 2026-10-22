@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { motion } from "motion/react";
 import { PORTFOLIO_DATA } from "../../data/portfolioData";
 import { usePortfolioStore } from "../../stores/usePortfolioStore";
 import {
@@ -9,16 +11,26 @@ import {
   Bot,
   ExternalLink,
   MessageCircle,
-  FileCode,
   ShieldCheck,
   Zap,
-  Layers,
   Download,
   Terminal,
   Activity,
-  CheckCircle2,
   Cpu
 } from "lucide-react";
+
+// Dynamic import with SSR disabled for 3D Three.js canvas
+const JarvisHologramCore3D = dynamic(
+  () => import("../Canvas/JarvisHologramCore3D").then((m) => m.JarvisHologramCore3D),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-full min-h-[300px] flex items-center justify-center">
+        <div className="w-28 h-28 rounded-full border-2 border-dashed border-[var(--accent-primary)]/40 animate-[spin_10s_linear_infinite]" />
+      </div>
+    )
+  }
+);
 
 export const HeroSection: React.FC = () => {
   const setJarvisOpen = usePortfolioStore((s) => s.setJarvisOpen);
@@ -31,10 +43,8 @@ export const HeroSection: React.FC = () => {
     status: string;
     tickMs?: number;
     entities?: number;
-    fps?: number;
   }>({
-    status: "CLIENT ENGINE ACTIVE",
-    fps: 60
+    status: "CLIENT ENGINE ACTIVE"
   });
 
   useEffect(() => {
@@ -61,12 +71,22 @@ export const HeroSection: React.FC = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const isMotionEnabled = animationIntensity !== "off";
+
   return (
-    <section id="home" className="relative pt-10 pb-20 md:py-24 px-4 sm:px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section id="home" className="relative pt-12 pb-20 md:py-24 px-4 sm:px-6 overflow-hidden">
+      {/* Dynamic Ambient Background Glow */}
+      <div className="ambient-glow top-1/4 left-1/2 -translate-x-1/2" />
+
+      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Column: Telemetry & Headline */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          <motion.div
+            initial={isMotionEnabled ? { opacity: 0, y: 20 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 space-y-6 text-left"
+          >
             {/* Status Pill */}
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[var(--badge-bg)] border border-[var(--border-color)] text-xs font-mono text-[var(--accent-primary)] shadow-sm">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
@@ -164,11 +184,16 @@ export const HeroSection: React.FC = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Holographic AI Orb & Telemetry HUD */}
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-md aspect-square rounded-3xl hud-panel p-7 flex flex-col justify-between overflow-hidden shadow-2xl">
+          {/* Right Column: 3D Holographic JARVIS Core & Telemetry HUD */}
+          <motion.div
+            initial={isMotionEnabled ? { opacity: 0, scale: 0.95 } : false}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 flex justify-center"
+          >
+            <div className="relative w-full max-w-md aspect-square rounded-3xl hud-panel p-6 sm:p-7 flex flex-col justify-between overflow-hidden shadow-2xl">
               {/* Corner Sci-Fi Brackets */}
               <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[var(--accent-primary)]/70" />
               <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[var(--accent-primary)]/70" />
@@ -179,31 +204,15 @@ export const HeroSection: React.FC = () => {
               <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] border-b border-[var(--border-color)]/70 pb-3">
                 <span className="flex items-center gap-1.5 text-[var(--accent-primary)] font-bold">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  JARVIS CORE ONLINE
+                  JARVIS 3D HOLOGRAPHIC CORE
                 </span>
                 <span>SYS.ID // 14756-ALI</span>
               </div>
 
-              {/* Central Holographic Orb / Reactor Graphic */}
-              <div className="relative my-auto flex items-center justify-center py-4">
-                {orbStyle !== "off" && animationIntensity !== "off" ? (
-                  <div className="relative flex items-center justify-center">
-                    {/* Outer Ring */}
-                    <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-full border border-dashed border-[var(--accent-primary)]/40 animate-[spin_35s_linear_infinite] flex items-center justify-center">
-                      {/* Middle Ring */}
-                      <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-[var(--accent-secondary)]/50 animate-[spin_20s_linear_infinite_reverse] flex items-center justify-center">
-                        {/* Core Sphere */}
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-[var(--bg-card)] to-[var(--badge-bg)] border-2 border-[var(--accent-primary)] flex flex-col items-center justify-center shadow-[var(--hud-glow)]">
-                          <Zap className="w-6 h-6 text-[var(--accent-primary)] animate-pulse" />
-                          <span className="text-[9px] font-mono font-bold text-[var(--text-primary)] mt-1">
-                            ARC-CORE
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Concentric Ambient Radial Glow */}
-                    <div className="absolute inset-0 bg-radial from-[var(--accent-primary)]/15 via-transparent to-transparent blur-xl pointer-events-none" />
-                  </div>
+              {/* Central 3D Holographic Quantum Core */}
+              <div className="relative my-auto w-full h-56 sm:h-64 flex items-center justify-center">
+                {orbStyle !== "off" ? (
+                  <JarvisHologramCore3D />
                 ) : (
                   <div className="w-32 h-32 rounded-full border-2 border-[var(--accent-primary)] bg-[var(--badge-bg)] flex flex-col items-center justify-center">
                     <Zap className="w-8 h-8 text-[var(--accent-primary)]" />
@@ -228,7 +237,7 @@ export const HeroSection: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Technology Marquee Bar */}

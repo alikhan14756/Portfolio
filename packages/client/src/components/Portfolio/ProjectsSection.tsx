@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "motion/react";
 import { PORTFOLIO_DATA, ProjectCaseStudy } from "../../data/portfolioData";
 import { usePortfolioStore } from "../../stores/usePortfolioStore";
 import {
@@ -18,10 +19,13 @@ export const ProjectsSection: React.FC = () => {
   const [filter, setFilter] = useState<"All" | "Client Work" | "Engineering Flagship" | "Playground">("All");
   const openCaseStudy = usePortfolioStore((s) => s.openCaseStudy);
   const setViewMode = usePortfolioStore((s) => s.setViewMode);
+  const animationIntensity = usePortfolioStore((s) => s.animationIntensity);
 
   const filteredProjects = PORTFOLIO_DATA.projects.filter(
     (p) => filter === "All" || p.category === filter
   );
+
+  const isMotionEnabled = animationIntensity !== "off";
 
   return (
     <section id="projects" className="py-20 px-4 sm:px-6 relative">
@@ -61,15 +65,20 @@ export const ProjectsSection: React.FC = () => {
 
         {/* Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-          {filteredProjects.map((project) => (
-            <div
+          {filteredProjects.map((project, idx) => (
+            <motion.div
               key={project.id}
-              className="hud-panel rounded-3xl p-6 flex flex-col justify-between group hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+              initial={isMotionEnabled ? { opacity: 0, y: 24 } : false}
+              whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={isMotionEnabled ? { y: -5, transition: { duration: 0.2 } } : {}}
+              className="hud-panel rounded-3xl p-6 flex flex-col justify-between group relative overflow-hidden shadow-xl"
             >
               <div className="space-y-4">
                 {/* Visual Asset if available */}
                 {project.imageUrl && (
-                  <div className="relative w-full h-40 rounded-2xl overflow-hidden border border-[var(--border-color)]/60 bg-[var(--bg-secondary)] shadow-inner">
+                  <div className="relative w-full h-44 rounded-2xl overflow-hidden border border-[var(--border-color)]/60 bg-[var(--bg-secondary)] shadow-inner">
                     <img
                       src={project.imageUrl}
                       alt={project.title}
@@ -180,7 +189,7 @@ export const ProjectsSection: React.FC = () => {
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -1,33 +1,50 @@
 "use client";
 
 import React from "react";
+import { motion } from "motion/react";
 import { PORTFOLIO_DATA } from "../../data/portfolioData";
-import { Milestone, Calendar, CheckCircle } from "lucide-react";
+import { usePortfolioStore } from "../../stores/usePortfolioStore";
+import { Milestone } from "lucide-react";
 
 export const ExperienceSection: React.FC = () => {
   const { experience } = PORTFOLIO_DATA;
+  const animationIntensity = usePortfolioStore((s) => s.animationIntensity);
+  const isMotionEnabled = animationIntensity !== "off";
 
   return (
     <section id="experience" className="py-20 px-4 sm:px-6 relative">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Section Header */}
-        <div className="space-y-2 text-left">
+        <motion.div
+          initial={isMotionEnabled ? { opacity: 0, y: 20 } : false}
+          whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-2 text-left"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--accent-primary)] uppercase tracking-widest">
             <Milestone className="w-3.5 h-3.5" />
             <span>CHRONOLOGICAL TRAJECTORY</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-[var(--text-primary)] tracking-tight">
-            My Journey & Milestones
+            My Journey &amp; Milestones
           </h2>
-          <p className="text-sm text-[var(--text-secondary)] max-w-xl">
+          <p className="text-sm text-[var(--text-secondary)] max-w-xl font-sans">
             From learning vanilla web standards from scratch to delivering robust client platforms and building high-performance systems.
           </p>
-        </div>
+        </motion.div>
 
         {/* Timeline Nodes */}
         <div className="relative border-l-2 border-[var(--border-color)] ml-4 sm:ml-8 space-y-8 text-left">
           {experience.map((item, idx) => (
-            <div key={idx} className="relative pl-6 sm:pl-10 group">
+            <motion.div
+              key={idx}
+              initial={isMotionEnabled ? { opacity: 0, x: -16 } : false}
+              whileInView={isMotionEnabled ? { opacity: 1, x: 0 } : undefined}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+              className="relative pl-6 sm:pl-10 group"
+            >
               {/* Pulse Node Marker */}
               <div
                 className={`absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-2 bg-[var(--bg-primary)] transition-all ${
@@ -37,7 +54,7 @@ export const ExperienceSection: React.FC = () => {
                 }`}
               />
 
-              <div className="hud-panel p-5 sm:p-6 rounded-2xl space-y-2">
+              <div className="hud-panel p-5 sm:p-6 rounded-2xl space-y-2 shadow-lg">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <span className="text-xs font-black font-mono px-2.5 py-0.5 rounded-full bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)]">
                     {item.year}
@@ -51,15 +68,15 @@ export const ExperienceSection: React.FC = () => {
                   </span>
                 </div>
 
-                <h3 className="text-base sm:text-lg font-bold text-[var(--text-primary)]">
+                <h3 className="text-base sm:text-lg font-bold text-[var(--text-primary)] font-mono">
                   {item.title}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans leading-relaxed">
                   {item.description}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

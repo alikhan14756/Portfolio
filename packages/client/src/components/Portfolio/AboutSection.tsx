@@ -1,30 +1,36 @@
 "use client";
 
 import React from "react";
+import { motion } from "motion/react";
 import { PORTFOLIO_DATA } from "../../data/portfolioData";
+import { usePortfolioStore } from "../../stores/usePortfolioStore";
 import {
   User,
   GraduationCap,
   Globe2,
   Video,
   Download,
-  ExternalLink,
   MapPin,
-  Calendar,
-  CheckCircle2,
-  Sparkles,
   Terminal,
   Instagram
 } from "lucide-react";
 
 export const AboutSection: React.FC = () => {
   const { profile, education, languages, contentBrand } = PORTFOLIO_DATA;
+  const animationIntensity = usePortfolioStore((s) => s.animationIntensity);
+  const isMotionEnabled = animationIntensity !== "off";
 
   return (
     <section id="about" className="py-20 px-4 sm:px-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div className="text-left space-y-3">
+        <motion.div
+          initial={isMotionEnabled ? { opacity: 0, y: 20 } : false}
+          whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="text-left space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--badge-bg)] border border-[var(--border-color)] text-xs font-mono text-[var(--accent-primary)]">
             <User className="w-3.5 h-3.5" />
             <span>OPERATOR PROFILE // BIOGRAPHY</span>
@@ -35,16 +41,22 @@ export const AboutSection: React.FC = () => {
           <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
             Frontend developer and digital creator based in Peshawar, Pakistan. Dedicated to crafting high-converting, responsive websites that combine aesthetic refinement with measurable business performance.
           </p>
-        </div>
+        </motion.div>
 
         {/* 3-Column Profile Matrix */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Bio & Core Identity */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="hud-panel p-6 sm:p-8 rounded-3xl space-y-6 text-left">
+          <motion.div
+            initial={isMotionEnabled ? { opacity: 0, y: 24 } : false}
+            whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 space-y-6"
+          >
+            <div className="hud-panel p-6 sm:p-8 rounded-3xl space-y-6 text-left shadow-xl">
               <div className="flex items-center gap-4 pb-6 border-b border-[var(--border-color)]/60">
                 <div className="w-16 h-16 rounded-2xl bg-[var(--badge-bg)] border border-[var(--border-color)] overflow-hidden flex items-center justify-center relative shadow-md">
-                  {/* Real Author Photo fallback */}
+                  {/* Real Author Photo */}
                   <img
                     src="/assets/author-pic.jpg"
                     alt="Muhammad Ali"
@@ -104,7 +116,7 @@ export const AboutSection: React.FC = () => {
             </div>
 
             {/* Content Brand: CodeVibe */}
-            <div className="hud-panel p-6 rounded-3xl text-left flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="hud-panel p-6 rounded-3xl text-left flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)]">
                   <Video className="w-4 h-4" />
@@ -127,12 +139,18 @@ export const AboutSection: React.FC = () => {
                 <span>FOLLOW @CODEVIBE.ANIM</span>
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Education & Languages */}
-          <div className="lg:col-span-5 space-y-6">
+          <motion.div
+            initial={isMotionEnabled ? { opacity: 0, y: 24 } : false}
+            whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 space-y-6"
+          >
             {/* Education Card */}
-            <div className="hud-panel p-6 sm:p-7 rounded-3xl space-y-4 text-left">
+            <div className="hud-panel p-6 sm:p-7 rounded-3xl space-y-4 text-left shadow-xl">
               <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)] pb-2 border-b border-[var(--border-color)]/60">
                 <GraduationCap className="w-4 h-4" />
                 <span>ACADEMIC BACKGROUND</span>
@@ -162,7 +180,7 @@ export const AboutSection: React.FC = () => {
             </div>
 
             {/* Languages Card */}
-            <div className="hud-panel p-6 sm:p-7 rounded-3xl space-y-4 text-left">
+            <div className="hud-panel p-6 sm:p-7 rounded-3xl space-y-4 text-left shadow-xl">
               <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)] pb-2 border-b border-[var(--border-color)]/60">
                 <Globe2 className="w-4 h-4" />
                 <span>COMMUNICATION LANGUAGES</span>
@@ -181,7 +199,7 @@ export const AboutSection: React.FC = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,17 +1,27 @@
 "use client";
 
 import React from "react";
+import { motion } from "motion/react";
 import { PORTFOLIO_DATA } from "../../data/portfolioData";
-import { GitBranch, CheckCircle2, ArrowRight, Layers } from "lucide-react";
+import { usePortfolioStore } from "../../stores/usePortfolioStore";
+import { GitBranch, CheckCircle2, ArrowRight } from "lucide-react";
 
 export const WorkflowSection: React.FC = () => {
   const { process } = PORTFOLIO_DATA;
+  const animationIntensity = usePortfolioStore((s) => s.animationIntensity);
+  const isMotionEnabled = animationIntensity !== "off";
 
   return (
     <section id="process" className="py-20 px-4 sm:px-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div className="text-left space-y-3">
+        <motion.div
+          initial={isMotionEnabled ? { opacity: 0, y: 20 } : false}
+          whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="text-left space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--badge-bg)] border border-[var(--border-color)] text-xs font-mono text-[var(--accent-primary)]">
             <GitBranch className="w-3.5 h-3.5" />
             <span>EXECUTION PROTOCOL // WORKFLOW</span>
@@ -22,14 +32,19 @@ export const WorkflowSection: React.FC = () => {
           <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl font-sans">
             A systematic four-phase engineering and delivery workflow that guarantees on-time delivery, pixel perfection, and measurable business growth.
           </p>
-        </div>
+        </motion.div>
 
         {/* 4-Step Process Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {process.map((p, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="hud-panel p-6 sm:p-7 rounded-3xl text-left space-y-4 flex flex-col justify-between relative group hover:border-[var(--accent-primary)] transition-all"
+              initial={isMotionEnabled ? { opacity: 0, y: 24 } : false}
+              whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={isMotionEnabled ? { y: -5, transition: { duration: 0.2 } } : {}}
+              className="hud-panel p-6 sm:p-7 rounded-3xl text-left space-y-4 flex flex-col justify-between relative group hover:border-[var(--accent-primary)] transition-all shadow-xl"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -54,13 +69,13 @@ export const WorkflowSection: React.FC = () => {
                 <div className="space-y-1.5">
                   {p.deliverables.map((del, dIdx) => (
                     <div key={dIdx} className="flex items-center gap-2 text-xs font-mono text-[var(--text-secondary)]">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent-primary)] shrink-0" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                       <span className="truncate">{del}</span>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

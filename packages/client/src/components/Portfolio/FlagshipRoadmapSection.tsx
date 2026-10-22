@@ -1,24 +1,20 @@
 "use client";
 
 import React from "react";
+import { motion } from "motion/react";
 import { usePortfolioStore } from "../../stores/usePortfolioStore";
 import {
   Cpu,
-  Radio,
   ShieldCheck,
   CheckCircle2,
-  Clock,
   Compass,
-  ArrowRight,
-  Database,
-  Bot,
-  Activity,
-  Layers,
-  Sparkles
+  ArrowRight
 } from "lucide-react";
 
 export const FlagshipRoadmapSection: React.FC = () => {
   const setViewMode = usePortfolioStore((s) => s.setViewMode);
+  const animationIntensity = usePortfolioStore((s) => s.animationIntensity);
+  const isMotionEnabled = animationIntensity !== "off";
 
   const gates = [
     {
@@ -67,7 +63,13 @@ export const FlagshipRoadmapSection: React.FC = () => {
     <section id="architecture" className="py-20 px-4 sm:px-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 text-left border-b border-[var(--border-color)]/60 pb-8">
+        <motion.div
+          initial={isMotionEnabled ? { opacity: 0, y: 20 } : false}
+          whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 text-left border-b border-[var(--border-color)]/60 pb-8"
+        >
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--badge-bg)] border border-[var(--border-color)] text-xs font-mono text-[var(--accent-primary)]">
               <Cpu className="w-3.5 h-3.5" />
@@ -89,12 +91,20 @@ export const FlagshipRoadmapSection: React.FC = () => {
             <span>LAUNCH 2.5D BIOSPHERE CANVAS</span>
             <ArrowRight className="w-4 h-4" />
           </button>
-        </div>
+        </motion.div>
 
         {/* 4-Gate Engineering Verification Matrix */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {gates.map((g, idx) => (
-            <div key={idx} className="hud-panel p-6 sm:p-8 rounded-3xl text-left space-y-4 relative overflow-hidden">
+            <motion.div
+              key={idx}
+              initial={isMotionEnabled ? { opacity: 0, y: 24 } : false}
+              whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={isMotionEnabled ? { y: -4, transition: { duration: 0.2 } } : {}}
+              className="hud-panel p-6 sm:p-8 rounded-3xl text-left space-y-4 relative overflow-hidden shadow-xl"
+            >
               {/* Corner Sci-Fi bracket */}
               <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[var(--accent-primary)]/40" />
 
@@ -121,12 +131,12 @@ export const FlagshipRoadmapSection: React.FC = () => {
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span>{g.metrics}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Real Architecture Telemetry Spec Bar */}
-        <div className="hud-panel p-6 rounded-3xl grid grid-cols-2 sm:grid-cols-4 gap-4 text-left font-mono">
+        <div className="hud-panel p-6 rounded-3xl grid grid-cols-2 sm:grid-cols-4 gap-4 text-left font-mono shadow-xl">
           <div className="border-r border-[var(--border-color)]/50 pr-4">
             <div className="text-[10px] text-[var(--text-muted)] uppercase">PHYSICS TIMESTEP</div>
             <div className="text-lg sm:text-xl font-black text-[var(--accent-primary)] mt-0.5">25 HZ FIXED</div>
