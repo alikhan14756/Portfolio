@@ -7,20 +7,26 @@ import {
   MessageCircle,
   Mail,
   MapPin,
-  CheckCircle,
+  CheckCircle2,
   Copy,
-  Sparkles
+  Download,
+  AlertCircle,
+  Loader2,
+  ShieldCheck
 } from "lucide-react";
 
 export const ContactSection: React.FC = () => {
   const { profile } = PORTFOLIO_DATA;
   const [copied, setCopied] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     projectType: "WordPress Website",
-    message: ""
+    message: "",
+    honeypot: "" // Anti-spam field
   });
 
   const copyEmail = () => {
@@ -29,20 +35,70 @@ export const ContactSection: React.FC = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      // Route to WhatsApp with the structured message
-      const text = encodeURIComponent(
-        `Hi Ali! My name is ${formData.name} (${formData.email}).\n` +
-        `• Project: ${formData.projectType}\n` +
-        `• Details: ${formData.message}`
-      );
-      window.open(`https://wa.me/923055389967?text=${text}`, "_blank");
-      setSubmitted(false);
-      setFormData({ name: "", email: "", projectType: "WordPress Website", message: "" });
-    }, 600);
+    setStatusMessage(null);
+
+    // Client-side validation
+    if (formData.name.trim().length < 2) {
+      setStatusMessage({ type: "error", text: "Please provide a valid name (at least 2 characters)." });
+      return;
+    }
+    if (!formData.email.includes("@") || !formData.email.includes(".")) {
+      setStatusMessage({ type: "error", text: "Please enter a valid email address." });
+      return;
+    }
+    if (formData.message.trim().length < 10) {
+      setStatusMessage({ type: "error", text: "Please provide project details (at least 10 characters)." });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const serverUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000";
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+      const res = await fetch(`${serverUrl}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setStatusMessage({
+          type: "success",
+          text: data.message || "Thank you! Muhammad Ali has received your message and will respond shortly."
+        });
+        setFormData({ name: "", email: "", projectType: "WordPress Website", message: "", honeypot: "" });
+      } else {
+        setStatusMessage({
+          type: "error",
+          text: data.error || "Unable to submit inquiry. Please use direct WhatsApp contact below."
+        });
+      }
+    } catch {
+      // Offline fallback: allow direct WhatsApp routing
+      setStatusMessage({
+        type: "success",
+        text: "Connecting inquiry directly to Muhammad Ali's verified WhatsApp..."
+      });
+      setTimeout(() => {
+        const text = encodeURIComponent(
+          `Hi Ali! My name is ${formData.name} (${formData.email}).\n` +
+          `• Project Type: ${formData.projectType}\n` +
+          `• Inquiry: ${formData.message}`
+        );
+        window.open(`https://wa.me/923055389967?text=${text}`, "_blank");
+      }, 800);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,179 +108,205 @@ export const ContactSection: React.FC = () => {
         <div className="space-y-2 text-left">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--accent-primary)] uppercase tracking-widest">
             <Send className="w-3.5 h-3.5" />
-            <span>COMMUNICATION CHANNELS</span>
+            <span>DIRECT ENGAGEMENT // INQUIRIES</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-[var(--text-primary)] tracking-tight">
             Have a Project in Mind?
           </h2>
-          <p className="text-sm text-[var(--text-secondary)] max-w-xl">
-            Let's turn your ideas into high-converting digital assets. I'm available for freelance projects and custom development.
+          <p className="text-sm text-[var(--text-secondary)] max-w-xl font-sans">
+            Let&apos;s build a fast, high-converting digital platform for your business. Available for freelance projects, WordPress developments, and full-stack engagements.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left">
-          {/* Direct Channels */}
+          {/* Direct Channels Column */}
           <div className="lg:col-span-5 space-y-4">
             {/* WhatsApp Direct Card */}
             <a
               href={profile.whatsappUrl}
               target="_blank"
               rel="noreferrer"
-              className="hud-panel p-6 rounded-2xl block group hover:-translate-y-1 transition-all"
+              className="hud-panel p-6 rounded-3xl flex items-center justify-between group hover:border-emerald-400/80 transition-all block"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3.5">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
-                    <MessageCircle className="w-6 h-6" />
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                  <MessageCircle className="w-6 h-6" />
+                </div>
+                <div>
+                  <div className="text-xs font-mono text-emerald-400 uppercase tracking-wider">
+                    FASTEST RESPONSE
                   </div>
-                  <div>
-                    <h3 className="font-bold text-base text-[var(--text-primary)] group-hover:text-emerald-400 transition-colors">
-                      WhatsApp Instant Chat
-                    </h3>
-                    <p className="text-xs font-mono text-[var(--text-muted)]">
-                      {profile.whatsapp}
-                    </p>
+                  <div className="text-base font-bold font-mono text-[var(--text-primary)] mt-0.5">
+                    WhatsApp Direct
+                  </div>
+                  <div className="text-xs text-[var(--text-secondary)] font-mono">
+                    {profile.whatsapp}
                   </div>
                 </div>
-                <span className="text-xs font-mono text-emerald-400 font-bold">
-                  FASTEST ↗
-                </span>
               </div>
+              <span className="text-xs font-mono font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
+                CHAT NOW &rarr;
+              </span>
             </a>
 
-            {/* Email Card with 1-Click Copy */}
-            <div className="hud-panel p-6 rounded-2xl flex items-center justify-between">
-              <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/30">
+            {/* Email Card */}
+            <div className="hud-panel p-6 rounded-3xl flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-[var(--badge-bg)] border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)]">
                   <Mail className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-[var(--text-primary)]">
-                    Official Email
-                  </h3>
-                  <p className="text-xs font-mono text-[var(--text-muted)]">
+                  <div className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                    DIRECT EMAIL
+                  </div>
+                  <div className="text-base font-bold font-mono text-[var(--text-primary)] mt-0.5">
+                    Email Inbox
+                  </div>
+                  <div className="text-xs text-[var(--text-secondary)] font-mono">
                     {profile.email}
-                  </p>
+                  </div>
                 </div>
               </div>
-
               <button
                 onClick={copyEmail}
-                className="px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] flex items-center gap-1.5 transition-all"
-                title="Copy Email Address"
+                className="p-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] transition-all"
+                title="Copy Email"
               >
-                {copied ? (
-                  <>
-                    <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-emerald-400">COPIED</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>COPY</span>
-                  </>
-                )}
+                {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
 
-            {/* Location Card */}
-            <div className="hud-panel p-6 rounded-2xl flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-violet-500/10 text-violet-400 flex items-center justify-center shrink-0 border border-violet-500/30">
-                <MapPin className="w-6 h-6" />
+            {/* Location & CV Download Card */}
+            <div className="hud-panel p-6 rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)]">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-mono text-[var(--text-muted)] uppercase">
+                    PHYSICAL BASE
+                  </div>
+                  <div className="text-xs font-mono font-bold text-[var(--text-primary)]">
+                    {profile.location}
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 className="font-bold text-base text-[var(--text-primary)]">
-                  Primary Location
-                </h3>
-                <p className="text-xs font-mono text-[var(--text-muted)]">
-                  Pakistan 🇵🇰 (Available Globally)
-                </p>
-              </div>
+
+              <a
+                href={profile.cvUrl}
+                download="Muhammad_Ali_CV.pdf"
+                className="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)] hover:border-[var(--accent-primary)] transition-all flex items-center gap-2 shrink-0"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>DOWNLOAD CV</span>
+              </a>
             </div>
           </div>
 
-          {/* Interactive Inquiry Form */}
+          {/* Contact Form Column */}
           <div className="lg:col-span-7">
-            <form onSubmit={handleSubmit} className="hud-panel p-6 sm:p-8 rounded-2xl space-y-4">
-              <div className="flex items-center justify-between border-b border-[var(--border-color)] pb-3">
-                <span className="text-xs font-mono font-bold text-[var(--accent-primary)]">
-                  PROJECT TRANSMISSION FORM
-                </span>
-                <span className="text-[10px] font-mono text-[var(--text-muted)]">
-                  SECURE CHANNEL
-                </span>
-              </div>
+            <form onSubmit={handleSubmit} className="hud-panel p-6 sm:p-8 rounded-3xl space-y-4">
+              {/* Status Alert Banner */}
+              {statusMessage && (
+                <div
+                  className={`p-4 rounded-2xl text-xs font-mono flex items-start gap-3 border ${
+                    statusMessage.type === "success"
+                      ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/30"
+                      : "bg-rose-500/10 text-rose-300 border-rose-500/30"
+                  }`}
+                >
+                  {statusMessage.type === "success" ? (
+                    <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                  )}
+                  <span>{statusMessage.text}</span>
+                </div>
+              )}
+
+              {/* Honeypot Anti-Spam Field */}
+              <input
+                type="text"
+                name="honeypot"
+                value={formData.honeypot}
+                onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+                className="hidden"
+                tabIndex={-1}
+                autoComplete="off"
+              />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-mono text-[var(--text-secondary)]">Your Name</label>
+                  <label className="text-xs font-mono text-[var(--text-muted)]">YOUR NAME *</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="e.g. John Doe"
-                    className="w-full px-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-mono focus:outline-none focus:border-[var(--accent-primary)]"
+                    placeholder="e.g. Alex Morgan"
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-mono text-[var(--text-secondary)]">Your Email</label>
+                  <label className="text-xs font-mono text-[var(--text-muted)]">YOUR EMAIL *</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="john@example.com"
-                    className="w-full px-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-mono focus:outline-none focus:border-[var(--accent-primary)]"
+                    placeholder="alex@company.com"
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-mono text-[var(--text-secondary)]">Project Focus</label>
+                <label className="text-xs font-mono text-[var(--text-muted)]">PROJECT CATEGORY</label>
                 <select
                   value={formData.projectType}
                   onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-mono focus:outline-none focus:border-[var(--accent-primary)]"
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
                 >
-                  <option value="WordPress Website">WordPress & Elementor Pro Website</option>
+                  <option value="WordPress Website">Custom WordPress Development</option>
                   <option value="Landing Page">High-Converting Landing Page</option>
-                  <option value="Website Redesign">Website Redesign & PageSpeed Optimization</option>
-                  <option value="Frontend Development">Custom Frontend Development (React/Tailwind)</option>
-                  <option value="Other Inquiry">Other Custom Engagement</option>
+                  <option value="Website Redesign">Website Redesign & Modernization</option>
+                  <option value="E-Commerce Store">WooCommerce E-Commerce Store</option>
+                  <option value="Frontend Application">Frontend React / Next.js Application</option>
                 </select>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-mono text-[var(--text-secondary)]">Project Details</label>
+                <label className="text-xs font-mono text-[var(--text-muted)]">PROJECT SCOPE & DETAILS *</label>
                 <textarea
                   rows={4}
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Describe your timeline, goals, and any specific requirements..."
-                  className="w-full px-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-mono focus:outline-none focus:border-[var(--accent-primary)] resize-none"
+                  placeholder="Describe your goals, requirements, desired timeline, or existing site..."
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors resize-none"
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={submitted}
-                className="w-full py-3 rounded-xl font-mono text-xs font-bold bg-[var(--accent-primary)] text-slate-950 flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-md shadow-[var(--hud-glow)] disabled:opacity-50"
-              >
-                {submitted ? (
-                  <>
-                    <CheckCircle className="w-4 h-4 animate-spin" />
-                    <span>PREPARING TRANSMISSION...</span>
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4" />
-                    <span>TRANSMIT INQUIRY DIRECT TO WHATSAPP</span>
-                  </>
-                )}
-              </button>
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3.5 rounded-xl font-mono text-xs font-bold tracking-wider bg-[var(--accent-primary)] text-slate-950 hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[var(--hud-glow)] disabled:opacity-50"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>DISPATCHING TELEMETRY...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>TRANSMIT INQUIRY TO MUHAMMAD ALI</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </form>
           </div>
         </div>

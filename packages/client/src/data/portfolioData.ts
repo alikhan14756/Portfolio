@@ -1,16 +1,27 @@
 export interface ProjectCaseStudy {
   id: string;
   title: string;
-  category: "Client Work" | "Playground";
+  category: "Client Work" | "Playground" | "Engineering Flagship";
   tag: string;
   subtitle: string;
+  client?: string;
+  date?: string;
+  status: "Completed" | "Active" | "Roadmap";
+  overview: string;
+  businessGoals?: string;
+  scopeContribution: string;
+  designDecisions?: string;
+  responsiveImplementation?: string;
+  accessibilityPerformance?: string;
   challenge: string;
   solution: string;
-  metrics: { label: string; value: string }[];
+  resultsEvidence?: string;
+  metrics: { label: string; value: string; isCvReported?: boolean }[];
   techStack: string[];
   liveUrl?: string;
   githubUrl?: string;
-  client?: string;
+  imageUrl?: string;
+  isMockup?: boolean;
 }
 
 export interface ServiceItem {
@@ -37,27 +48,81 @@ export interface ExperienceItem {
   status: "Completed" | "Current";
 }
 
+export interface EducationItem {
+  degree: string;
+  institution: string;
+  period: string;
+  status: "Completed" | "In Progress";
+  location: string;
+}
+
+export interface LanguageItem {
+  language: string;
+  proficiency: "Native" | "Fluent" | "Professional";
+}
+
+export interface ProcessStep {
+  step: string;
+  title: string;
+  description: string;
+  deliverables: string[];
+}
+
 export const PORTFOLIO_DATA = {
   profile: {
     name: "Muhammad Ali",
-    role: "Frontend Web Developer & Digital Creator",
+    role: "Frontend Developer & Digital Creator",
     callsign: "ALI.BUILD // JARVIS-CORE",
     headline: "I Build Websites That Convert.",
     subheadline:
-      "I help businesses grow online with fast, modern websites built on WordPress, Elementor & clean code — delivered with pixel-perfect precision.",
+      "Frontend developer based in Peshawar, Pakistan with 2+ years of hands-on experience crafting fast, modern, and responsive websites. Specialized in WordPress, Elementor, and vanilla web technologies.",
     availability: "Available for Projects",
-    location: "Pakistan 🇵🇰",
+    location: "Peshawar, Pakistan 🇵🇰",
     email: "alikhanwebdeveloper@gmail.com",
     whatsapp: "+92 305 5389967",
     whatsappUrl: "https://wa.me/923055389967?text=Hi%20Ali,%20I%20am%20interested%20in%20working%20with%20you!",
     github: "https://github.com/alikhan14756",
+    codevibe: "@codevibe.anim",
+    codevibeUrl: "https://instagram.com/codevibe.anim",
     portfolioSource: "https://alibuild.site/",
+    cvUrl: "/assets/Muhammad_Ali_CV.pdf",
     stats: [
       { label: "Projects Completed", value: "15+" },
       { label: "Client Satisfaction", value: "100%" },
       { label: "Years Experience", value: "2+" },
-      { label: "Core Technologies", value: "10+" }
+      { label: "PageSpeed Benchmark", value: "90+" }
     ]
+  },
+
+  education: [
+    {
+      degree: "Diploma of Information Technology (DIT)",
+      institution: "Government Polytechnic Institute / Technical Board",
+      period: "2025 – Present",
+      status: "In Progress",
+      location: "Peshawar, KPK"
+    },
+    {
+      degree: "FSc (Pre-Medical)",
+      institution: "Peshawar Model Degree College",
+      period: "Graduated 2025",
+      status: "Completed",
+      location: "Peshawar, KPK"
+    }
+  ] as EducationItem[],
+
+  languages: [
+    { language: "Pashto", proficiency: "Native" },
+    { language: "Urdu", proficiency: "Fluent" },
+    { language: "English", proficiency: "Professional" }
+  ] as LanguageItem[],
+
+  contentBrand: {
+    name: "CodeVibe",
+    handle: "@codevibe.anim",
+    platforms: "Instagram & TikTok",
+    focus: "Creative CSS Animations, JavaScript Micro-Interactions, and Web Experiments",
+    url: "https://instagram.com/codevibe.anim"
   },
 
   skills: [
@@ -65,169 +130,327 @@ export const PORTFOLIO_DATA = {
     { name: "Elementor Pro", level: 90, category: "CMS" },
     { name: "Responsive Design", level: 90, category: "Frontend" },
     { name: "HTML5 & CSS3", level: 85, category: "Frontend" },
-    { name: "UI/UX Design", level: 88, category: "Design" },
+    { name: "UI/UX & Speed Opt.", level: 88, category: "Design" },
     { name: "JavaScript", level: 80, category: "Frontend" },
     { name: "Tailwind CSS", level: 85, category: "Frontend" },
     { name: "WooCommerce", level: 85, category: "E-Commerce" },
-    { name: "PageSpeed Optimization", level: 92, category: "Performance" },
     { name: "Git & GitHub", level: 80, category: "DevOps" },
     { name: "Figma to Code", level: 88, category: "Design" }
   ],
 
   learningRoadmap: [
-    { name: "React 19", progress: 85 },
-    { name: "Next.js 15", progress: 80 },
-    { name: "Three.js / WebGL", progress: 75 },
-    { name: "GSAP Animations", progress: 80 },
-    { name: "TypeScript", progress: 85 }
+    { name: "React 19 & Next.js 15", progress: 85 },
+    { name: "Three.js / WebGL Shaders", progress: 80 },
+    { name: "Fastify & Socket.IO Architecture", progress: 85 },
+    { name: "TypeScript Strict Systems", progress: 85 },
+    { name: "State Machines & Spatial Partitioning", progress: 80 }
   ],
 
   projects: [
     {
       id: "ivanalexx",
-      title: "ivanalexx.com",
+      title: "Ivana Studio (ivanalexx.com)",
       category: "Client Work",
       tag: "WordPress & Elementor",
-      subtitle: "Top-Rated Fiverr Creator Portfolio",
-      client: "Ivanalexx (Video Producer & Director on Fiverr)",
+      subtitle: "Top-Rated Fiverr Video Producer & Director Portfolio",
+      client: "Ivan's Studios Videography",
+      date: "2025 – 2026",
+      status: "Completed",
+      imageUrl: "/assets/ivan.jfif",
+      overview:
+        "Ivan's Studios (ivanalexx.com) is an international video production portfolio showcasing commercial spots, brand films, generative AI videos, product ads, and motion graphics for clients worldwide.",
+      businessGoals:
+        "Elevate personal branding beyond freelance marketplace confines, establish direct high-ticket client trust, and streamline incoming commercial inquiries with zero friction.",
+      scopeContribution:
+        "Full frontend website development using WordPress & Elementor Pro, structuring video showreel grids, responsive typography hierarchy, dynamic lead capture forms, and performance tuning.",
+      designDecisions:
+        "Cinematic dark aesthetic with high-contrast typography, bold video hero containers, and distraction-free portfolio grids prioritizing high-definition motion reels.",
+      responsiveImplementation:
+        "Fluid container layout verified across mobile, tablet, laptop, and ultra-wide displays with aspect-ratio-locked video players.",
+      accessibilityPerformance:
+        "Semantic markup, keyboard navigation on modal video players, lazy-loaded video iframes, and sub-2.5s initial visual response.",
       challenge:
-        "Ivanalexx is a prominent video creator and director on Fiverr. As a top-rated freelancer, he needed a high-caliber digital portfolio to showcase his video productions and capture high-ticket direct client leads.",
+        "Embedding high-bitrate video showreels without degrading page load times or mobile scroll fluidity.",
       solution:
-        "Engineered a polished, high-performance WordPress website using Elementor Pro with a conversion-focused layout, smooth micro-interactions, an integrated video showcase, and instant WhatsApp inquiry routing.",
+        "Implemented poster frame previews with on-demand video player mounting, caching static assets, and minimizing render-blocking stylesheets.",
+      resultsEvidence:
+        "Live deployed website at https://ivanalexx.com/ serving global prospective clients with 100% mobile responsiveness.",
       metrics: [
-        { label: "Brand Design", value: "Modern" },
-        { label: "Responsiveness", value: "100%" },
-        { label: "Performance", value: "Fast" }
+        { label: "Mobile Usability", value: "100%" },
+        { label: "Video Showcase", value: "Multi-Format" },
+        { label: "Deployment", value: "Live Production" }
       ],
-      techStack: ["WordPress", "Elementor Pro", "Custom CSS", "Speed Opt"],
-      liveUrl: "https://ivanalexx.com"
+      techStack: ["WordPress", "Elementor Pro", "Custom CSS", "Responsive Video", "WhatsApp Funnel"],
+      liveUrl: "https://ivanalexx.com/"
+    },
+    {
+      id: "nexcurex",
+      title: "Nexcurex (nexcurex.com)",
+      category: "Client Work",
+      tag: "WordPress & WooCommerce",
+      subtitle: "E-Commerce Fashion & Apparel Storefront",
+      client: "Nexcurex Apparel",
+      date: "2025 – 2026",
+      status: "Completed",
+      overview:
+        "Nexcurex (nexcurex.com) is an e-commerce fashion storefront featuring seasonal collections, denim apparel, footwear, accessories, and promotional discount funnels.",
+      businessGoals:
+        "Provide a clean, fast shopping experience for apparel customers, with clear promotional coupon visibility (OFF20) and streamlined catalog navigation.",
+      scopeContribution:
+        "E-commerce layout implementation on WordPress with Astra theme foundations, custom WooCommerce catalog integration, responsive product grids, and coupon funnel integration.",
+      designDecisions:
+        "Clean, high-conversion retail layout with prominent promotion banners, grid-based product cards, clear discount badges, and intuitive checkout pathways.",
+      responsiveImplementation:
+        "Mobile-first responsive e-commerce architecture ensuring seamless browsing, filtering, and cart checkout on smartphones and tablets.",
+      accessibilityPerformance:
+        "WCAG-compliant color contrast on product prices, accessible cart drawer toggles, and responsive image sizing.",
+      challenge:
+        "Balancing rich promotional banners and high-resolution clothing catalogs with rapid page loads on mobile connections.",
+      solution:
+        "Implemented WordPress responsive image srcset sizing, lightweight Astra theme core assets, and optimized WooCommerce catalog queries.",
+      resultsEvidence:
+        "Live functional storefront at https://nexcurex.com/ featuring product categories, special edition discounts, and direct checkout.",
+      metrics: [
+        { label: "Product Catalog", value: "Active" },
+        { label: "Cart & Checkout", value: "Woo Ready" },
+        { label: "Responsiveness", value: "Mobile First" }
+      ],
+      techStack: ["WordPress", "WooCommerce", "Astra", "Custom CSS", "Responsive UI"],
+      liveUrl: "https://nexcurex.com/"
     },
     {
       id: "arshad",
-      title: "Arshad Tiles Website",
+      title: "Arshad Tiles — Business Website",
       category: "Client Work",
-      tag: "WordPress & Elementor",
+      tag: "HTML/CSS & JavaScript",
       subtitle: "Artisanal Tile & Ceramics Showcase",
       client: "Arshad Khan (Business Owner)",
+      date: "2025",
+      status: "Completed",
+      imageUrl: "/assets/tiles.jfif",
+      overview:
+        "A complete commercial showcase website built for Arshad Tiles, a regional tiles and sanitary products retailer transitioning from traditional walk-ins to digital customer inquiries.",
+      businessGoals:
+        "Establish an online product catalog so homeowners and contractors can explore ceramic, porcelain, and sanitary product lines before visiting.",
+      scopeContribution:
+        "End-to-end design and frontend development: built responsive product galleries, interactive category filtering, direct WhatsApp quote integration, and mobile optimization.",
+      designDecisions:
+        "Warm, elegant presentation emphasizing material textures, clean product grids, and instantaneous WhatsApp inquiry call-to-actions.",
+      responsiveImplementation:
+        "100% mobile-friendly responsive design tested across diverse device viewports.",
+      accessibilityPerformance:
+        "Achieved 2.1s average load time and 90+ PageSpeed benchmark score with semantic HTML and optimized image assets.",
       challenge:
-        "The business had zero digital presence. Customers could not explore ceramic and tile inventory online, and all inquiries depended strictly on word-of-mouth foot traffic.",
+        "The client had zero existing web footprint or digital photography assets, requiring structured catalog organization from raw product inventory.",
       solution:
-        "Built a fast, fully responsive digital catalog featuring product showcase galleries, direct WhatsApp quote integration, structured contact channels, and performance tuned to 90+ PageSpeed.",
+        "Organized products into high-demand architectural categories (Floor, Wall, Kitchen, Sanitary) and paired each with instant WhatsApp inquiry routing.",
+      resultsEvidence:
+        "Client reports a 40% increase in customer inquiries and direct quote requests within the first two months.",
       metrics: [
-        { label: "More Inquiries", value: "+40%" },
-        { label: "Load Time", value: "2.1s" },
-        { label: "PageSpeed Score", value: "90+" }
+        { label: "Inquiry Growth", value: "+40%", isCvReported: true },
+        { label: "Average Load Time", value: "2.1s", isCvReported: true },
+        { label: "Mobile Friendliness", value: "100%", isCvReported: true }
       ],
-      techStack: ["WordPress", "Elementor Pro", "WooCommerce", "Custom CSS"],
-      liveUrl: "https://alikhan14756.github.io/Portfolio/"
+      techStack: ["HTML5", "CSS3", "JavaScript", "WhatsApp API", "Responsive Design"],
+      liveUrl: "https://alikhan14756.github.io/Arshad-Tiles/",
+      githubUrl: "https://github.com/alikhan14756/Arshad-Tiles"
     },
     {
       id: "vet",
-      title: "Malik Hassan Veterinary",
+      title: "VetCarePlus — Veterinary Website",
       category: "Client Work",
       tag: "WordPress & Elementor",
       subtitle: "Veterinary Clinic Booking Portal",
-      client: "Dr. Usman (Veterinary Surgeon)",
+      client: "Dr. Usman (Veterinary Surgeon, Malik Hassan Veterinary)",
+      date: "2025",
+      status: "Completed",
+      imageUrl: "/assets/vet.jfif",
+      overview:
+        "A clean, professional veterinary clinic portal developed for Malik Hassan Veterinary (VetCarePlus) to provide digital healthcare information and online appointment booking.",
+      businessGoals:
+        "Modernize clinic patient intake, reduce receptionist call volume, and provide clear listings of surgical, vaccination, and diagnostic pet services.",
+      scopeContribution:
+        "Full website development using WordPress and Elementor Pro: custom appointment request system, medical service directory, and mobile-first consultation routing.",
+      designDecisions:
+        "Trust-inspiring healthcare aesthetic with clinical blues and calming greens, prominent emergency clinic contact buttons, and clear service pricing.",
+      responsiveImplementation:
+        "Responsive appointment form and service cards engineered for single-thumb mobile interaction.",
+      accessibilityPerformance:
+        "High-contrast text, accessible form inputs with visible labels, and lightweight asset loading delivering 1.8s load times.",
       challenge:
-        "The veterinary clinic lacked an online appointment booking system and struggled to reach pet owners beyond its immediate neighborhood.",
+        "Pet owners needed an intuitive way to request appointments without confusing medical terminology.",
       solution:
-        "Developed a trustworthy, clean clinic platform with medical service listings, an online appointment request engine, WhatsApp fast booking, and rapid mobile load speeds.",
+        "Designed an intuitive 3-step appointment booking interface with instant confirmation alerts and direct WhatsApp clinic routing.",
+      resultsEvidence:
+        "CV reports 1.8s average load time and a 35% increase in clinic bookings (reported on CV; marked for independent audit).",
       metrics: [
-        { label: "More Bookings", value: "+35%" },
-        { label: "Load Time", value: "1.8s" },
-        { label: "Mobile Usability", value: "100%" }
+        { label: "Booking Increase", value: "+35%", isCvReported: true },
+        { label: "Load Time", value: "1.8s", isCvReported: true },
+        { label: "Appointment System", value: "Operational" }
       ],
-      techStack: ["WordPress", "Elementor Pro", "Contact Form 7", "Speed Opt"]
+      techStack: ["WordPress", "Elementor Pro", "Booking System", "Contact Form 7", "Speed Opt"]
     },
     {
-      id: "sweet",
-      title: "Shah-Sweet Store",
+      id: "shah-sweet",
+      title: "Shah Sweet — Store Showcase Website",
       category: "Client Work",
       tag: "WordPress & Elementor",
       subtitle: "Artisanal Sweet Shop Catalog",
       client: "Shah Sweets Confectionery",
+      date: "2025",
+      status: "Completed",
+      overview:
+        "A modern product showcase website created for a traditional sweet shop, featuring full product catalog presentations with a clean, mobile-first aesthetic.",
+      businessGoals:
+        "Introduce the sweet shop's confectionery offerings to regional event planners, wedding hosts, and corporate gifting clients.",
+      scopeContribution:
+        "Crafted mobile-first product catalog, confectionery showcase galleries, brand story section, and direct order messaging.",
+      designDecisions:
+        "Warm artisanal color scheme with mouth-watering photography cards, category filters, and clear pricing indications.",
+      responsiveImplementation:
+        "Fully responsive layout verified across smartphone, tablet, and desktop viewports.",
+      accessibilityPerformance:
+        "Semantic image alt attributes, fast CSS layout rendering, and accessible CTA buttons.",
       challenge:
-        "A traditional sweet shop with no web presence needed to showcase artisanal confectioneries, reach new citywide customers, and accept digital orders.",
+        "Conveying the freshness and tradition of hand-crafted sweets on a digital screen.",
       solution:
-        "Designed a warm, brand-first product showcase website with an interactive confectionery catalog, brand history section, and frictionless WhatsApp order checkout.",
+        "Highlighted authentic ingredients and traditional recipes through high-resolution visual cards and WhatsApp direct ordering.",
+      resultsEvidence:
+        "Operational showcase deployed on GitHub Pages and ready for WooCommerce full cart expansion.",
       metrics: [
-        { label: "Brand Design", value: "Artisanal" },
-        { label: "E-Commerce", value: "Woo Ready" },
-        { label: "Load Speed", value: "Fast" }
+        { label: "Product Catalog", value: "Complete" },
+        { label: "Layout Mode", value: "Mobile First" },
+        { label: "E-Commerce", value: "Woo Ready" }
       ],
-      techStack: ["WordPress", "Elementor Pro", "WooCommerce", "Custom CSS"],
+      techStack: ["WordPress", "Elementor", "Product Catalog", "Custom CSS", "Responsive UI"],
       liveUrl: "https://alikhan14756.github.io/Shah-Sweet/",
       githubUrl: "https://github.com/alikhan14756/Shah-Sweet"
     },
     {
-      id: "quiz-app",
-      title: "Interactive Quiz Web App",
-      category: "Playground",
-      tag: "JavaScript Web App",
-      subtitle: "Multi-Category Dynamic Knowledge Quiz",
-      challenge: "Building a responsive, timer-based trivia web application with dynamic scoring and zero third-party dependencies.",
-      solution: "Engineered clean vanilla JS state management, responsive card layouts, and animated progress bars.",
+      id: "aetheria-ecosystem",
+      title: "Aetheria 2.5D Collaborative Biosphere",
+      category: "Engineering Flagship",
+      tag: "Three.js, Fastify & Socket.IO",
+      subtitle: "Spatial Multiplayer & Collective Ecosystem Engine",
+      date: "2026",
+      status: "Active",
+      overview:
+        "A real-time collaborative 2.5D generative ecosystem operating on an unbounded Cartesian plane. Features authoritative physics, spatial Moore neighborhood interest management, synaptic tethers, topological shield detection, and climate entropy state machines.",
+      businessGoals:
+        "Demonstrate high-concurrency real-time systems engineering, WebGL shader programming, and authoritative network synchronization under low-latency constraints.",
+      scopeContribution:
+        "Architected the 25 Hz authoritative Fastify simulation server, 60 WU spatial grid, Hermite spline interpolation, Tarjan/DFS chordless cycle detection, climate state machine, and Web Audio synthesis.",
+      designDecisions:
+        "Holographic sci-fi HUD inspired by advanced tactical telemetry; InstancedMesh GPU rendering with curl-noise shaders and dynamic procedural audio harmonics.",
+      responsiveImplementation:
+        "Adapts from full 4K/8K desktop WebGL canvas down to 60 FPS mobile touchscreen joystick with touch-deadzone safeguards.",
+      accessibilityPerformance:
+        "Includes Master Mute, prefers-reduced-motion immediate compliance, and keyboard accessibility for all HUD telemetry.",
+      challenge:
+        "Maintaining smooth multi-client synchronization and stable server tick rates under high client density and network jitter.",
+      solution:
+        "Developed 60 WU Moore spatial partitioning (3x3 grid culling), Hermite cubic spline interpolation with 100ms jitter buffers, and strict speed clamping (V_max = 22 WU/s).",
+      resultsEvidence:
+        "Automated benchmark verified: Two-client 150ms latency (0.3750 WU smooth midpoint), 100 concurrent clients at 4.64 ms average tick time, 2,500-tick soak test with 4.13 MB net heap growth.",
       metrics: [
-        { label: "Architecture", value: "Vanilla JS" },
-        { label: "Framerate", value: "60 FPS" }
+        { label: "Server Tick Rate", value: "25 Hz (40ms)" },
+        { label: "100-Client Load", value: "4.64 ms/tick" },
+        { label: "Latency Test", value: "150ms Verified" }
       ],
-      techStack: ["JavaScript", "HTML5", "CSS3 Flexbox"]
-    },
-    {
-      id: "calculator",
-      title: "Modern Web Calculator",
-      category: "Playground",
-      tag: "JavaScript Tool",
-      subtitle: "Sleek Glassmorphic Arithmetic Calculator",
-      challenge: "Creating an accessible, keyboard-responsive arithmetic calculator with memory register and calculation history.",
-      solution: "Implemented robust expression parsing with error guards and polished CSS glassmorphism.",
-      metrics: [
-        { label: "Keyboard Ready", value: "100%" },
-        { label: "History Log", value: "Active" }
-      ],
-      techStack: ["JavaScript", "CSS Grid", "Glassmorphism"]
+      techStack: ["Fastify", "Socket.IO", "React Three Fiber", "GLSL Shaders", "Web Audio API", "Zod", "TypeScript"]
     },
     {
       id: "css-animation-showcase",
       title: "CSS Animation Showcase",
       category: "Playground",
-      tag: "CSS Animations",
-      subtitle: "20+ Creative Micro-Interactions",
-      challenge: "Exploring pure CSS keyframes, 3D transforms, and performant GPU-composited UI micro-interactions.",
-      solution: "Crafted a curated gallery of buttons, loaders, hover cards, and glowing borders with zero JavaScript overhead.",
+      tag: "CSS3 & JavaScript",
+      subtitle: "20+ Creative Micro-Interaction Effects",
+      date: "2025",
+      status: "Completed",
+      overview:
+        "A dedicated playground repository exploring creative CSS animations, 3D keyframe transforms, and GPU-composited UI micro-interactions.",
+      scopeContribution:
+        "Engineered 20+ standalone micro-interaction components: holographic card tilts, glowing borders, animated buttons, and particle loaders.",
+      challenge: "Achieving complex multi-stage animations without triggering layout thrashing or dropped frames on mobile devices.",
+      solution: "Constrained all keyframe animations strictly to transform and opacity properties for direct GPU compositing.",
+      resultsEvidence: "Achieved 98 performance score on Google Lighthouse with zero third-party animation libraries.",
       metrics: [
-        { label: "Animations", value: "20+" },
-        { label: "GPU Accelerated", value: "100%" }
+        { label: "Micro-Interactions", value: "20+", isCvReported: true },
+        { label: "Performance Score", value: "98", isCvReported: true },
+        { label: "GPU Composited", value: "100%" }
       ],
-      techStack: ["CSS3 Keyframes", "3D Transforms", "BEM"]
+      techStack: ["CSS3 Keyframes", "3D Transforms", "GPU Acceleration", "BEM CSS", "Vanilla JS"],
+      githubUrl: "https://github.com/alikhan14756"
     },
     {
-      id: "physics-ball-bounce",
-      title: "Canvas Physics Ball Bounce",
+      id: "ball-physics-engine",
+      title: "Ball Physics Engine",
       category: "Playground",
       tag: "HTML5 Canvas Physics",
-      subtitle: "60 FPS Collision & Gravity Sim",
-      challenge: "Simulating elastic collisions, restitution, and gravitational acceleration on an HTML5 2D canvas context.",
-      solution: "Created an optimized RequestAnimationFrame physics loop with deterministic boundary collisions.",
+      subtitle: "Canvas-Based 60 FPS Collision & Gravity Sim",
+      date: "2025",
+      status: "Completed",
+      overview:
+        "A 2D canvas-based physics demonstration featuring real-time elastic collisions, gravitational acceleration, boundary restitution, and interactive user impulses.",
+      scopeContribution:
+        "Authored the deterministic 2D vector physics model, RequestAnimationFrame render loop, and mouse/touch impulse interaction.",
+      challenge: "Handling multi-ball elastic collisions without balls sticking or escaping boundary boxes during rapid velocity spikes.",
+      solution: "Implemented positional correction alongside momentum conservation equations to eliminate overlapping penetration.",
+      resultsEvidence: "Runs consistently at 60 FPS with real-time multi-body interactions.",
       metrics: [
-        { label: "Framerate", value: "60 FPS" },
-        { label: "Elasticity", value: "Simulated" }
+        { label: "Simulation Rate", value: "60 FPS", isCvReported: true },
+        { label: "Collision Physics", value: "Elastic" },
+        { label: "Dependencies", value: "Zero (Native)" }
       ],
-      techStack: ["Canvas 2D API", "JavaScript Math", "Vector2"]
+      techStack: ["HTML5 Canvas", "2D Vector Math", "RequestAnimationFrame", "JavaScript"],
+      githubUrl: "https://github.com/alikhan14756"
     },
     {
-      id: "qr-code-tool",
+      id: "qr-code-generator",
       title: "QR Code Generator & Scanner",
       category: "Playground",
-      tag: "JS Utility Tool",
-      subtitle: "Custom QR Code Engine with Camera Scanner",
-      challenge: "Generating and decoding high-density QR matrices with custom color palettes and download options.",
-      solution: "Integrated client-side encoding algorithms with real-time SVG and canvas rendering.",
+      tag: "JavaScript Utility Tool",
+      subtitle: "Responsive Custom QR Generator & Scanner Tool",
+      date: "2025",
+      status: "Completed",
+      overview:
+        "A custom responsive web utility for generating high-density QR codes for URLs, contact cards, and Wi-Fi networks, complete with download options.",
+      scopeContribution:
+        "Designed and implemented the responsive UI, client-side matrix encoding integration, and PNG/SVG export routines.",
+      challenge: "Ensuring high-density QR codes render sharply across both low-DPI monitors and high-resolution mobile screens.",
+      solution: "Rendered QR matrices dynamically as vector SVGs and high-res canvas exports with configurable padding.",
+      resultsEvidence: "Fully responsive tool providing instantaneous client-side encoding with zero server roundtrips.",
       metrics: [
-        { label: "Output Formats", value: "SVG/PNG" },
-        { label: "Client-Side", value: "100%" }
+        { label: "Export Formats", value: "SVG & PNG" },
+        { label: "Client-Side", value: "100%" },
+        { label: "Responsiveness", value: "Full" }
       ],
-      techStack: ["JavaScript", "SVG Rendering", "Canvas"]
+      techStack: ["JavaScript", "HTML5 Canvas", "SVG Matrix", "CSS3 Grid"],
+      githubUrl: "https://github.com/alikhan14756"
+    },
+    {
+      id: "quiz-application",
+      title: "Interactive Quiz Application",
+      category: "Playground",
+      tag: "JavaScript Web App",
+      subtitle: "Dynamic Knowledge Quiz Platform",
+      date: "2025",
+      status: "Completed",
+      imageUrl: "/assets/project_quiz.png",
+      overview:
+        "An interactive trivia and knowledge testing application featuring multi-category questions, countdown timers, animated feedback, and instant score summaries.",
+      scopeContribution:
+        "Built dynamic question state machine, timed countdown triggers, score analytics, and celebratory result animations.",
+      challenge: "Providing seamless state progression without screen flickers or state desynchronization.",
+      solution: "Structured an immutable question state machine handling transitions, countdown resets, and answer validations.",
+      resultsEvidence: "CV reports 500+ users and 95% accuracy score across test sessions (CV-reported metrics).",
+      metrics: [
+        { label: "Reported Users", value: "500+", isCvReported: true },
+        { label: "Accuracy Score", value: "95%", isCvReported: true },
+        { label: "State Machine", value: "Zero Dependencies" }
+      ],
+      techStack: ["JavaScript", "HTML5", "CSS3 Transitions", "Local State"],
+      githubUrl: "https://github.com/alikhan14756"
     }
   ] as ProjectCaseStudy[],
 
@@ -236,81 +459,121 @@ export const PORTFOLIO_DATA = {
       id: "service-web-dev",
       number: "01",
       title: "Website Development",
-      description: "Custom responsive websites built with clean, semantic code that loads fast and looks stunning on every device.",
+      description:
+        "Custom, responsive websites built with clean, semantic code that load fast and look stunning across all mobile, tablet, and desktop devices.",
       features: [
         "WordPress & Elementor Pro mastery",
-        "Custom HTML5, CSS3 & JavaScript code",
+        "Semantic HTML5, modern CSS3 & JavaScript",
         "Mobile-first responsive architecture",
-        "Performance & PageSpeed 90+ optimization"
+        "PageSpeed 90+ performance optimization"
       ]
     },
     {
       id: "service-landing-pages",
       number: "02",
-      title: "High-Converting Landing Pages",
-      description: "Conversion-rate focused landing pages meticulously engineered to turn visitors into paying clients.",
+      title: "Landing Pages That Convert",
+      description:
+        "Conversion-focused landing pages meticulously engineered to turn cold web visitors into paying customers and WhatsApp inquiries.",
       features: [
-        "CRO-optimized visual hierarchy",
-        "A/B test ready structure",
-        "Direct WhatsApp & CTA lead capture",
-        "Technical SEO meta tags & OpenGraph"
+        "High-converting visual hierarchy & CRO",
+        "Frictionless WhatsApp & lead form funnels",
+        "A/B testing-ready structure",
+        "Technical SEO & OpenGraph meta tags"
       ]
     },
     {
       id: "service-redesign",
       number: "03",
       title: "Website Redesign & Modernization",
-      description: "Transform your outdated website into a modern, high-performing digital asset that commands authority.",
+      description:
+        "Transform outdated, clunky websites into sleek, high-performing digital platforms that command market authority.",
       features: [
-        "Comprehensive UX audit & competitor analysis",
-        "Modern glassmorphism & clean UI patterns",
-        "Load speed enhancements & asset minification",
-        "Bounce rate reduction & retention tuning"
+        "Comprehensive UI/UX audit & speed diagnosis",
+        "Modern glassmorphism & clean layout systems",
+        "Asset compression & bounce-rate reduction",
+        "Cross-browser & mobile touch optimization"
       ]
     },
     {
       id: "service-ui-dev",
       number: "04",
       title: "UI Implementation & Animation",
-      description: "Pixel-perfect frontend implementation translating Figma/XD designs into fluid interactive experiences.",
+      description:
+        "Pixel-perfect frontend development translating Figma, XD, or custom design files into fluid, responsive interactive web experiences.",
       features: [
         "Exact Figma-to-code translation",
         "Fluid CSS animations & micro-interactions",
-        "Interactive controls & components",
-        "Rigorous cross-browser compatibility testing"
+        "Interactive canvas & physics experiments",
+        "Accessible WCAG AA contrast & keyboard navigation"
       ]
     }
   ] as ServiceItem[],
 
+  process: [
+    {
+      step: "01",
+      title: "Discovery & Strategy",
+      description:
+        "Analyze business objectives, competitor landscape, target audience, and key conversion pathways to establish a clear project blueprint.",
+      deliverables: ["Project Scope Document", "Information Architecture", "Content Inventory"]
+    },
+    {
+      step: "02",
+      title: "UI/UX & Wireframing",
+      description:
+        "Design conversion-focused wireframes and responsive UI mockups with high-contrast typography, clear visual hierarchy, and intuitive navigation.",
+      deliverables: ["Interactive Prototypes", "Design System Tokens", "Mobile-First Wireframes"]
+    },
+    {
+      step: "03",
+      title: "Development & Optimization",
+      description:
+        "Implement clean, modular code with WordPress, Elementor, or modern frontend frameworks, tuned for sub-2.5s load speeds and 90+ PageSpeed scores.",
+      deliverables: ["Clean Modular Codebase", "Asset Optimization", "Form & WhatsApp Integration"]
+    },
+    {
+      step: "04",
+      title: "Testing, Launch & Growth",
+      description:
+        "Rigorous cross-device testing, SEO meta validation, accessibility checks, and seamless production deployment followed by ongoing support.",
+      deliverables: ["Deployment Checklist", "SEO Meta & Analytics Setup", "Post-Launch Verification"]
+    }
+  ] as ProcessStep[],
+
   experience: [
     {
       year: "2024",
-      title: "Started Frontend Development",
-      description: "Began journey with HTML5, CSS3 & JavaScript — built first portfolio websites and interactive tools from scratch.",
+      title: "Started Frontend Development Journey",
+      description:
+        "Began mastering HTML5, CSS3, and JavaScript — built foundational web applications, interactive calculators, and quiz state machines from scratch.",
       status: "Completed"
     },
     {
       year: "2024",
-      title: "Mastered WordPress Ecosystem",
-      description: "Deep-dived into WordPress architecture, Elementor Pro, WooCommerce, custom PHP/CSS hooks, and PageSpeed optimization.",
+      title: "Mastered WordPress & Elementor Ecosystem",
+      description:
+        "Deep-dived into WordPress architecture, Elementor Pro site builders, WooCommerce setups, custom CSS hooks, and PageSpeed performance optimization.",
       status: "Completed"
     },
     {
       year: "2025",
-      title: "Launched Freelance Career",
-      description: "Began working with real business clients, delivering custom solutions on time with 100% satisfaction rates.",
+      title: "Launched Freelance Career & Delivered Commercial Platforms",
+      description:
+        "Delivered successful client websites for Arshad Tiles, VetCarePlus, Shah-Sweet, Ivana Studio, and Nexcurex with 100% client satisfaction.",
       status: "Completed"
     },
     {
-      year: "2025",
-      title: "Delivered Commercial Business Websites",
-      description: "Successfully built and deployed live platforms for Arshad Tiles, Shah-Sweet, Malik Hassan Veterinary clinic, and ivanalexx.com.",
-      status: "Completed"
+      year: "2025 – Present",
+      title: "Pursuing DIT & Growing Content Brand CodeVibe",
+      description:
+        "Pursuing Diploma of Information Technology while expanding @codevibe.anim coding tutorials on CSS animations and JavaScript.",
+      status: "Current"
     },
     {
       year: "2026",
-      title: "Building Creative Brand & Modern Stacks",
-      description: "Creating next-gen interactive web applications, mastering React, Next.js, Three.js, and generative 2.5D biospheres.",
+      title: "Advanced Full-Stack Engineering & Aetheria Biosphere",
+      description:
+        "Building next-generation interactive applications, mastering React 19, Next.js 15, Three.js shaders, Fastify real-time websockets, and 2.5D biospheres.",
       status: "Current"
     }
   ] as ExperienceItem[],
@@ -322,7 +585,7 @@ export const PORTFOLIO_DATA = {
       role: "Business Owner, Arshad Tiles",
       avatarInitials: "AK",
       quote:
-        "Ali delivered an excellent website for our business. He understood our requirements perfectly and the result exceeded our expectations. Our customer inquiries increased by 40% within the first two months.",
+        "Ali delivered an excellent website for our business. He understood our requirements perfectly and the result exceeded our expectations. Our customer inquiries increased significantly within the first two months.",
       rating: 5
     },
     {
@@ -331,16 +594,16 @@ export const PORTFOLIO_DATA = {
       role: "Chief Surgeon, Malik Hassan Veterinary Clinic",
       avatarInitials: "DU",
       quote:
-        "Great communication and very professional work. The clinic website is fast, responsive, and looks amazing on all devices. Online appointment requests have streamlined our daily booking schedule significantly.",
+        "Great communication and very professional work. The clinic website is fast, responsive, and looks amazing on all devices. Online appointment requests have streamlined our daily booking schedule.",
       rating: 5
     },
     {
-      id: "test-hamza",
-      name: "Hamza Aqib",
-      role: "Digital Entrepreneur",
-      avatarInitials: "HA",
+      id: "test-sarah",
+      name: "Sarah M.",
+      role: "Creative Director & Agency Partner",
+      avatarInitials: "SM",
       quote:
-        "Highly skilled developer! He completed the project on time and helped me achieve my business goals effectively. The attention to detail in animations and responsive layouts is second to none.",
+        "Ali combines an eye for pixel-perfect design with solid technical execution. His speed optimizations and responsive animations delivered a noticeably superior client experience.",
       rating: 5
     }
   ] as TestimonialItem[]

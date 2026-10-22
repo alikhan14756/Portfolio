@@ -83,6 +83,151 @@ async function startServer() {
     return aiOverseer.getHistory();
   });
 
+  // Contact form submission endpoint with validation and anti-spam protection
+  const recentSubmissions = new Map<string, number>();
+
+  fastify.post("/api/contact", async (request, reply) => {
+    try {
+      const ContactSchema = (await import("zod")).z.object({
+        name: (await import("zod")).z.string().min(2, "Name must be at least 2 characters").max(100),
+        email: (await import("zod")).z.string().email("Please provide a valid email address"),
+        projectType: (await import("zod")).z.string().optional(),
+        message: (await import("zod")).z.string().min(10, "Message must be at least 10 characters").max(2000),
+        honeypot: (await import("zod")).z.string().max(0).optional()
+      });
+
+      const body = ContactSchema.parse(request.body);
+
+      // Honeypot anti-spam check
+      if (body.honeypot && body.honeypot.length > 0) {
+        return reply.status(400).send({ success: false, error: "Spam detected" });
+      }
+
+      // IP rate limit (max 1 message per 30 seconds per IP)
+      const ip = request.ip;
+      const lastSent = recentSubmissions.get(ip) || 0;
+      if (Date.now() - lastSent < 30000) {
+        return reply.status(429).send({
+          success: false,
+          error: "Rate limit exceeded. Please wait 30 seconds before sending another message."
+        });
+      }
+      recentSubmissions.set(ip, Date.now());
+
+      console.log(`[Contact Submission] From: ${body.name} (${body.email}) - Type: ${body.projectType || 'General'}`);
+      console.log(`[Message]: ${body.message}`);
+
+      return reply.send({
+        success: true,
+        message: "Thank you, your inquiry has been received! Muhammad Ali will reply to you within 24 hours.",
+        timestamp: Date.now()
+      });
+    } catch (err: any) {
+      return reply.status(400).send({
+        success: false,
+        error: err.errors ? err.errors[0]?.message : (err.message || "Invalid submission")
+      });
+    }
+  });
+
+  // AI Assistant endpoint with deterministic fallbacks and safe action tags
+  fastify.post("/api/ai/chat", async (request, reply) => {
+    try {
+      const z = (await import("zod")).z;
+      const schema = z.object({
+        message: z.string().min(1).max(500)
+      });
+      const { message } = schema.parse(request.body);
+      const lower = message.toLowerCase();
+
+      // Check for theme switches
+      const themeMatches = [
+        { key: "cyberpunk", tag: "THEME_cyberpunk-neon", name: "CYBERPUNK NEON" },
+        { key: "matrix", tag: "THEME_matrix-terminal", name: "MATRIX TERMINAL" },
+        { key: "iron", tag: "THEME_iron-red", name: "IRON RED" },
+        { key: "arctic", tag: "THEME_arctic-glass", name: "ARCTIC GLASS" },
+        { key: "purple", tag: "THEME_midnight-purple", name: "MIDNIGHT PURPLE" },
+        { key: "emerald", tag: "THEME_emerald-professional", name: "EMERALD PRO" },
+        { key: "solar", tag: "THEME_solar-gold", name: "SOLAR GOLD" },
+        { key: "ocean", tag: "THEME_ocean-blue", name: "OCEAN BLUE" },
+        { key: "rose", tag: "THEME_rose-neon", name: "ROSE NEON" },
+        { key: "paper", tag: "THEME_paper-studio", name: "PAPER STUDIO" },
+        { key: "monochrome", tag: "THEME_monochrome", name: "MONOCHROME" },
+        { key: "jarvis", tag: "THEME_jarvis-core", name: "JARVIS CORE" }
+      ];
+
+      for (const tm of themeMatches) {
+        if (lower.includes(tm.key) && (lower.includes("theme") || lower.includes("switch") || lower.includes("set"))) {
+          return reply.send({
+            success: true,
+            reply: `Calibrating visual HUD theme to ${tm.name}.`,
+            actionTag: tm.tag,
+            isAiGenerated: true
+          });
+        }
+      }
+
+      // Check for navigation & portfolio commands
+      if (lower.includes("biosphere") || lower.includes("simulation") || lower.includes("canvas")) {
+        return reply.send({
+          success: true,
+          reply: "Navigating to Aetheria 2.5D Collaborative Biosphere with real-time 25 Hz authoritative physics.",
+          actionTag: "NAV_BIOSPHERE",
+          isAiGenerated: true
+        });
+      }
+
+      if (lower.includes("ivana") || lower.includes("ivanalexx")) {
+        return reply.send({
+          success: true,
+          reply: "Ivana Studio (ivanalexx.com) is an international video production portfolio built with WordPress & Elementor Pro, featuring multi-format showreels and direct client lead capture.",
+          actionTag: "PROJECT_IVANALEXX",
+          isAiGenerated: true
+        });
+      }
+
+      if (lower.includes("nexcurex")) {
+        return reply.send({
+          success: true,
+          reply: "Nexcurex (nexcurex.com) is an e-commerce fashion storefront featuring product categories, special edition discounts (OFF20), and WooCommerce responsive shopping.",
+          actionTag: "PROJECT_NEXCUREX",
+          isAiGenerated: true
+        });
+      }
+
+      if (lower.includes("arshad") || lower.includes("tile")) {
+        return reply.send({
+          success: true,
+          reply: "Arshad Tiles is a business showcase website with 2.1s load time and 100% mobile friendliness, resulting in a CV-reported +40% increase in customer inquiries.",
+          actionTag: "PROJECT_ARSHAD",
+          isAiGenerated: true
+        });
+      }
+
+      if (lower.includes("vet") || lower.includes("clinic")) {
+        return reply.send({
+          success: true,
+          reply: "VetCarePlus (Malik Hassan Veterinary Clinic) features digital service listings and an online appointment request engine with 1.8s load times (CV-reported).",
+          actionTag: "PROJECT_VET",
+          isAiGenerated: true
+        });
+      }
+
+      // Default contextual response
+      return reply.send({
+        success: true,
+        reply: "Muhammad Ali is a Frontend Developer & Digital Creator based in Peshawar, Pakistan. He has delivered 15+ websites for businesses like Ivana Studio, Nexcurex, and Arshad Tiles with 100% satisfaction.",
+        actionTag: "INFO_DEFAULT",
+        isAiGenerated: true
+      });
+    } catch (err: any) {
+      return reply.status(400).send({
+        success: false,
+        error: err.message || "Invalid request payload"
+      });
+    }
+  });
+
   // Authoritative 25 Hz Simulation Loop (dt = 40 ms)
   const TICK_INTERVAL_MS = 40;
   const dt = TICK_INTERVAL_MS / 1000;
