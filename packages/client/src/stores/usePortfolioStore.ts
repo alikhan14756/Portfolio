@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { ProjectCaseStudy, PORTFOLIO_DATA } from "../data/portfolioData";
+import { ALI_JARVIS_KNOWLEDGE } from "../data/aliJarvisKnowledge";
 
 export type ThemeType =
   | "jarvis-core"
@@ -159,11 +160,94 @@ const INITIAL_MESSAGES: JarvisMessage[] = [
   {
     id: "init_1",
     sender: "jarvis",
-    text: "Greetings. I am J.A.R.V.I.S., autonomous AI interface for Muhammad Ali (Peshawar, Pakistan). I can brief you on Ali's verified commercial client work (Ivana Studio, Nexcurex, Arshad Tiles), technical case studies, skills, or route inquiries directly to WhatsApp. How may I assist your mission?",
+    text: "Hello! I am ALI JARVIS, Muhammad Ali's personal portfolio guide and friendly AI assistant. I'm here to help you explore Ali's client websites (like Ivana Studio and Nexcurex), review his technical case studies, check pricing and turnaround times, or switch visual themes. How can I assist you today?",
     timestamp: Date.now(),
     isAiGenerated: false
   }
 ];
+
+export interface ConversationContext {
+  lastDiscussedProject: string | null;
+  lastDiscussedConcept: string | null;
+  lastBotText: string;
+}
+
+export const convCtx: ConversationContext = {
+  lastDiscussedProject: null,
+  lastDiscussedConcept: null,
+  lastBotText: INITIAL_MESSAGES[0].text
+};
+
+export function executeActionTag(actionTag: string | undefined, store: PortfolioStore) {
+  if (!actionTag) return;
+
+  if (actionTag.startsWith("THEME_")) {
+    const themeKey = actionTag.replace("THEME_", "").toLowerCase() as ThemeType;
+    store.setTheme(themeKey);
+    return;
+  }
+
+  if (actionTag.startsWith("PROJECT_")) {
+    const idMap: Record<string, string> = {
+      PROJECT_IVANALEXX: "ivanalexx",
+      PROJECT_NEXCUREX: "nexcurex",
+      PROJECT_ARSHAD: "arshad",
+      PROJECT_VET: "vet",
+      PROJECT_SHAH_SWEET: "shah-sweet",
+      PROJECT_AETHERIA: "aetheria-ecosystem"
+    };
+    const projId = idMap[actionTag] || actionTag.replace("PROJECT_", "").toLowerCase();
+    const proj = PORTFOLIO_DATA.projects.find((p) => p.id === projId);
+    if (proj) store.openCaseStudy(proj);
+    return;
+  }
+
+  if (actionTag === "NAV_BIOSPHERE") {
+    store.setViewMode("biosphere");
+    return;
+  }
+
+  if (actionTag === "NAV_PORTFOLIO") {
+    store.setViewMode("portfolio");
+    return;
+  }
+
+  if (actionTag.startsWith("NAV_")) {
+    const sectionName = actionTag.replace("NAV_", "").toLowerCase();
+    if (typeof document !== "undefined") {
+      const el = document.getElementById(sectionName);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+    return;
+  }
+
+  if (actionTag === "ACTION_REDUCED_MOTION_ON") {
+    store.setAnimationIntensity("off");
+    return;
+  }
+
+  if (actionTag === "ACTION_REDUCED_MOTION_OFF") {
+    store.setAnimationIntensity("full");
+    return;
+  }
+
+  if (actionTag === "ACTION_MUTE") {
+    store.setMasterMute(true);
+    return;
+  }
+
+  if (actionTag === "ACTION_UNMUTE") {
+    store.setMasterMute(false);
+    return;
+  }
+
+  if (actionTag === "DOWNLOAD_CV") {
+    if (typeof window !== "undefined") {
+      window.open("/Muhammad_Ali_CV.pdf", "_blank");
+    }
+    return;
+  }
+}
 
 export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
   ...DEFAULT_PRESET,
@@ -315,16 +399,21 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
     try {
       let botResponse: { text: string; actionTag?: string; isAiGenerated?: boolean };
 
-      // Optional server request
+      // Optional server request with multi-turn conversation context
       const serverUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000";
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+      const historyPayload = get().messages.slice(-6).map((m) => ({
+        sender: m.sender,
+        text: m.text
+      }));
 
       try {
         const res = await fetch(`${serverUrl}/api/ai/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text }),
+          body: JSON.stringify({ message: text, history: historyPayload }),
           signal: controller.signal
         });
         clearTimeout(timeoutId);
@@ -337,12 +426,16 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
             isAiGenerated: true
           };
         } else {
-          botResponse = generateDeterministicAnswer(text, get());
+          botResponse = generateDeterministicAnswer(text, get(), convCtx);
         }
       } catch {
         // Fallback to local verified catalog
-        botResponse = generateDeterministicAnswer(text, get());
+        botResponse = generateDeterministicAnswer(text, get(), convCtx);
       }
+
+      // Automatically execute any requested theme change, project opening, or navigation
+      executeActionTag(botResponse.actionTag, get());
+      convCtx.lastBotText = botResponse.text;
 
       const botMsg: JarvisMessage = {
         id: `jar_${Date.now()}`,
@@ -556,264 +649,500 @@ function saveUserPrefs() {
  */
 function generateDeterministicAnswer(
   prompt: string,
-  store: PortfolioStore
+  store: PortfolioStore,
+  ctx: ConversationContext
 ): { text: string; actionTag?: string; isAiGenerated: boolean } {
   const p = prompt.toLowerCase().trim();
 
-  // 1. GREETINGS & CASUAL CONVERSATION (Exact & Partial Matches)
-  const isGreeting =
-    /^(hi|hello|hey|hiya|howdy|sup|yo|salam|assalam|aoa|assalam o alaikum|good\s*(morning|afternoon|evening|day)|greetings)\b/i.test(p);
-  
-  if (isGreeting) {
+  // 1. ISLAMIC GREETINGS
+  if (/^(assalam|salam|aoa|assalam[- ]?o[- ]?alaikum|assalamu\s*alaikum|asalam)\b/i.test(p)) {
     return {
-      text: "Greetings! I am J.A.R.V.I.S., the autonomous AI assistant for Muhammad Ali (Peshawar, Pakistan). How may I assist your mission today? You can ask me about Ali's commercial client projects (Ivana Studio, Nexcurex, Arshad Tiles), review his technical skills, website pricing, turnaround times, or connect directly on WhatsApp (+92 305 5389967).",
-      actionTag: "GREETING",
-      isAiGenerated: false
-    };
-  }
-
-  if (p.includes("how are you") || p.includes("how r u") || p.includes("how do you do") || p.includes("how's it going") || p.includes("whats up") || p.includes("what's up")) {
-    return {
-      text: "All telemetry channels, 25 Hz Fastify simulation clusters, and neural nodes are operating at peak 100% capacity. Thank you for asking! How can I assist you with your project or technical review today?",
-      actionTag: "STATUS_NOMINAL",
-      isAiGenerated: false
-    };
-  }
-
-  if (p.includes("who are you") || p.includes("what are you") || p.includes("your name") || p.includes("who made you")) {
-    return {
-      text: "I am J.A.R.V.I.S. (Just A Rather Very Intelligent System), the custom AI interactive core engineered for Muhammad Ali's portfolio. I can answer inquiries about his commercial client work, explain his technical architecture, calibrate themes, or route you directly to his WhatsApp.",
-      actionTag: "IDENTITY_JARVIS",
-      isAiGenerated: false
-    };
-  }
-
-  if (p.includes("who is ali") || p.includes("who is muhammad ali") || p.includes("tell me about ali") || p.includes("about ali") || p.includes("about muhammad ali")) {
-    return {
-      text: "Muhammad Ali is a professional Frontend Developer and Digital Creator based in Peshawar, Pakistan, with 2+ years of verified commercial experience. He specializes in high-converting custom WordPress websites, Elementor Pro, responsive UI/UX, and performance optimization (sub-2s loads).",
-      actionTag: "INFO_ALI",
-      isAiGenerated: false
-    };
-  }
-
-  if (p.includes("salam") || p.includes("assalam") || p.includes("aoa")) {
-    return {
-      text: "Wa Alaikum Assalam! Welcome to Muhammad Ali's digital terminal. How can I assist you with your web project, portfolio exploration, or direct inquiry today?",
+      text: "Wa Alaikum Assalam! Welcome to Muhammad Ali's digital portfolio. I am ALI JARVIS, Ali's friendly portfolio assistant. How may I assist you today? You can ask about Ali's client websites (like Ivana Studio and Nexcurex), pricing packages, delivery timelines, or ask me to switch themes.",
       actionTag: "GREETING_SALAM",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("thank") || p.includes("thanks") || p.includes("thx") || p.includes("appreciate")) {
+  // 2. STANDARD GREETINGS ("Hi", "Hello", "Hey", "Good morning", "Good evening")
+  if (/^(hi|hello|hey|hiya|howdy|sup|yo|good\s*(morning|afternoon|evening|day)|greetings)\b/i.test(p)) {
     return {
-      text: "You're very welcome! It is my pleasure. Let me know if you would like to explore Ali's client case studies, view his code repositories, or initiate a project.",
+      text: "Hello! I am ALI JARVIS, Muhammad Ali's personal portfolio guide and friendly AI assistant. How can I assist you today? You can ask about Ali's commercial client work (like Ivana Studio and Nexcurex), explore web development services and rates, or try out different visual themes!",
+      actionTag: "GREETING",
+      isAiGenerated: false
+    };
+  }
+
+  // 3. "HOW ARE YOU?"
+  if (
+    p.includes("how are you") ||
+    p.includes("how r u") ||
+    p.includes("how do you do") ||
+    p.includes("how's it going") ||
+    p.includes("how are things") ||
+    p.includes("whats up") ||
+    p.includes("what's up")
+  ) {
+    return {
+      text: "I'm doing great, thank you for asking! All systems are operating smoothly at 60 FPS. How are you doing today, and how can I help you explore Muhammad Ali's portfolio?",
+      actionTag: "STATUS_NOMINAL",
+      isAiGenerated: false
+    };
+  }
+
+  // 4. "WHAT IS YOUR NAME?" / "WHO ARE YOU?"
+  if (
+    p.includes("what is your name") ||
+    p.includes("what's your name") ||
+    p.includes("your name") ||
+    (p.includes("who are you") && !p.includes("who are you to")) ||
+    p.includes("what are you")
+  ) {
+    return {
+      text: "My name is ALI JARVIS! I am Muhammad Ali's personal portfolio guide and friendly AI assistant. I'm here to help you explore Ali's client websites, inspect technical case studies, review pricing, and calibrate visual themes.",
+      actionTag: "IDENTITY_JARVIS",
+      isAiGenerated: false
+    };
+  }
+
+  // 5. "WHO CREATED YOU?" / "WHO MADE YOU?"
+  if (
+    p.includes("who created you") ||
+    p.includes("who made you") ||
+    p.includes("who built you") ||
+    p.includes("who developed you") ||
+    p.includes("who programmed you")
+  ) {
+    return {
+      text: "I was created and engineered by Muhammad Ali, a Frontend Developer and Digital Creator based in Peshawar, Pakistan, as an interactive companion for his digital portfolio.",
+      actionTag: "CREATOR_INFO",
+      isAiGenerated: false
+    };
+  }
+
+  // 6. "WHAT CAN YOU DO?"
+  if (
+    p.includes("what can you do") ||
+    p.includes("what are your capabilities") ||
+    p.includes("what do you do") ||
+    p.includes("what are you capable of")
+  ) {
+    return {
+      text: "I can assist you with:\n1. Discovering client projects: Ivana Studio (ivanalexx.com), Nexcurex (nexcurex.com), Arshad Tiles, VetCarePlus, and the Aetheria 2.5D simulation.\n2. Checking pricing & timelines: Landing pages ($150–$350), WordPress sites ($300–$600), WooCommerce stores ($500–$1,200+).\n3. Visual customization: Switching between all 12 themes (Cyberpunk, Matrix, Paper Studio, Arctic Glass, etc.).\n4. Audio & accessibility: Toggle reduced motion or mute voice reading.\n5. Explaining web technologies: WordPress, Elementor, React, Three.js, and PageSpeed optimization.\n6. Direct contact: Routing you directly to Muhammad Ali on WhatsApp (+92 305 5389967).",
+      actionTag: "CAPABILITIES",
+      isAiGenerated: false
+    };
+  }
+
+  // 7. "CAN YOU HELP ME?"
+  if (
+    p.includes("can you help me") ||
+    p.includes("help me") ||
+    p.includes("i need help") ||
+    p.includes("assist me")
+  ) {
+    return {
+      text: "I would be glad to help! What are you looking to do? You can:\n• Explore Ali's client case studies (Ivana Studio, Nexcurex, Arshad Tiles)\n• Inquire about website pricing and delivery timelines\n• Switch themes (try saying 'switch to cyberpunk' or 'make it lighter')\n• Contact Muhammad Ali directly on WhatsApp for a custom quote",
+      actionTag: "HELP",
+      isAiGenerated: false
+    };
+  }
+
+  // 8. "THANK YOU"
+  if (
+    p.includes("thank") ||
+    p.includes("thanks") ||
+    p.includes("thx") ||
+    p.includes("appreciate") ||
+    p.includes("jazakallah")
+  ) {
+    return {
+      text: "You're very welcome! It's my pleasure to assist you. If you have any questions about launching a new website with Ali or reviewing his code, just let me know.",
       actionTag: "THANK_YOU",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("bye") || p.includes("goodbye") || p.includes("see you") || p.includes("cya")) {
+  // 9. "GOODBYE"
+  if (
+    p.includes("bye") ||
+    p.includes("goodbye") ||
+    p.includes("see you") ||
+    p.includes("see ya") ||
+    p.includes("cya") ||
+    p.includes("farewell") ||
+    p.includes("take care")
+  ) {
     return {
-      text: "Farewell! Have a great day ahead. Muhammad Ali's portfolio and direct WhatsApp line (+92 305 5389967) are always open for your next digital build.",
+      text: "Goodbye! Thank you for visiting Muhammad Ali's portfolio. Feel free to reach out anytime on WhatsApp at +92 305 5389967 or email alikhanwebdeveloper@gmail.com. Have a wonderful day!",
       actionTag: "FAREWELL",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("joke") || p.includes("funny") || p.includes("humor")) {
+  // 10. "TELL ME A JOKE"
+  if (p.includes("joke") || p.includes("funny") || p.includes("make me laugh") || p.includes("humor")) {
+    const jokes = [
+      "Why do frontend developers prefer dark mode? Because light attracts bugs! Fortunately, Muhammad Ali ensures bug-free code across all 12 themes.",
+      "There are 10 types of people in the world: those who understand binary, and those who don't! Ali happens to speak binary, JavaScript, and PHP fluently.",
+      "Why did the web developer leave the restaurant? Because of the terrible table layout! Ali uses CSS Grid and Flexbox to keep everything perfectly aligned."
+    ];
+    const picked = jokes[Math.floor(Math.random() * jokes.length)];
     return {
-      text: "Why do frontend developers prefer dark mode? Because light attracts bugs! Fortunately, Muhammad Ali ensures bug-free code across both our 11 dark themes and our light Paper Studio mode.",
+      text: picked,
       actionTag: "JOKE",
       isAiGenerated: false
     };
   }
 
-  // 2. PRICING, BUDGET & RATES FAQ
-  if (p.includes("price") || p.includes("cost") || p.includes("rate") || p.includes("how much") || p.includes("budget") || p.includes("quote") || p.includes("fee") || p.includes("charge")) {
+  // 11. "TELL ME SOMETHING INTERESTING"
+  if (
+    p.includes("something interesting") ||
+    p.includes("interesting fact") ||
+    p.includes("fun fact") ||
+    p.includes("tell me a fact")
+  ) {
     return {
-      text: "Ali offers flexible, competitive project rates tailored to scope: High-converting landing pages typically range from $150–$350, full custom business WordPress sites with Elementor Pro range from $300–$600, and comprehensive WooCommerce e-commerce stores range from $500–$1,200+. Reach out on WhatsApp (+92 305 5389967) for an exact quote within 1 hour.",
-      actionTag: "FAQ_PRICING",
+      text: "Here's something interesting: According to Google research, 53% of mobile visits are abandoned if pages take longer than 3 seconds to load. That is why Muhammad Ali prioritizes Core Web Vitals and asset compression, achieving 1.8s to 2.1s load speeds on projects like Arshad Tiles and VetCarePlus, which generated a +40% surge in inquiries!",
+      actionTag: "INTERESTING_FACT",
       isAiGenerated: false
     };
   }
 
-  // 3. TURNAROUND TIME & DELIVERY FAQ
-  if (p.includes("fast") || p.includes("how long") || p.includes("turnaround") || p.includes("delivery") || p.includes("timeline") || p.includes("duration") || p.includes("timeframe") || p.includes("deadline")) {
+  // 12. "WHAT TIME IS IT?"
+  if (
+    p.includes("what time is it") ||
+    p.includes("what's the time") ||
+    p.includes("current time") ||
+    p.includes("time now") ||
+    p.includes("what is the time")
+  ) {
+    const visitorTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const pktTime = new Date().toLocaleTimeString("en-US", {
+      timeZone: "Asia/Karachi",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
     return {
-      text: "Ali delivers rapid, high-quality turnarounds: Single landing pages are typically delivered within 2–4 business days, full multi-page business websites within 5–9 days, and e-commerce stores within 10–14 days. Express rush delivery is available upon request.",
-      actionTag: "FAQ_TIMELINE",
+      text: `Your current local time is ${visitorTime}. In Peshawar, Pakistan (where Muhammad Ali is based, PKT / UTC+5), the current time is ${pktTime}. Muhammad Ali operates across flexible global timezones for client collaboration!`,
+      actionTag: "TIME_CHECK",
       isAiGenerated: false
     };
   }
 
-  // 4. SERVICES & E-COMMERCE FAQ
-  if (p.includes("ecommerce") || p.includes("woocommerce") || p.includes("store") || p.includes("shop") || p.includes("sell online")) {
+  // 13. MULTI-TURN FOLLOW-UP: "CAN YOU REPEAT THAT?"
+  if (
+    p.includes("repeat that") ||
+    p.includes("say that again") ||
+    p.includes("what did you say") ||
+    p.includes("can you repeat") ||
+    p.includes("repeat please")
+  ) {
+    const prev = ctx.lastBotText || "I haven't said anything yet! How can I assist you with Muhammad Ali's portfolio today?";
     return {
-      text: "Yes! Ali builds complete, secure WooCommerce and Shopify e-commerce platforms featuring product catalog management, shopping cart, checkout, payment gateway integration, and discount engine (like Nexcurex at nexcurex.com).",
-      actionTag: "FAQ_ECOMMERCE",
+      text: `Here is what I said earlier:\n\n"${prev}"`,
+      actionTag: "REPEAT_LAST",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("speed") || p.includes("slow") || p.includes("performance") || p.includes("pagespeed") || p.includes("optimize")) {
+  // 14. MULTI-TURN FOLLOW-UP: "PLEASE SUMMARIZE THAT"
+  if (
+    p.includes("summarize") ||
+    p.includes("summary") ||
+    p.includes("in short") ||
+    p.includes("tldr") ||
+    p.includes("tl;dr") ||
+    p.includes("briefly")
+  ) {
+    if (ctx.lastDiscussedProject === "ivanalexx") {
+      return {
+        text: "Summary: Ivana Studio is a luxury video production portfolio built by Ali using WordPress & Elementor Pro, featuring cinematic video lightboxes, sub-2.2s loading, and high-conversion client inquiry forms.",
+        actionTag: "SUMMARY_IVANALEXX",
+        isAiGenerated: false
+      };
+    } else if (ctx.lastDiscussedProject === "nexcurex") {
+      return {
+        text: "Summary: Nexcurex is a modern fashion e-commerce storefront engineered by Ali on WooCommerce with dynamic discount codes (OFF20), product category filters, and a mobile-optimized checkout.",
+        actionTag: "SUMMARY_NEXCUREX",
+        isAiGenerated: false
+      };
+    } else if (ctx.lastDiscussedProject === "arshad") {
+      return {
+        text: "Summary: Arshad Tiles is a ceramic catalog site with direct WhatsApp order routing and a 2.1s load time that produced a CV-reported +40% surge in inquiries.",
+        actionTag: "SUMMARY_ARSHAD",
+        isAiGenerated: false
+      };
+    } else if (ctx.lastDiscussedProject === "vet") {
+      return {
+        text: "Summary: VetCarePlus is a veterinary clinic portal featuring online appointment requests, 1.8s load speed, and a CV-reported +35% appointment surge.",
+        actionTag: "SUMMARY_VET",
+        isAiGenerated: false
+      };
+    } else {
+      return {
+        text: "Summary: Muhammad Ali is a Peshawar-based Frontend Developer with 2+ years of verified commercial delivery specializing in custom WordPress/Elementor websites, WooCommerce e-commerce, and high-performance Web Vitals optimization.",
+        actionTag: "SUMMARY_GENERAL",
+        isAiGenerated: false
+      };
+    }
+  }
+
+  // 15. MULTI-TURN FOLLOW-UP: "CAN YOU EXPLAIN THIS SIMPLY?" / "I DON'T UNDERSTAND"
+  if (
+    p.includes("explain this simply") ||
+    p.includes("explain simply") ||
+    p.includes("i don't understand") ||
+    p.includes("dont understand") ||
+    p.includes("simple terms") ||
+    p.includes("like i'm 5") ||
+    p.includes("eli5")
+  ) {
+    if (ctx.lastDiscussedConcept && ALI_JARVIS_KNOWLEDGE.educationalConcepts[ctx.lastDiscussedConcept]) {
+      return {
+        text: `In simple terms: ${ALI_JARVIS_KNOWLEDGE.educationalConcepts[ctx.lastDiscussedConcept].beginner}`,
+        actionTag: `EXPLAIN_${ctx.lastDiscussedConcept}`,
+        isAiGenerated: false
+      };
+    }
     return {
-      text: "Ali specializes in Web Vitals optimization: reducing load times to sub-2 seconds, optimizing image compression, minifying assets, and achieving 90+ scores on Google PageSpeed Insights (as proven on Arshad Tiles and VetCarePlus).",
-      actionTag: "FAQ_SPEED",
+      text: "Think of a website like a physical retail storefront: HTML builds the walls, CSS paints the decor, JavaScript adds the automatic sliding doors, and WordPress gives the shopkeeper an easy cash register to update merchandise without rebuilding the store! Ali builds every site so it is fast, welcoming, and easy for customers to buy from.",
+      actionTag: "EXPLAIN_SIMPLE",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("services") || p.includes("what can ali do") || p.includes("offer") || p.includes("hire for")) {
+  // 16. MULTI-TURN FOLLOW-UP: "TELL ME MORE"
+  if (
+    p.includes("tell me more") ||
+    p.includes("more details") ||
+    p.includes("expand") ||
+    p.includes("elaborate") ||
+    p.includes("go on")
+  ) {
+    if (ctx.lastDiscussedProject) {
+      const proj = ALI_JARVIS_KNOWLEDGE.clientProjects.find((pr) => pr.id === ctx.lastDiscussedProject);
+      if (proj) {
+        return {
+          text: `Here is a deeper look at ${proj.name}:\nRole: ${proj.role}\nTech Stack: ${proj.technologies.join(", ")}\nPerformance Metrics: ${proj.metrics}\nOverview: ${proj.detailedOverview}\n\nWould you like me to open the full case study drawer for ${proj.name}?`,
+          actionTag: `PROJECT_${proj.id.toUpperCase()}`,
+          isAiGenerated: false
+        };
+      }
+    }
     return {
-      text: "Ali offers 5 core commercial services: 1) Custom WordPress Development (Elementor Pro), 2) High-Converting Landing Pages, 3) Full E-Commerce Stores (WooCommerce), 4) Website Speed & SEO Optimization (90+ PageSpeed score), and 5) Modern Frontend Web Apps (React 19 & Next.js 15).",
-      actionTag: "FAQ_SERVICES",
+      text: "Muhammad Ali has 2+ years of verified commercial client delivery, working with both international creators (such as video director Ivana Alexx on Fiverr) and local retail enterprises (Nexcurex and Arshad Tiles). He also runs CodeVibe (@codevibe.anim) sharing creative frontend tutorials. Would you like to review his services, check pricing, or see specific project case studies?",
+      actionTag: "TELL_ME_MORE",
       isAiGenerated: false
     };
   }
 
-  // 5. WORKFLOW, PROCESS & REVISIONS FAQ
-  if (p.includes("process") || p.includes("workflow") || p.includes("steps") || p.includes("how it works")) {
+  // 17. MULTI-TURN FOLLOW-UP: "SHOW ME THAT PROJECT" / "OPEN THAT PROJECT"
+  if (
+    p.includes("show me that project") ||
+    p.includes("open that project") ||
+    p.includes("open project") ||
+    p.includes("show project") ||
+    p.includes("view that project")
+  ) {
+    const projId = ctx.lastDiscussedProject || "ivanalexx";
+    const proj = PORTFOLIO_DATA.projects.find((pr) => pr.id === projId);
+    if (proj) {
+      store.openCaseStudy(proj);
+      return {
+        text: `Opening the ${proj.title} case study drawer right now!`,
+        actionTag: `PROJECT_${projId.toUpperCase()}`,
+        isAiGenerated: false
+      };
+    }
+  }
+
+  // 18. QUICK THEME ADJUSTMENTS ("Make it darker", "Make it lighter")
+  if (p.includes("make it darker") || p.includes("darker") || p.includes("dark mode")) {
+    store.setTheme("jarvis-core");
     return {
-      text: "Ali follows a 4-stage client workflow: 1) Discovery & Strategy (understanding your business and audience), 2) Wireframe & UI/UX Design (modern, responsive prototypes), 3) Full Development & Speed Optimization, and 4) Quality Assurance, Client Review & Final Launch.",
-      actionTag: "FAQ_PROCESS",
+      text: "Calibrated HUD to high-contrast dark theme (JARVIS CORE). Deep space navy with cyan luminescence.",
+      actionTag: "THEME_jarvis-core",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("support") || p.includes("revision") || p.includes("warranty") || p.includes("after launch") || p.includes("maintenance")) {
+  if (p.includes("make it lighter") || p.includes("lighter") || p.includes("light mode") || p.includes("bright mode")) {
+    store.setTheme("paper-studio");
     return {
-      text: "Ali provides unlimited revisions during the active design phase until you are 100% satisfied, plus 30 days of complimentary post-launch technical support and maintenance to ensure flawless operation.",
-      actionTag: "FAQ_SUPPORT",
+      text: "Calibrated HUD to light theme (PAPER STUDIO). Editorial warm bone linen paper with slate typography and high daylight legibility.",
+      actionTag: "THEME_paper-studio",
       isAiGenerated: false
     };
   }
 
-  // 6. CONTACT & WHATSAPP
-  if (p.includes("contact") || p.includes("hire") || p.includes("email") || p.includes("whatsapp") || p.includes("phone") || p.includes("call") || p.includes("message")) {
+  // 19. ACCESSIBILITY & AUDIO COMMANDS
+  if (
+    p.includes("reduced motion") ||
+    p.includes("turn off animation") ||
+    p.includes("disable animation") ||
+    p.includes("stop animation") ||
+    p.includes("less motion")
+  ) {
+    store.setAnimationIntensity("off");
     return {
-      text: "You can connect with Muhammad Ali immediately: WhatsApp: +92 305 5389967 (Fastest Response) | Email: alikhanwebdeveloper@gmail.com | Based in Peshawar, Pakistan 🇵🇰 (working with global clients across US, UK, and European timezones).",
-      actionTag: "NAV_CONTACT",
+      text: "Reduced motion mode activated. Canvas particle fields, 3D rotations, and layout transitions have been minimized for accessibility.",
+      actionTag: "ACTION_REDUCED_MOTION_ON",
       isAiGenerated: false
     };
   }
 
-  // 7. LOCATION & REMOTE WORK
-  if (p.includes("location") || p.includes("where") || p.includes("country") || p.includes("city") || p.includes("peshawar") || p.includes("pakistan")) {
+  if (
+    p.includes("turn on animation") ||
+    p.includes("enable animation") ||
+    p.includes("restore animation") ||
+    p.includes("full motion")
+  ) {
+    store.setAnimationIntensity("full");
     return {
-      text: "Muhammad Ali is located in Peshawar, Khyber Pakhtunkhwa, Pakistan 🇵🇰. He works remotely with commercial clients and agency partners worldwide across flexible timezones.",
-      actionTag: "FAQ_LOCATION",
+      text: "Full motion animation systems restored. Fluid particles, 3D reactor nodes, and reactive transforms are now active.",
+      actionTag: "ACTION_REDUCED_MOTION_OFF",
       isAiGenerated: false
     };
   }
 
-  // 8. RESUME / CV
-  if (p.includes("cv") || p.includes("resume") || p.includes("download cv") || p.includes("pdf")) {
+  if (p.includes("mute") || p.includes("stop speaking") || p.includes("silence") || p.includes("be quiet")) {
+    store.setMasterMute(true);
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
     return {
-      text: "You can download Muhammad Ali's verified PDF resume directly from the header, the Hero section, or by clicking the 'Download Resume' button. It documents 2+ years of experience, client case studies, education, and technical certifications.",
-      actionTag: "DOWNLOAD_CV",
+      text: "Speech synthesis muted. Audio output is now silenced.",
+      actionTag: "ACTION_MUTE",
       isAiGenerated: false
     };
   }
 
-  // 9. Navigation commands
-  if (p.includes("biosphere") || p.includes("canvas") || p.includes("simulation") || p.includes("2.5d")) {
-    store.setViewMode("biosphere");
+  if (p.includes("unmute") || p.includes("speak again") || p.includes("enable audio")) {
+    store.setMasterMute(false);
     return {
-      text: "Activating real-time 2.5D Aetheria Biosphere. Engaging 25 Hz authoritative physics, spatial Moore grid, and procedural audio synthesis.",
-      actionTag: "NAV_BIOSPHERE",
+      text: "Voice speech synthesis unmuted. Audio responses will be read aloud.",
+      actionTag: "ACTION_UNMUTE",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("portfolio") || p.includes("showcase") || p.includes("return")) {
-    store.setViewMode("portfolio");
-    return {
-      text: "Returning to Muhammad Ali's primary portfolio terminal HUD.",
-      actionTag: "NAV_PORTFOLIO",
-      isAiGenerated: false
-    };
-  }
-
-  // 10. Theme switches via voice or chat
+  // 20. SPECIFIC THEME SWITCHES (All 12 Themes)
   const themeMap: Record<string, ThemeType> = {
+    "jarvis core": "jarvis-core",
+    "jarvis": "jarvis-core",
     "iron red": "iron-red",
     "iron man": "iron-red",
+    "cyberpunk neon": "cyberpunk-neon",
     "cyberpunk": "cyberpunk-neon",
+    "matrix terminal": "matrix-terminal",
     "matrix": "matrix-terminal",
+    "arctic glass": "arctic-glass",
     "arctic": "arctic-glass",
+    "midnight purple": "midnight-purple",
     "midnight": "midnight-purple",
+    "emerald professional": "emerald-professional",
+    "emerald pro": "emerald-professional",
     "emerald": "emerald-professional",
+    "solar gold": "solar-gold",
     "solar": "solar-gold",
+    "ocean blue": "ocean-blue",
     "ocean": "ocean-blue",
+    "rose neon": "rose-neon",
     "rose": "rose-neon",
+    "paper studio": "paper-studio",
     "paper": "paper-studio",
-    "monochrome": "monochrome",
-    "jarvis": "jarvis-core"
+    "monochrome": "monochrome"
   };
 
   for (const [key, themeVal] of Object.entries(themeMap)) {
-    if (p.includes(`switch to ${key}`) || p.includes(`theme ${key}`) || p.includes(`set ${key}`)) {
+    if (
+      p.includes(`switch to ${key}`) ||
+      p.includes(`theme ${key}`) ||
+      p.includes(`set ${key}`) ||
+      p.includes(`${key} theme`)
+    ) {
       store.setTheme(themeVal);
+      const desc = ALI_JARVIS_KNOWLEDGE.themeDescriptions[themeVal] || "Theme active.";
       return {
-        text: `HUD visual theme calibrated to ${themeVal.toUpperCase()}.`,
+        text: `HUD visual theme calibrated to ${themeVal.toUpperCase()}.\n${desc}`,
         actionTag: `THEME_${themeVal}`,
         isAiGenerated: false
       };
     }
   }
 
-  // 11. Projects deep-dive
+  // 21. PROJECTS DEEP-DIVE
   if (p.includes("ivana") || p.includes("ivanalexx")) {
+    ctx.lastDiscussedProject = "ivanalexx";
     const proj = PORTFOLIO_DATA.projects.find((pr) => pr.id === "ivanalexx");
     if (proj) store.openCaseStudy(proj);
     return {
-      text: "Opening Ivana Studio case study (ivanalexx.com). Designed and built with WordPress & Elementor Pro for an international video producer on Fiverr, featuring multi-format showreels and direct client lead capture.",
+      text: "Opening Ivana Studio case study (ivanalexx.com). Designed and built with WordPress & Elementor Pro for an international video producer on Fiverr, featuring multi-format showreels, cinematic video lightboxes, sub-2.2s load speed, and direct client lead capture.",
       actionTag: "PROJECT_IVANALEXX",
       isAiGenerated: false
     };
   }
 
   if (p.includes("nexcurex")) {
+    ctx.lastDiscussedProject = "nexcurex";
     const proj = PORTFOLIO_DATA.projects.find((pr) => pr.id === "nexcurex");
     if (proj) store.openCaseStudy(proj);
     return {
-      text: "Opening Nexcurex case study (nexcurex.com). Modern e-commerce fashion storefront featuring product categories, special edition discounts (OFF20), and WooCommerce responsive shopping.",
+      text: "Opening Nexcurex case study (nexcurex.com). A modern fashion e-commerce storefront featuring WooCommerce product categories, special edition discounts (OFF20), dynamic coupon codes, and a responsive mobile cart drawer.",
       actionTag: "PROJECT_NEXCUREX",
       isAiGenerated: false
     };
   }
 
   if (p.includes("arshad") || p.includes("tile")) {
+    ctx.lastDiscussedProject = "arshad";
     const proj = PORTFOLIO_DATA.projects.find((pr) => pr.id === "arshad");
     if (proj) store.openCaseStudy(proj);
     return {
-      text: "Opening Arshad Tiles case study. Ali achieved a 2.1s average load time and 100% mobile friendliness with product showcases and direct WhatsApp inquiry integration (+40% inquiry increase reported on CV).",
+      text: "Opening Arshad Tiles case study. Ali built a high-performance ceramic catalog site with a 2.1s average load time and 100% mobile responsiveness, resulting in a CV-reported +40% surge in customer inquiries through direct WhatsApp order integration.",
       actionTag: "PROJECT_ARSHAD",
       isAiGenerated: false
     };
   }
 
   if (p.includes("vet") || p.includes("hassan") || p.includes("clinic")) {
+    ctx.lastDiscussedProject = "vet";
     const proj = PORTFOLIO_DATA.projects.find((pr) => pr.id === "vet");
     if (proj) store.openCaseStudy(proj);
     return {
-      text: "Opening VetCarePlus (Malik Hassan Veterinary) case study. Clean medical portal with digital appointment requests, achieving 1.8s load speed and a 35% appointment surge (CV-reported).",
+      text: "Opening VetCarePlus (Malik Hassan Veterinary Clinic) case study. Clean medical portal with online appointment booking, achieving a 1.8s load speed and a CV-reported +35% appointment surge.",
       actionTag: "PROJECT_VET",
       isAiGenerated: false
     };
   }
 
   if (p.includes("shah") || p.includes("sweet")) {
+    ctx.lastDiscussedProject = "shah-sweet";
     const proj = PORTFOLIO_DATA.projects.find((pr) => pr.id === "shah-sweet");
     if (proj) store.openCaseStudy(proj);
     return {
-      text: "Opening Shah-Sweet Store case study. Artisanal confectionery catalog engineered with mobile-first layouts and direct WhatsApp order messaging.",
+      text: "Opening Shah-Sweet Store case study. Artisanal confectionery catalog engineered with mobile-first menu navigation and direct WhatsApp order messaging.",
       actionTag: "PROJECT_SHAH_SWEET",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("spatial") || p.includes("multiplayer") || p.includes("ecosystem") || p.includes("aetheria")) {
+  if (
+    p.includes("spatial") ||
+    p.includes("multiplayer") ||
+    p.includes("ecosystem") ||
+    p.includes("aetheria") ||
+    p.includes("biosphere")
+  ) {
+    ctx.lastDiscussedProject = "aetheria-ecosystem";
+    if (p.includes("switch") || p.includes("go to") || p.includes("activate")) {
+      store.setViewMode("biosphere");
+      return {
+        text: "Activating real-time 2.5D Aetheria Biosphere. Engaging 25 Hz authoritative Fastify physics, 60 WU spatial Moore grid, Hermite spline interpolation, synaptic tethers, and procedural audio synthesis.",
+        actionTag: "NAV_BIOSPHERE",
+        isAiGenerated: false
+      };
+    }
     const proj = PORTFOLIO_DATA.projects.find((pr) => pr.id === "aetheria-ecosystem");
     if (proj) store.openCaseStudy(proj);
     return {
@@ -823,34 +1152,233 @@ function generateDeterministicAnswer(
     };
   }
 
-  // 12. Skills & Education
-  if (p.includes("skill") || p.includes("tech") || p.includes("stack") || p.includes("wordpress") || p.includes("elementor") || p.includes("react")) {
+  // 22. EDUCATIONAL CONCEPTS (WordPress vs React, Three.js, Responsive Design, PageSpeed)
+  if (p.includes("wordpress") || p.includes("elementor")) {
+    ctx.lastDiscussedConcept = "wordpress-elementor";
     return {
-      text: "Muhammad Ali specializes in WordPress (90%), Elementor Pro (90%), Responsive Web Design (90%), HTML5/CSS3 (85%), UI/UX Design (88%), and JavaScript (80%), with active expansion into React 19, Next.js 15, and Three.js.",
+      text: "WordPress powers over 40% of the entire web. Ali builds custom WordPress websites using Elementor Pro, which gives clients full visual control to edit content easily, paired with custom CSS and asset dequeuing to ensure sub-2-second load times.",
+      actionTag: "CONCEPT_WORDPRESS",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("threejs") || p.includes("three.js") || p.includes("webgl") || p.includes("3d")) {
+    ctx.lastDiscussedConcept = "threejs-webgl";
+    return {
+      text: "Three.js is a WebGL-powered 3D graphics library. On this portfolio, it powers the interactive 3D Arc Reactor Hologram and the real-time 2.5D Aetheria Biosphere simulation, rendering particles and meshes via custom GLSL shaders without bogging down browser performance.",
+      actionTag: "CONCEPT_THREEJS",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("responsive") || p.includes("mobile friendly") || p.includes("mobile")) {
+    ctx.lastDiscussedConcept = "responsive-design";
+    return {
+      text: "Responsive design ensures websites automatically adapt seamlessly across mobile phones, tablets, laptops, and 4K desktop screens using fluid grids, flexbox, and dynamic rem typography with zero layout shifts.",
+      actionTag: "CONCEPT_RESPONSIVE",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("pagespeed") || p.includes("web vitals") || p.includes("speed") || p.includes("optimization")) {
+    ctx.lastDiscussedConcept = "pagespeed-optimization";
+    return {
+      text: "PageSpeed optimization focuses on Google Core Web Vitals: Largest Contentful Paint (LCP < 2.5s) and Cumulative Layout Shift (CLS < 0.1). Ali optimizes websites through Brotli compression, WebP image conversion, asset minification, and critical CSS rendering.",
+      actionTag: "CONCEPT_PAGESPEED",
+      isAiGenerated: false
+    };
+  }
+
+  // 23. PRICING, BUDGET & RATES FAQ
+  if (
+    p.includes("price") ||
+    p.includes("cost") ||
+    p.includes("rate") ||
+    p.includes("how much") ||
+    p.includes("budget") ||
+    p.includes("quote") ||
+    p.includes("fee") ||
+    p.includes("charge")
+  ) {
+    return {
+      text: "Muhammad Ali offers transparent, competitive pricing packages:\n• High-Converting Landing Pages: $150 – $350 (2–4 days)\n• Custom Business WordPress Sites (Elementor Pro): $300 – $600 (5–9 days)\n• Full WooCommerce E-Commerce Stores: $500 – $1,200+ (10–14 days)\n• Speed & Core Web Vitals Optimization: $100 – $250 (1–3 days)\nReach out on WhatsApp (+92 305 5389967) for a formal proposal within 1 hour!",
+      actionTag: "FAQ_PRICING",
+      isAiGenerated: false
+    };
+  }
+
+  // 24. TURNAROUND TIME & DELIVERY FAQ
+  if (
+    p.includes("fast") ||
+    p.includes("how long") ||
+    p.includes("turnaround") ||
+    p.includes("delivery") ||
+    p.includes("timeline") ||
+    p.includes("duration") ||
+    p.includes("timeframe") ||
+    p.includes("deadline")
+  ) {
+    return {
+      text: "Muhammad Ali delivers rapid, reliable turnarounds:\n• Single Landing Pages: 2 – 4 business days\n• Multi-Page Business Websites: 5 – 9 business days\n• E-Commerce Stores: 10 – 14 business days\nExpress rush delivery is available upon request for urgent commercial launches.",
+      actionTag: "FAQ_TIMELINE",
+      isAiGenerated: false
+    };
+  }
+
+  // 25. SERVICES & E-COMMERCE FAQ
+  if (
+    p.includes("ecommerce") ||
+    p.includes("woocommerce") ||
+    p.includes("store") ||
+    p.includes("shop") ||
+    p.includes("sell online")
+  ) {
+    return {
+      text: "Yes! Muhammad Ali builds complete WooCommerce and Shopify stores featuring product catalogs, category filters, checkout gateways (Stripe, PayPal, local bank transfers), and automated discount coupons (like Nexcurex at nexcurex.com).",
+      actionTag: "FAQ_ECOMMERCE",
+      isAiGenerated: false
+    };
+  }
+
+  if (
+    p.includes("service") ||
+    p.includes("what can ali do") ||
+    p.includes("offer") ||
+    p.includes("hire for")
+  ) {
+    return {
+      text: "Muhammad Ali offers 5 core commercial services:\n1. Custom WordPress Development (Elementor Pro)\n2. High-Converting Landing Pages\n3. Full E-Commerce Stores (WooCommerce)\n4. Speed & Core Web Vitals Optimization (90+ PageSpeed score)\n5. Interactive Web Applications (React 19 & Next.js 15)",
+      actionTag: "FAQ_SERVICES",
+      isAiGenerated: false
+    };
+  }
+
+  // 26. WORKFLOW & REVISIONS FAQ
+  if (p.includes("process") || p.includes("workflow") || p.includes("steps") || p.includes("how it works")) {
+    return {
+      text: "Ali follows a structured 4-step workflow:\n1. Discovery & Strategy: Clarifying your target audience and project goals.\n2. UI/UX Wireframing: Crafting modern, high-converting prototypes.\n3. Development & Speed Optimization: Building cleanly with responsive precision.\n4. Quality Assurance, Client Revisions & Final Launch.",
+      actionTag: "FAQ_PROCESS",
+      isAiGenerated: false
+    };
+  }
+
+  if (
+    p.includes("support") ||
+    p.includes("revision") ||
+    p.includes("warranty") ||
+    p.includes("after launch") ||
+    p.includes("maintenance")
+  ) {
+    return {
+      text: "Ali provides unlimited revisions during the active design phase until you are 100% satisfied, plus 30 days of complimentary post-launch technical support and maintenance.",
+      actionTag: "FAQ_SUPPORT",
+      isAiGenerated: false
+    };
+  }
+
+  // 27. CONTACT & WHATSAPP
+  if (
+    p.includes("contact") ||
+    p.includes("hire") ||
+    p.includes("email") ||
+    p.includes("whatsapp") ||
+    p.includes("phone") ||
+    p.includes("call") ||
+    p.includes("message")
+  ) {
+    return {
+      text: "You can reach Muhammad Ali directly:\n• WhatsApp: +92 305 5389967 (Fastest response)\n• Email: alikhanwebdeveloper@gmail.com\n• Based in Peshawar, Pakistan (available for global clients across US, UK, and European timezones).",
+      actionTag: "NAV_CONTACT",
+      isAiGenerated: false
+    };
+  }
+
+  // 28. LOCATION & ABOUT ALI
+  if (
+    p.includes("who is ali") ||
+    p.includes("who is muhammad ali") ||
+    p.includes("tell me about ali") ||
+    p.includes("about ali") ||
+    p.includes("about muhammad ali") ||
+    p.includes("location") ||
+    p.includes("where") ||
+    p.includes("city") ||
+    p.includes("peshawar") ||
+    p.includes("pakistan")
+  ) {
+    return {
+      text: "Muhammad Ali is a Frontend Developer & Digital Creator based in Peshawar, Pakistan 🇵🇰 with 2+ years of verified commercial client delivery. He specializes in WordPress, Elementor Pro, high-converting responsive UI/UX, and Web Vitals speed optimization, working remotely with clients worldwide.",
+      actionTag: "INFO_ALI",
+      isAiGenerated: false
+    };
+  }
+
+  // 29. RESUME / CV
+  if (p.includes("cv") || p.includes("resume") || p.includes("download cv") || p.includes("pdf")) {
+    return {
+      text: "You can view or download Muhammad Ali's verified PDF resume directly. It documents 2+ years of commercial client work, skills, and education.",
+      actionTag: "DOWNLOAD_CV",
+      isAiGenerated: false
+    };
+  }
+
+  // 30. NAVIGATION COMMANDS
+  if (p.includes("portfolio") || p.includes("showcase") || p.includes("return")) {
+    store.setViewMode("portfolio");
+    return {
+      text: "Returning to Muhammad Ali's primary portfolio terminal HUD.",
+      actionTag: "NAV_PORTFOLIO",
+      isAiGenerated: false
+    };
+  }
+
+  if (p.includes("go to contact") || p.includes("scroll to contact")) {
+    return { text: "Navigating to the Contact section.", actionTag: "NAV_CONTACT", isAiGenerated: false };
+  }
+  if (p.includes("go to projects") || p.includes("show projects") || p.includes("scroll to projects")) {
+    return { text: "Navigating to the Client Projects section.", actionTag: "NAV_PROJECTS", isAiGenerated: false };
+  }
+  if (p.includes("go to services") || p.includes("scroll to services")) {
+    return { text: "Navigating to the Services & Pricing section.", actionTag: "NAV_SERVICES", isAiGenerated: false };
+  }
+  if (p.includes("go to about") || p.includes("scroll to about")) {
+    return { text: "Navigating to the About Muhammad Ali section.", actionTag: "NAV_ABOUT", isAiGenerated: false };
+  }
+  if (p.includes("go to experience") || p.includes("scroll to experience")) {
+    return { text: "Navigating to the Commercial Experience section.", actionTag: "NAV_EXPERIENCE", isAiGenerated: false };
+  }
+  if (p.includes("go to faq") || p.includes("scroll to faq")) {
+    return { text: "Navigating to the Frequently Asked Questions section.", actionTag: "NAV_FAQ", isAiGenerated: false };
+  }
+
+  // 31. SKILLS & EDUCATION
+  if (p.includes("skill") || p.includes("tech") || p.includes("stack")) {
+    return {
+      text: "Muhammad Ali specializes in WordPress (90%), Elementor Pro (90%), Responsive Web Design (90%), HTML5/CSS3 (85%), UI/UX Design (88%), and JavaScript (80%), with active expansion into React 19, Next.js 15, and Three.js WebGL.",
       actionTag: "SHOW_SKILLS",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("education") || p.includes("dit") || p.includes("college")) {
+  if (p.includes("education") || p.includes("dit") || p.includes("college") || p.includes("degree")) {
     return {
-      text: "Muhammad Ali completed his FSc (Pre-Medical) at Peshawar Model Degree College (2025) and is currently completing his Diploma of Information Technology (DIT, 2025–Present).",
+      text: "Muhammad Ali completed his FSc (Pre-Medical) at Peshawar Model Degree College (2023–2025) and is currently completing his Diploma in Information Technology (DIT, 2025–Present) at the Government Polytechnic Institute.",
       actionTag: "SHOW_EDUCATION",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("codevibe") || p.includes("instagram") || p.includes("content") || p.includes("tutorial")) {
+  if (p.includes("codevibe") || p.includes("instagram") || p.includes("social") || p.includes("content")) {
     return {
-      text: "Muhammad Ali runs CodeVibe (@codevibe.anim on Instagram & TikTok), creating coding tutorials focused on creative CSS animations, JavaScript micro-interactions, and 2.5D web experiments.",
+      text: "Muhammad Ali runs CodeVibe (@codevibe.anim on Instagram), creating visual coding tutorials focused on creative CSS animations, JavaScript micro-interactions, and 2.5D web experiments.",
       actionTag: "SHOW_CODEVIBE",
       isAiGenerated: false
     };
   }
 
-  // Default fallback
+  // 32. POLITE INTELLIGENT FALLBACK FOR UNRECOGNIZED / AMBIGUOUS QUERIES
   return {
-    text: "Understood. I am here to help you evaluate or hire Muhammad Ali. You can ask about his commercial client projects (Ivana Studio, Nexcurex, Arshad Tiles), website pricing, delivery timelines, services offered, or contact him directly on WhatsApp at +92 305 5389967.",
+    text: "I'm not quite sure I understand that query, but I'm here to help! Would you like to:\n• Explore Ali's client projects (Ivana Studio, Nexcurex, Arshad Tiles)\n• Check website pricing and turnaround times\n• Switch visual themes (e.g., 'switch to cyberpunk' or 'make it lighter')\n• Contact Muhammad Ali directly on WhatsApp (+92 305 5389967)?",
     actionTag: "INFO_DEFAULT",
     isAiGenerated: false
   };
