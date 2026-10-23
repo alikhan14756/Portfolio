@@ -1,4 +1,4 @@
-﻿import { create } from "zustand";
+import { create } from "zustand";
 import { ProjectCaseStudy, PORTFOLIO_DATA } from "../data/portfolioData";
 import { ALI_JARVIS_KNOWLEDGE } from "../data/aliJarvisKnowledge";
 import { STYLE_PRESETS, getStylePreset } from "../data/stylePresets";
@@ -276,6 +276,84 @@ export function executeActionTag(actionTag: string | undefined, store: Portfolio
   }
 }
 
+// Direct Google Gemini AI helper with automatic multi-model fallback and speed optimization
+async function callGeminiDirectly(
+  userText: string,
+  history: Array<{ sender: string; text: string }>
+): Promise<string | null> {
+  const apiKey = (() => {
+    try {
+      if (typeof window !== "undefined") {
+        const custom = localStorage.getItem("gemini_api_key") || localStorage.getItem("ali_ai_key");
+        if (custom && custom.trim()) return custom.trim();
+      }
+      return typeof atob === "function"
+        ? atob("QVEuQWI4Uk42SktqNVRqdzA4VDlyWEhKb0VTQlRwWHJmWnUwci1NWDU5YkhTQ01IM21YWWc=")
+        : "";
+    } catch {
+      return "";
+    }
+  })();
+
+  if (!apiKey) return null;
+
+  const sysInstruction =
+    "You are Ali AI, the intelligent, friendly, and expert AI assistant for Muhammad Ali's developer portfolio (alibuild.site). " +
+    "About Muhammad Ali: Senior Frontend Developer and WordPress & Elementor Pro Specialist based in Peshawar, Pakistan with 2+ years of verified commercial delivery. " +
+    "Real client projects: Ivana Studio (luxury fashion boutique e-commerce), Nexcurex (crypto fintech trading platform), Arshad Tiles (commercial ceramics distributor), VetCarePlus (veterinary clinic management portal), and Shah Sweet (artisan confectionery store). " +
+    "Services & Pricing: High-Converting Landing Pages ($150-$350, 2-4 days), Custom Business WordPress Sites with Elementor Pro ($300-$600, 5-9 days), Full WooCommerce E-Commerce Stores ($500-$1,200+, 10-14 days), Speed & Core Web Vitals Optimization ($100-$250, 1-3 days). Hourly rate: $25-$40/hr. WhatsApp: +92 305 5389967. Email: alikhanwebdeveloper@gmail.com. " +
+    "Core Skills: React 19, Next.js 15, TypeScript, Tailwind CSS, WordPress, Elementor Pro, WooCommerce, Framer Motion, GSAP, Three.js, REST APIs, and 98+ PageSpeed optimization. " +
+    "CRITICAL CAPABILITY: You are ALSO a brilliant, versatile, general-purpose AI assistant! You CAN and MUST answer ANY question the user asks — including smart glasses & wearable tech (like Ray-Ban Meta smart glasses, Apple Vision Pro), programming in any language, science, history, general knowledge, design advice, or life questions! " +
+    "Style: Be engaging, warm, professional, and direct. Keep answers concise (2 to 4 sentences maximum) so they are easy to read in a portfolio chat popup. Never refer to yourself as Jarvis.";
+
+  const historyPayload = history.slice(-4).map((m) => ({
+    role: m.sender === "user" ? "user" : "model",
+    parts: [{ text: m.text }]
+  }));
+
+  const candidateModels = ["gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-flash-latest"];
+
+  for (const model of candidateModels) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 7000);
+
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: sysInstruction }] },
+            contents: [
+              ...historyPayload,
+              { role: "user", parts: [{ text: userText }] }
+            ],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 350
+            }
+          }),
+          signal: controller.signal
+        }
+      );
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        const data = await res.json();
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (reply && reply.trim().length > 0) {
+          return reply.trim();
+        }
+      }
+    } catch {
+      // Try next model if timeout or network issue occurs
+    }
+  }
+
+  return null;
+}
+
 export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
   ...DEFAULT_PRESET,
   viewMode: "portfolio",
@@ -455,113 +533,41 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
     try {
       let botResponse: { text: string; actionTag?: string; isAiGenerated?: boolean };
 
-      // 1. Check local catalog first for immediate intents (themes, styles, greetings, FAQ, project actions)
+      // 1. Generate local deterministic answer to check for direct UI commands or fallback
       const deterministic = generateDeterministicAnswer(text, get(), convCtx);
 
-      if (deterministic.actionTag && deterministic.actionTag !== "INFO_DEFAULT") {
+      // If the user issued a direct UI action command (switch style, switch theme, open project, nav), execute immediately
+      const isStrictUiAction =
+        deterministic.actionTag &&
+        (deterministic.actionTag.startsWith("STYLE_") ||
+         deterministic.actionTag.startsWith("THEME_") ||
+         deterministic.actionTag.startsWith("PROJECT_") ||
+         deterministic.actionTag.startsWith("NAV_") ||
+         deterministic.actionTag.startsWith("ACTION_") ||
+         deterministic.actionTag === "OPEN_STYLE_LAB" ||
+         deterministic.actionTag === "DOWNLOAD_CV");
+
+      if (isStrictUiAction) {
         botResponse = deterministic;
       } else {
-        // 2. For open-ended or unrecognized queries, attempt the server endpoint
-        const serverUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000";
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 12000);
-
+        // 2. For questions, conversations, and general queries (Meta glasses, tech, pricing, skills, greetings):
+        // Directly call Google Gemini AI in real-time
         const historyPayload = get().messages.slice(-6).map((m) => ({
           sender: m.sender,
           text: m.text
         }));
 
-        try {
-          const res = await fetch(`${serverUrl}/api/ai/chat`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: text, history: historyPayload }),
-            signal: controller.signal
-          });
-          clearTimeout(timeoutId);
+        const geminiText = await callGeminiDirectly(text, historyPayload);
 
-          if (res.ok) {
-            const data = await res.json();
-            botResponse = {
-              text: data.reply || data.text,
-              actionTag: data.actionTag,
-              isAiGenerated: true
-            };
-          } else {
-            botResponse = deterministic;
-          }
-        } catch {
+        if (geminiText) {
+          botResponse = {
+            text: geminiText,
+            actionTag: "AI_GENERATED",
+            isAiGenerated: true
+          };
+        } else {
+          // Instant safe fallback to local knowledge base
           botResponse = deterministic;
-        }
-
-        // Direct Google Gemini AI integration (Uses browser-stored key or environment)
-        if (botResponse.actionTag === "INFO_DEFAULT") {
-          try {
-            const customKey = typeof window !== "undefined"
-              ? (localStorage.getItem("gemini_api_key") || localStorage.getItem("ali_ai_key"))
-              : null;
-
-            // Use custom key or default runtime-decoded portfolio key so ANY visitor gets real Gemini AI
-            const apiKey = customKey || (() => {
-              try {
-                return typeof atob === "function"
-                  ? atob("QVEuQWI4Uk42SktqNVRqdzA4VDlyWEhKb0VTQlRwWHJmWnUwci1NWDU5YkhTQ01IM21YWWc=")
-                  : "";
-              } catch {
-                return "";
-              }
-            })();
-
-            if (apiKey) {
-              const sysInstruction =
-                "You are Ali AI, the intelligent, friendly, and expert AI assistant for Muhammad Ali's developer portfolio (alibuild.site). " +
-                "About Muhammad Ali: Senior Frontend Developer, WordPress & Elementor Pro Specialist from Peshawar, Pakistan with 2+ years of verified commercial delivery (projects: Ivana Studio, Nexcurex, Arshad Tiles, VetCarePlus, Shah Sweet). " +
-                "You are ALSO a versatile general-purpose AI! You CAN and SHOULD answer ANY technical, gadget, science, general knowledge, or worldly question (e.g. Meta smart glasses, Apple Vision Pro, frameworks, hardware, AI, history) accurately, conversationally, and helpfully! " +
-                "Keep responses concise (2 to 4 sentences maximum, natural, engaging, and friendly). Never call yourself Jarvis.";
-
-              const geminiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=" + apiKey;
-
-              const historyPayload = get().messages.slice(-4).map((m) => ({
-                role: m.sender === "user" ? "user" : "model",
-                parts: [{ text: m.text }]
-              }));
-
-              const aiController = new AbortController();
-              const aiTimeout = setTimeout(() => aiController.abort(), 9000);
-
-              const geminiRes = await fetch(geminiUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  system_instruction: { parts: [{ text: sysInstruction }] },
-                  contents: [
-                    ...historyPayload,
-                    { role: "user", parts: [{ text }] }
-                  ],
-                  generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 350
-                  }
-                }),
-                signal: aiController.signal
-              });
-              clearTimeout(aiTimeout);
-
-              if (geminiRes.ok) {
-                const geminiData = await geminiRes.json();
-                const replyText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (replyText && replyText.trim().length > 0) {
-                  botResponse = {
-                    text: replyText.trim(),
-                    actionTag: "AI_GENERATED",
-                    isAiGenerated: true
-                  };
-                }
-              }
-            }
-          } catch (e) {
-            // Keep deterministic fallback if Gemini network fails
-          }
         }
       }
 
@@ -838,7 +844,7 @@ function generateDeterministicAnswer(
   // 1. ISLAMIC GREETINGS
   if (/\b(assalam|asalam|aslam|salam|slam|slm|aoa|walaykum|walaikum)\b/i.test(p) || p.includes("salam") || p.includes("alaikum") || p.includes("alaykum")) {
     return {
-      text: "Wa Alaikum Assalam wa Rahmatullahi wa Barakatuh! (Ã™Ë†Ã˜Â¹Ã™â€žÃ™Å Ã™Æ’Ã™â€¦ Ã˜Â§Ã™â€žÃ˜Â³Ã™â€žÃ˜Â§Ã™â€¦ Ã™Ë†Ã˜Â±Ã˜Â­Ã™â€¦Ã˜Â© Ã˜Â§Ã™â€žÃ™â€žÃ™â€¡ Ã™Ë†Ã˜Â¨Ã˜Â±Ã™Æ’Ã˜Â§Ã˜ÂªÃ™â€¡) Welcome to Muhammad Ali's portfolio! How are you doing today? I am Ali AI, Ali's interactive portfolio assistant and guide. How can I help you? You can ask about Ali's real client projects, services, pricing, skills, or tell me to switch the theme!",
+      text: "Wa Alaikum Assalam wa Rahmatullahi wa Barakatuh! (وَعَلَيْكُمُ ٱلسَّلَامُ وَرَحْمَةُ ٱللَّٰهِ وَبَرَكَاتُهُ) Welcome to Muhammad Ali's portfolio! How are you doing today? I am Ali AI, Ali's interactive portfolio assistant and guide. How can I help you? You can ask about Ali's real client projects, services, pricing, skills, or tell me to switch the theme!",
       actionTag: "GREETING_SALAM",
       isAiGenerated: false
     };
@@ -853,7 +859,7 @@ function generateDeterministicAnswer(
     p === "jarvis"
   ) {
     return {
-      text: "Hello! Ã°Å¸ËœÅ  I am Ali AI, Muhammad Ali's personal portfolio assistant and guide. How can I assist you today? You can ask about Ali's commercial client work (like Ivana Studio and Nexcurex), explore web development services and rates, or tell me to switch styles like 'change theme to glassmorphism'!",
+      text: "Hello! Welcome to Muhammad Ali's portfolio. I am Ali AI, Muhammad Ali's personal assistant and guide. How can I assist you today? You can ask about Ali's commercial client work (like Ivana Studio and Nexcurex), explore web development services and rates, or tell me to switch styles like 'change theme to glassmorphism'!",
       actionTag: "GREETING",
       isAiGenerated: false
     };
@@ -933,7 +939,7 @@ function generateDeterministicAnswer(
     p.includes("what are you capable of")
   ) {
     return {
-      text: "I can assist you with:\n1. Discovering client projects: Ivana Studio (ivanalexx.com), Nexcurex (nexcurex.com), Arshad Tiles, VetCarePlus, and the Aetheria 2.5D simulation.\n2. Checking pricing & timelines: Landing pages ($150Ã¢â‚¬â€œ$350), WordPress sites ($300Ã¢â‚¬â€œ$600), WooCommerce stores ($500Ã¢â‚¬â€œ$1,200+).\n3. Visual customization: Switching between all 12 themes (Cyberpunk, Matrix, Paper Studio, Arctic Glass, etc.).\n4. Audio & accessibility: Toggle reduced motion or mute voice reading.\n5. Explaining web technologies: WordPress, Elementor, React, Three.js, and PageSpeed optimization.\n6. Direct contact: Routing you directly to Muhammad Ali on WhatsApp (+92 305 5389967).",
+      text: "I can assist you with:\n1. Discovering client projects: Ivana Studio (ivanalexx.com), Nexcurex (nexcurex.com), Arshad Tiles, VetCarePlus, and Shah Sweet.\n2. Checking pricing & timelines: Landing pages ($150-$350), WordPress sites ($300-$600), WooCommerce stores ($500-$1,200+).\n3. Visual customization: Switching between all 28 design styles (Claymorphism, Glassmorphism, Cyberpunk, Neobrutalism, etc.).\n4. Audio & accessibility: Toggle reduced motion or mute voice reading.\n5. Explaining web technologies: WordPress, Elementor, React, Three.js, and PageSpeed optimization.\n6. Direct contact: Routing you directly to Muhammad Ali on WhatsApp (+92 305 5389967).",
       actionTag: "CAPABILITIES",
       isAiGenerated: false
     };
@@ -947,7 +953,7 @@ function generateDeterministicAnswer(
     p.includes("assist me")
   ) {
     return {
-      text: "I would be glad to help! What are you looking to do? You can:\nÃ¢â‚¬Â¢ Explore Ali's client case studies (Ivana Studio, Nexcurex, Arshad Tiles)\nÃ¢â‚¬Â¢ Inquire about website pricing and delivery timelines\nÃ¢â‚¬Â¢ Switch themes (try saying 'switch to cyberpunk' or 'make it lighter')\nÃ¢â‚¬Â¢ Contact Muhammad Ali directly on WhatsApp for a custom quote",
+      text: "I would be glad to help! What are you looking to do? You can:\n• Explore Ali's client case studies (Ivana Studio, Nexcurex, Arshad Tiles)\n• Inquire about website pricing and delivery timelines\n• Switch themes (try saying 'switch to cyberpunk' or 'make it lighter')\n• Contact Muhammad Ali directly on WhatsApp for a custom quote",
       actionTag: "HELP",
       isAiGenerated: false
     };
@@ -1257,7 +1263,7 @@ function generateDeterministicAnswer(
     if (hasName && (isCommand || isShortQuery)) {
       store.setStyleId(preset.id);
       return {
-        text: `Design system calibrated to ${preset.name.toUpperCase()}! Ã°Å¸Å½Â¨\n${preset.shortDesc}\n\nThe entire website has been restyled in real-time. You can also ask me to switch to other styles like Aurora, Neobrutalism, Cyberpunk, or Minimalist.`,
+        text: `Design system calibrated to ${preset.name.toUpperCase()}!\n${preset.shortDesc}\n\nThe entire website has been restyled in real-time. You can also ask me to switch to other styles like Aurora, Neobrutalism, Cyberpunk, or Minimalist.`,
         actionTag: `STYLE_${preset.id}`,
         isAiGenerated: false
       };
@@ -1439,7 +1445,7 @@ function generateDeterministicAnswer(
     p.includes("charge")
   ) {
     return {
-      text: "Muhammad Ali offers transparent, competitive pricing packages:\nÃ¢â‚¬Â¢ High-Converting Landing Pages: $150 Ã¢â‚¬â€œ $350 (2Ã¢â‚¬â€œ4 days)\nÃ¢â‚¬Â¢ Custom Business WordPress Sites (Elementor Pro): $300 Ã¢â‚¬â€œ $600 (5Ã¢â‚¬â€œ9 days)\nÃ¢â‚¬Â¢ Full WooCommerce E-Commerce Stores: $500 Ã¢â‚¬â€œ $1,200+ (10Ã¢â‚¬â€œ14 days)\nÃ¢â‚¬Â¢ Speed & Core Web Vitals Optimization: $100 Ã¢â‚¬â€œ $250 (1Ã¢â‚¬â€œ3 days)\nReach out on WhatsApp (+92 305 5389967) for a formal proposal within 1 hour!",
+      text: "Muhammad Ali offers transparent, competitive pricing packages:\n• High-Converting Landing Pages: $150 – $350 (2–4 days)\n• Custom Business WordPress Sites (Elementor Pro): $300 – $600 (5–9 days)\n• Full WooCommerce E-Commerce Stores: $500 – $1,200+ (10–14 days)\n• Speed & Core Web Vitals Optimization: $100 – $250 (1–3 days)\nReach out on WhatsApp (+92 305 5389967) for a formal proposal within 1 hour!",
       actionTag: "FAQ_PRICING",
       isAiGenerated: false
     };
@@ -1457,7 +1463,7 @@ function generateDeterministicAnswer(
     p.includes("deadline")
   ) {
     return {
-      text: "Muhammad Ali delivers rapid, reliable turnarounds:\nÃ¢â‚¬Â¢ Single Landing Pages: 2 Ã¢â‚¬â€œ 4 business days\nÃ¢â‚¬Â¢ Multi-Page Business Websites: 5 Ã¢â‚¬â€œ 9 business days\nÃ¢â‚¬Â¢ E-Commerce Stores: 10 Ã¢â‚¬â€œ 14 business days\nExpress rush delivery is available upon request for urgent commercial launches.",
+      text: "Muhammad Ali delivers rapid, reliable turnarounds:\n• Single Landing Pages: 2 – 4 business days\n• Multi-Page Business Websites: 5 – 9 business days\n• E-Commerce Stores: 10 – 14 business days\nExpress rush delivery is available upon request for urgent commercial launches.",
       actionTag: "FAQ_TIMELINE",
       isAiGenerated: false
     };
@@ -1525,7 +1531,7 @@ function generateDeterministicAnswer(
     p.includes("message")
   ) {
     return {
-      text: "You can reach Muhammad Ali directly:\nÃ¢â‚¬Â¢ WhatsApp: +92 305 5389967 (Fastest response)\nÃ¢â‚¬Â¢ Email: alikhanwebdeveloper@gmail.com\nÃ¢â‚¬Â¢ Based in Peshawar, Pakistan (available for global clients across US, UK, and European timezones).",
+      text: "You can reach Muhammad Ali directly:\n• WhatsApp: +92 305 5389967 (Fastest response)\n• Email: alikhanwebdeveloper@gmail.com\n• Based in Peshawar, Pakistan (available for global clients across US, UK, and European timezones).",
       actionTag: "NAV_CONTACT",
       isAiGenerated: false
     };
@@ -1545,7 +1551,7 @@ function generateDeterministicAnswer(
     p.includes("pakistan")
   ) {
     return {
-      text: "Muhammad Ali is a Frontend Developer & Digital Creator based in Peshawar, Pakistan Ã°Å¸â€¡ÂµÃ°Å¸â€¡Â° with 2+ years of verified commercial client delivery. He specializes in WordPress, Elementor Pro, high-converting responsive UI/UX, and Web Vitals speed optimization, working remotely with clients worldwide.",
+      text: "Muhammad Ali is a Frontend Developer & Digital Creator based in Peshawar, Pakistan with 2+ years of verified commercial client delivery. He specializes in WordPress, Elementor Pro, high-converting responsive UI/UX, and Web Vitals speed optimization, working remotely with clients worldwide.",
       actionTag: "INFO_ALI",
       isAiGenerated: false
     };
@@ -1600,7 +1606,7 @@ function generateDeterministicAnswer(
 
   if (p.includes("education") || p.includes("dit") || p.includes("college") || p.includes("degree")) {
     return {
-      text: "Muhammad Ali completed his FSc (Pre-Medical) at Peshawar Model Degree College (2023Ã¢â‚¬â€œ2025) and is currently completing his Diploma in Information Technology (DIT, 2025Ã¢â‚¬â€œPresent) at the Government Polytechnic Institute.",
+      text: "Muhammad Ali completed his FSc (Pre-Medical) at Peshawar Model Degree College (2023–2025) and is currently completing his Diploma in Information Technology (DIT, 2025–Present) at the Government Polytechnic Institute.",
       actionTag: "SHOW_EDUCATION",
       isAiGenerated: false
     };
@@ -1616,7 +1622,7 @@ function generateDeterministicAnswer(
 
   // 32. POLITE INTELLIGENT FALLBACK FOR UNRECOGNIZED / AMBIGUOUS QUERIES
   return {
-    text: "I'm not quite sure I understand that query, but I'm here to help! Would you like to:\nÃ¢â‚¬Â¢ Explore Ali's client projects (Ivana Studio, Nexcurex, Arshad Tiles)\nÃ¢â‚¬Â¢ Check website pricing and turnaround times\nÃ¢â‚¬Â¢ Switch visual themes (e.g., 'switch to cyberpunk' or 'make it lighter')\nÃ¢â‚¬Â¢ Contact Muhammad Ali directly on WhatsApp (+92 305 5389967)?",
+    text: "I'm not quite sure I understand that query, but I'm here to help! Would you like to:\n• Explore Ali's client projects (Ivana Studio, Nexcurex, Arshad Tiles)\n• Check website pricing and turnaround times\n• Switch visual themes (e.g., 'switch to cyberpunk' or 'make it lighter')\n• Contact Muhammad Ali directly on WhatsApp (+92 305 5389967)?",
     actionTag: "INFO_DEFAULT",
     isAiGenerated: false
   };
