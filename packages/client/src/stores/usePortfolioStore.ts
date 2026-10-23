@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { ProjectCaseStudy, PORTFOLIO_DATA } from "../data/portfolioData";
 import { ALI_JARVIS_KNOWLEDGE } from "../data/aliJarvisKnowledge";
+import { STYLE_PRESETS, getStylePreset } from "../data/stylePresets";
 
 export type ThemeType =
   | "jarvis-core"
@@ -33,6 +34,7 @@ export type OrbStyle = "arc-reactor" | "pulsar" | "minimal-ring" | "off";
 
 export interface AppearancePreset {
   version: 2;
+  styleId: string;
   theme: ThemeType;
   accentOverride: string;
   layout: LayoutMode;
@@ -50,6 +52,7 @@ export interface AppearancePreset {
   cursorSpotlight: boolean;
   soundEnabled: boolean;
   masterMute: boolean;
+  favoriteStyles: string[];
 }
 
 export interface JarvisMessage {
@@ -62,6 +65,12 @@ export interface JarvisMessage {
 }
 
 export interface PortfolioStore {
+  // Style Lab (28 Design Systems)
+  styleId: string;
+  previewStyleId: string | null;
+  isStyleLabOpen: boolean;
+  favoriteStyles: string[];
+
   // Theme & Appearance Customization
   theme: ThemeType;
   accentOverride: string;
@@ -87,7 +96,7 @@ export interface PortfolioStore {
   // Preloader State
   isPreloaderActive: boolean;
 
-  // Case Study Drawer & Theme Studio Modals
+  // Case Study Drawer, Theme Studio & Style Lab Modals
   activeDrawerProject: ProjectCaseStudy | null;
   isCustomizerOpen: boolean;
 
@@ -100,6 +109,11 @@ export interface PortfolioStore {
   messages: JarvisMessage[];
 
   // Actions
+  setStyleId: (id: string) => void;
+  setPreviewStyleId: (id: string | null) => void;
+  setStyleLabOpen: (open: boolean) => void;
+  toggleFavoriteStyle: (id: string) => void;
+
   setTheme: (t: ThemeType) => void;
   setAccentOverride: (hex: string) => void;
   setLayout: (l: LayoutMode) => void;
@@ -137,6 +151,7 @@ export interface PortfolioStore {
 
 const DEFAULT_PRESET: AppearancePreset = {
   version: 2,
+  styleId: "claymorphism",
   theme: "jarvis-core",
   accentOverride: "",
   layout: "hud-grid",
@@ -153,14 +168,15 @@ const DEFAULT_PRESET: AppearancePreset = {
   showScanlines: true,
   cursorSpotlight: true,
   soundEnabled: false,
-  masterMute: false
+  masterMute: false,
+  favoriteStyles: ["glassmorphism", "cyberpunk", "neobrutalism", "aurora", "bento-grid"]
 };
 
 const INITIAL_MESSAGES: JarvisMessage[] = [
   {
     id: "init_1",
     sender: "jarvis",
-    text: "Hello! I am ALI JARVIS, Muhammad Ali's personal portfolio guide and friendly AI assistant. I'm here to help you explore Ali's client websites (like Ivana Studio and Nexcurex), review his technical case studies, check pricing and turnaround times, or switch visual themes. How can I assist you today?",
+    text: "Assalamu Alaikum! I am Ali AI, Muhammad Ali's personal portfolio assistant and guide. I'm here to answer questions about Ali's real client projects, discuss web development services and rates, or instantly switch between 28 design themes. What would you like to explore?",
     timestamp: Date.now(),
     isAiGenerated: false
   }
@@ -180,6 +196,17 @@ export const convCtx: ConversationContext = {
 
 export function executeActionTag(actionTag: string | undefined, store: PortfolioStore) {
   if (!actionTag) return;
+
+  if (actionTag === "OPEN_STYLE_LAB") {
+    store.setStyleLabOpen(true);
+    return;
+  }
+
+  if (actionTag.startsWith("STYLE_")) {
+    const styleKey = actionTag.replace("STYLE_", "").toLowerCase();
+    store.setStyleId(styleKey);
+    return;
+  }
 
   if (actionTag.startsWith("THEME_")) {
     const themeKey = actionTag.replace("THEME_", "").toLowerCase() as ThemeType;
@@ -255,6 +282,8 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
   isPreloaderActive: false,
   activeDrawerProject: null,
   isCustomizerOpen: false,
+  isStyleLabOpen: false,
+  previewStyleId: null,
 
   isJarvisOpen: false,
   isVoiceMuted: false,
@@ -262,6 +291,34 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
   isSpeaking: false,
   isAiGenerating: false,
   messages: INITIAL_MESSAGES,
+
+  setStyleId: (styleId: string) => {
+    set({ styleId });
+    applyStyleToDOM(styleId, get().accentOverride);
+    saveUserPrefs();
+  },
+
+  setPreviewStyleId: (previewStyleId: string | null) => {
+    set({ previewStyleId });
+    if (previewStyleId) {
+      applyStyleToDOM(previewStyleId, get().accentOverride);
+    } else {
+      applyStyleToDOM(get().styleId, get().accentOverride);
+    }
+  },
+
+  setStyleLabOpen: (isStyleLabOpen: boolean) => set({ isStyleLabOpen }),
+
+  toggleFavoriteStyle: (id: string) => {
+    set((state) => {
+      const exists = state.favoriteStyles.includes(id);
+      const next = exists
+        ? state.favoriteStyles.filter((s) => s !== id)
+        : [...state.favoriteStyles, id];
+      return { favoriteStyles: next };
+    });
+    saveUserPrefs();
+  },
 
   setTheme: (theme) => {
     set({ theme });
@@ -395,42 +452,73 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
       isAiGenerating: true
     }));
 
-    // Server-side provider attempt or fallback knowledge engine
     try {
       let botResponse: { text: string; actionTag?: string; isAiGenerated?: boolean };
 
-      // Optional server request with multi-turn conversation context
-      const serverUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000";
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      // 1. Check local catalog first for immediate intents (themes, styles, greetings, FAQ, project actions)
+      const deterministic = generateDeterministicAnswer(text, get(), convCtx);
 
-      const historyPayload = get().messages.slice(-6).map((m) => ({
-        sender: m.sender,
-        text: m.text
-      }));
+      if (deterministic.actionTag && deterministic.actionTag !== "INFO_DEFAULT") {
+        botResponse = deterministic;
+      } else {
+        // 2. For open-ended or unrecognized queries, attempt the server endpoint
+        const serverUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000";
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-      try {
-        const res = await fetch(`${serverUrl}/api/ai/chat`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, history: historyPayload }),
-          signal: controller.signal
-        });
-        clearTimeout(timeoutId);
+        const historyPayload = get().messages.slice(-6).map((m) => ({
+          sender: m.sender,
+          text: m.text
+        }));
 
-        if (res.ok) {
-          const data = await res.json();
-          botResponse = {
-            text: data.reply || data.text,
-            actionTag: data.actionTag,
-            isAiGenerated: true
-          };
-        } else {
-          botResponse = generateDeterministicAnswer(text, get(), convCtx);
+        try {
+          const res = await fetch(`${serverUrl}/api/ai/chat`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: text, history: historyPayload }),
+            signal: controller.signal
+          });
+          clearTimeout(timeoutId);
+
+          if (res.ok) {
+            const data = await res.json();
+            botResponse = {
+              text: data.reply || data.text,
+              actionTag: data.actionTag,
+              isAiGenerated: true
+            };
+          } else {
+            botResponse = deterministic;
+          }
+        } catch {
+          botResponse = deterministic;
         }
-      } catch {
-        // Fallback to local verified catalog
-        botResponse = generateDeterministicAnswer(text, get(), convCtx);
+
+        // Secondary free AI agent fallback if still default response
+        if (botResponse.actionTag === "INFO_DEFAULT") {
+          try {
+            const sysPrompt = encodeURIComponent(
+              "You are Ali AI, the helpful, polite, and friendly personal portfolio assistant for Muhammad Ali, a Senior Frontend Developer from Peshawar, Pakistan. Answer concisely (2-4 sentences max), naturally and warmly. Never call yourself Jarvis. If asked about projects, mention Ivana Studio, Nexcurex, or Arshad Tiles."
+            );
+            const aiController = new AbortController();
+            const aiTimeout = setTimeout(() => aiController.abort(), 3500);
+            const aiRes = await fetch(
+              "https://text.pollinations.ai/" + encodeURIComponent(text) + "?system=" + sysPrompt,
+              { signal: aiController.signal }
+            );
+            clearTimeout(aiTimeout);
+            if (aiRes.ok) {
+              const aiText = await aiRes.text();
+              if (aiText && aiText.trim().length > 0) {
+                botResponse = {
+                  text: aiText.trim(),
+                  actionTag: "AI_GENERATED",
+                  isAiGenerated: true
+                };
+              }
+            }
+          } catch {}
+        }
       }
 
       // Automatically execute any requested theme change, project opening, or navigation
@@ -515,6 +603,7 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
     const s = get();
     const preset: AppearancePreset = {
       version: 2,
+      styleId: s.styleId,
       theme: s.theme,
       accentOverride: s.accentOverride,
       layout: s.layout,
@@ -531,7 +620,8 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
       showScanlines: s.showScanlines,
       cursorSpotlight: s.cursorSpotlight,
       soundEnabled: s.soundEnabled,
-      masterMute: s.masterMute
+      masterMute: s.masterMute,
+      favoriteStyles: s.favoriteStyles
     };
     return JSON.stringify(preset, null, 2);
   },
@@ -541,6 +631,7 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
       const data = JSON.parse(jsonStr);
       if (!data || data.version !== 2) return false;
       const store = get();
+      if (data.styleId) store.setStyleId(data.styleId);
       if (data.theme) store.setTheme(data.theme);
       if (data.accentOverride !== undefined) store.setAccentOverride(data.accentOverride);
       if (data.layout) store.setLayout(data.layout);
@@ -558,12 +649,43 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
       if (data.cursorSpotlight !== undefined) store.setCursorSpotlight(data.cursorSpotlight);
       if (data.soundEnabled !== undefined) store.setSoundEnabled(data.soundEnabled);
       if (data.masterMute !== undefined) store.setMasterMute(data.masterMute);
+      if (data.favoriteStyles && Array.isArray(data.favoriteStyles)) {
+        usePortfolioStore.setState({ favoriteStyles: data.favoriteStyles });
+      }
       return true;
     } catch {
       return false;
     }
   }
 }));
+
+export function applyStyleToDOM(styleId: string, customAccent?: string) {
+  if (typeof document === "undefined") return;
+  const preset = getStylePreset(styleId);
+  document.documentElement.setAttribute("data-style", styleId);
+  document.documentElement.setAttribute("data-theme", styleId);
+
+  // Sync background theme class and atmosphere attribute
+  if (preset.themeMode === "light") {
+    document.documentElement.classList.remove("dark");
+    document.documentElement.classList.add("light");
+    document.documentElement.setAttribute("data-theme-mode", "light");
+    document.documentElement.setAttribute("data-atmosphere", "none");
+  } else {
+    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("light");
+    document.documentElement.setAttribute("data-theme-mode", "dark");
+    document.documentElement.setAttribute("data-atmosphere", "block");
+  }
+
+  if (customAccent && /^#[0-9A-Fa-f]{6}$/.test(customAccent)) {
+    document.documentElement.style.setProperty("--accent-primary", customAccent);
+    document.documentElement.style.setProperty("--border-glow", `${customAccent}99`);
+  } else {
+    document.documentElement.style.removeProperty("--accent-primary");
+    document.documentElement.style.removeProperty("--border-glow");
+  }
+}
 
 function applyThemeToDOM(theme: ThemeType, customAccent?: string) {
   if (typeof document === "undefined") return;
@@ -592,6 +714,7 @@ export function loadUserPrefs() {
     const data = JSON.parse(raw);
     if (!data || data.version !== 2) return;
     const store = usePortfolioStore.getState();
+    if (data.styleId) store.setStyleId(data.styleId);
     if (data.theme) store.setTheme(data.theme);
     if (data.accentOverride !== undefined) store.setAccentOverride(data.accentOverride);
     if (data.layout) store.setLayout(data.layout);
@@ -609,6 +732,9 @@ export function loadUserPrefs() {
     if (data.cursorSpotlight !== undefined) store.setCursorSpotlight(data.cursorSpotlight);
     if (data.soundEnabled !== undefined) store.setSoundEnabled(data.soundEnabled);
     if (data.masterMute !== undefined) store.setMasterMute(data.masterMute);
+    if (data.favoriteStyles && Array.isArray(data.favoriteStyles)) {
+      usePortfolioStore.setState({ favoriteStyles: data.favoriteStyles });
+    }
   } catch {
     // Ignore storage issues
   }
@@ -620,6 +746,7 @@ function saveUserPrefs() {
   try {
     const data: AppearancePreset = {
       version: 2,
+      styleId: s.styleId,
       theme: s.theme,
       accentOverride: s.accentOverride,
       layout: s.layout,
@@ -636,7 +763,8 @@ function saveUserPrefs() {
       showScanlines: s.showScanlines,
       cursorSpotlight: s.cursorSpotlight,
       soundEnabled: s.soundEnabled,
-      masterMute: s.masterMute
+      masterMute: s.masterMute,
+      favoriteStyles: s.favoriteStyles
     };
     localStorage.setItem("ali_jarvis_prefs_v2", JSON.stringify(data));
   } catch {
@@ -655,19 +783,44 @@ function generateDeterministicAnswer(
   const p = prompt.toLowerCase().trim();
 
   // 1. ISLAMIC GREETINGS
-  if (/^(assalam|salam|aoa|assalam[- ]?o[- ]?alaikum|assalamu\s*alaikum|asalam)\b/i.test(p)) {
+  if (/\b(assalam|asalam|aslam|salam|slam|slm|aoa|walaykum|walaikum)\b/i.test(p) || p.includes("salam") || p.includes("alaikum") || p.includes("alaykum")) {
     return {
-      text: "Wa Alaikum Assalam! Welcome to Muhammad Ali's digital portfolio. I am ALI JARVIS, Ali's friendly portfolio assistant. How may I assist you today? You can ask about Ali's client websites (like Ivana Studio and Nexcurex), pricing packages, delivery timelines, or ask me to switch themes.",
+      text: "Wa Alaikum Assalam wa Rahmatullahi wa Barakatuh! (وعليكم السلام ورحمة الله وبركاته) Welcome to Muhammad Ali's portfolio! How are you doing today? I am Ali AI, Ali's interactive portfolio assistant and guide. How can I help you? You can ask about Ali's real client projects, services, pricing, skills, or tell me to switch the theme!",
       actionTag: "GREETING_SALAM",
       isAiGenerated: false
     };
   }
 
-  // 2. STANDARD GREETINGS ("Hi", "Hello", "Hey", "Good morning", "Good evening")
-  if (/^(hi|hello|hey|hiya|howdy|sup|yo|good\s*(morning|afternoon|evening|day)|greetings)\b/i.test(p)) {
+  // 2. STANDARD GREETINGS ("Hi", "Hello", "Hey", "Good morning", "Good evening", "Can we talk")
+  if (
+    /^(hi|hello|hey|hiya|howdy|sup|yo|good\s*(morning|afternoon|evening|day)|greetings)\b/i.test(p) ||
+    p.includes("can we talk") ||
+    p.includes("are you there") ||
+    p.includes("talk to me") ||
+    p === "jarvis"
+  ) {
     return {
-      text: "Hello! I am ALI JARVIS, Muhammad Ali's personal portfolio guide and friendly AI assistant. How can I assist you today? You can ask about Ali's commercial client work (like Ivana Studio and Nexcurex), explore web development services and rates, or try out different visual themes!",
+      text: "Hello! 😊 I am Ali AI, Muhammad Ali's personal portfolio assistant and guide. How can I assist you today? You can ask about Ali's commercial client work (like Ivana Studio and Nexcurex), explore web development services and rates, or tell me to switch styles like 'change theme to glassmorphism'!",
       actionTag: "GREETING",
+      isAiGenerated: false
+    };
+  }
+
+  
+  // 3B. "WHAT IS YOUR FAVORITE THEME?"
+  if (
+    p.includes("favorite theme") ||
+    p.includes("favourite theme") ||
+    p.includes("best theme") ||
+    p.includes("fav theme") ||
+    p.includes("theme do you like") ||
+    p.includes("which theme") ||
+    p.includes("recommend a theme") ||
+    p.includes("suggest a theme")
+  ) {
+    return {
+      text: "My personal favorite theme is **Vaporwave** for its gorgeous Miami sunset pastel colors and **Liquid Glass** for its refreshing turquoise lagoon shine! I also really love **Claymorphism** for its soft 3D puffy cards and **Aurora UI** for its glowing northern lights waves. Which one would you like to see? You can say 'switch to vaporwave' or click any theme in the marquee bar above!",
+      actionTag: "FAVORITE_THEME",
       isAiGenerated: false
     };
   }
@@ -683,7 +836,7 @@ function generateDeterministicAnswer(
     p.includes("what's up")
   ) {
     return {
-      text: "I'm doing great, thank you for asking! All systems are operating smoothly at 60 FPS. How are you doing today, and how can I help you explore Muhammad Ali's portfolio?",
+      text: "I'm doing fantastic, thank you so much for asking! All systems are running smoothly and looking vibrant. How are you doing today? Can I show you some of Muhammad Ali's client projects or switch to your favorite theme? How are you doing today, and how can I help you explore Muhammad Ali's portfolio?",
       actionTag: "STATUS_NOMINAL",
       isAiGenerated: false
     };
@@ -698,7 +851,7 @@ function generateDeterministicAnswer(
     p.includes("what are you")
   ) {
     return {
-      text: "My name is ALI JARVIS! I am Muhammad Ali's personal portfolio guide and friendly AI assistant. I'm here to help you explore Ali's client websites, inspect technical case studies, review pricing, and calibrate visual themes.",
+      text: "My name is Ali AI! I am Muhammad Ali's interactive portfolio companion and AI assistant. I'm here to help you explore Ali's client websites, inspect technical case studies, review pricing, and calibrate visual themes.",
       actionTag: "IDENTITY_JARVIS",
       isAiGenerated: false
     };
@@ -713,7 +866,7 @@ function generateDeterministicAnswer(
     p.includes("who programmed you")
   ) {
     return {
-      text: "I was created and engineered by Muhammad Ali, a Frontend Developer and Digital Creator based in Peshawar, Pakistan, as an interactive companion for his digital portfolio.",
+      text: "I was created, designed, and engineered by Muhammad Ali! He is a Senior Frontend Developer and Digital Creator based in Peshawar, Pakistan, as an interactive companion for his digital portfolio.",
       actionTag: "CREATOR_INFO",
       isAiGenerated: false
     };
@@ -1026,7 +1179,39 @@ function generateDeterministicAnswer(
     };
   }
 
-  // 20. SPECIFIC THEME SWITCHES (All 12 Themes)
+  // 20. STYLE LAB & SPECIFIC DESIGN SYSTEM SWITCHES (28 Presets)
+  if (
+    p.includes("style lab") ||
+    p.includes("open styles") ||
+    p.includes("design systems") ||
+    p.includes("show styles")
+  ) {
+    store.setStyleLabOpen(true);
+    return {
+      text: "Opening the interactive Style Lab. You can browse and live-preview all 28 distinct modern design systems, from Glassmorphism and Neumorphism to Neobrutalism, Bento Grid, and Industrial Technical CAD.",
+      actionTag: "OPEN_STYLE_LAB",
+      isAiGenerated: false
+    };
+  }
+
+  for (const preset of STYLE_PRESETS) {
+    const matchId = preset.id.replace(/-/g, " ");
+    const matchName = preset.name.toLowerCase();
+    const hasName = p.includes(matchName) || p.includes(matchId) || p.includes(preset.id);
+    const isCommand = /theme|style|change|switch|apply|use|set|activate|enable|make|turn|like|show|try|view|want/.test(p);
+    const isShortQuery = p.split(/\s+/).length <= 4;
+
+    if (hasName && (isCommand || isShortQuery)) {
+      store.setStyleId(preset.id);
+      return {
+        text: `Design system calibrated to ${preset.name.toUpperCase()}! 🎨\n${preset.shortDesc}\n\nThe entire website has been restyled in real-time. You can also ask me to switch to other styles like Aurora, Neobrutalism, Cyberpunk, or Minimalist.`,
+        actionTag: `STYLE_${preset.id}`,
+        isAiGenerated: false
+      };
+    }
+  }
+
+  // 20b. SPECIFIC THEME SWITCHES (All 12 Themes)
   const themeMap: Record<string, ThemeType> = {
     "jarvis core": "jarvis-core",
     "jarvis": "jarvis-core",

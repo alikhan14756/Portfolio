@@ -148,11 +148,16 @@ async function startServer() {
         .reverse()
         .find((h) => h.sender === "jarvis" || h.sender === "bot")?.text;
 
-      // 1. ISLAMIC GREETINGS
-      if (/^(assalam|salam|aoa|assalam[- ]?o[- ]?alaikum|assalamu\s*alaikum|asalam)\b/i.test(lower)) {
+      // 1. ISLAMIC GREETINGS (Catches all variations anywhere in the message)
+      if (
+        /\b(assalam|asalam|aslam|salam|slam|slm|aoa|walaykum|walaikum)\b/i.test(lower) ||
+        lower.includes("salam") ||
+        lower.includes("alaikum") ||
+        lower.includes("alaykum")
+      ) {
         return reply.send({
           success: true,
-          reply: "Wa Alaikum Assalam! Welcome to Muhammad Ali's digital portfolio. I am ALI JARVIS, Ali's friendly portfolio assistant. How may I assist you today? You can ask about Ali's client websites (like Ivana Studio and Nexcurex), pricing packages, delivery timelines, or ask me to switch themes.",
+          reply: "Wa Alaikum Assalam wa Rahmatullahi wa Barakatuh! (وعليكم السلام ورحمة الله وبركاته) Welcome to Muhammad Ali's digital portfolio! How are you doing today? I am Ali AI, your personal portfolio assistant and guide. How can I assist you? You can ask about Ali's real client projects, services, pricing, skills, or tell me to switch the theme!",
           actionTag: "GREETING_SALAM",
           isAiGenerated: true
         });
@@ -162,8 +167,28 @@ async function startServer() {
       if (/^(hi|hello|hey|hiya|howdy|sup|yo|good\s*(morning|afternoon|evening|day)|greetings)\b/i.test(lower)) {
         return reply.send({
           success: true,
-          reply: "Hello! I am ALI JARVIS, Muhammad Ali's personal portfolio guide and friendly AI assistant. How can I assist you today? You can ask about Ali's commercial client work (like Ivana Studio and Nexcurex), explore web development services and rates, or try out different visual themes!",
+          reply: "Hello! I am Ali AI, Muhammad Ali's personal portfolio guide and friendly AI assistant. How can I assist you today? You can ask about Ali's commercial client work (like Ivana Studio and Nexcurex), explore web development services and rates, or try out different visual themes!",
           actionTag: "GREETING",
+          isAiGenerated: true
+        });
+      }
+
+      
+      // 3B. "WHAT IS YOUR FAVORITE THEME?"
+      if (
+        lower.includes("favorite theme") ||
+        lower.includes("favourite theme") ||
+        lower.includes("best theme") ||
+        lower.includes("fav theme") ||
+        lower.includes("theme do you like") ||
+        lower.includes("which theme") ||
+        lower.includes("recommend a theme") ||
+        lower.includes("suggest a theme")
+      ) {
+        return reply.send({
+          success: true,
+          reply: "My personal favorite theme is **Vaporwave** for its gorgeous Miami sunset pastel colors and **Liquid Glass** for its refreshing turquoise lagoon shine! I also really love **Claymorphism** for its soft 3D puffy cards and **Aurora UI** for its glowing northern lights waves. Which one would you like to see? You can say 'switch to vaporwave' or click any theme in the marquee bar above!",
+          actionTag: "FAVORITE_THEME",
           isAiGenerated: true
         });
       }
@@ -196,8 +221,8 @@ async function startServer() {
       ) {
         return reply.send({
           success: true,
-          reply: "My name is ALI JARVIS! I am Muhammad Ali's personal portfolio guide and friendly AI assistant. I'm here to help you explore Ali's client websites, inspect technical case studies, review pricing, and calibrate visual themes.",
-          actionTag: "IDENTITY_JARVIS",
+          reply: "My name is Ali AI! I am Muhammad Ali's interactive portfolio companion and friendly AI assistant. I'm here to help you explore Ali's client websites, inspect technical case studies, review pricing, and calibrate visual themes.",
+          actionTag: "IDENTITY_ALI_AI",
           isAiGenerated: true
         });
       }
@@ -469,6 +494,50 @@ async function startServer() {
         });
       }
 
+      // 18b. 28 DESIGN SYSTEM STYLES (Glassmorphism, Neumorphism, Neobrutalism, Aurora, etc.)
+      const styleMatches = [
+        { id: "glassmorphism", name: "Glassmorphism", keywords: ["glassmorphism", "glass morphic", "frosted glass"] },
+        { id: "neumorphism", name: "Neumorphism", keywords: ["neumorphism", "soft ui", "extruded"] },
+        { id: "liquid-glass", name: "Liquid Glass", keywords: ["liquid glass", "fluid glass", "refraction"] },
+        { id: "claymorphism", name: "Claymorphism", keywords: ["claymorphism", "clay", "soft 3d"] },
+        { id: "neobrutalism", name: "Neobrutalism", keywords: ["neobrutalism", "brutalist", "neo brutalism"] },
+        { id: "minimalism", name: "Minimalism", keywords: ["minimalism", "minimal", "clean whitespace"] },
+        { id: "dark-midnight", name: "Dark Midnight", keywords: ["dark midnight", "midnight ui", "deep midnight"] },
+        { id: "cyberpunk", name: "Cyberpunk", keywords: ["cyberpunk", "cyber punk", "neon cyberpunk"] },
+        { id: "aurora", name: "Aurora", keywords: ["aurora", "aurora borealis", "northern lights"] },
+        { id: "bento-grid", name: "Bento Grid", keywords: ["bento grid", "bento", "modular cards"] },
+        { id: "skeuomorphism", name: "Skeuomorphism", keywords: ["skeuomorphism", "tactile material", "skeuo"] },
+        { id: "glass-grain", name: "Glass & Grain", keywords: ["glass grain", "film grain", "editorial grain"] },
+        { id: "holographic", name: "Holographic", keywords: ["holographic", "holo", "iridescent"] },
+        { id: "immersive-3d", name: "Immersive 3D", keywords: ["immersive 3d", "spatial 3d", "perspective"] },
+        { id: "motion-driven", name: "Motion Driven", keywords: ["motion driven", "kinetic motion", "choreographed"] },
+        { id: "parallax-scrolling", name: "Parallax Scrolling", keywords: ["parallax scrolling", "multi plane parallax", "parallax"] },
+        { id: "kinetic-typography", name: "Kinetic Typography", keywords: ["kinetic typography", "kinetic text", "bold type"] },
+        { id: "retro-futurism", name: "Retro Futurism", keywords: ["retro futurism", "synthwave", "retrowave", "outrun"] },
+        { id: "y2k-aesthetic", name: "Y2K Aesthetic", keywords: ["y2k aesthetic", "y2k", "chrome metallic", "early 2000s"] },
+        { id: "vaporwave", name: "Vaporwave", keywords: ["vaporwave", "pastel aesthetic", "glitch art"] },
+        { id: "swiss-style", name: "Swiss Style", keywords: ["swiss style", "international typographic", "helvetica grid"] },
+        { id: "editorial-luxury", name: "Editorial Luxury", keywords: ["editorial luxury", "vogue editorial", "haute couture"] },
+        { id: "terminal-matrix", name: "Terminal Matrix", keywords: ["terminal matrix", "phosphor green", "hacker terminal"] },
+        { id: "organic-biophilic", name: "Organic Biophilic", keywords: ["organic biophilic", "botanical", "nature earth"] },
+        { id: "retro-pixel", name: "Retro Pixel", keywords: ["retro pixel", "8-bit", "16-bit arcade", "pixel art"] },
+        { id: "gradient-mesh", name: "Gradient Mesh", keywords: ["gradient mesh", "chromatic blend", "multivariate gradient"] },
+        { id: "high-contrast-monochrome", name: "High Contrast Monochrome", keywords: ["high contrast monochrome", "pure noir", "black and white"] },
+        { id: "industrial-technical", name: "Industrial Technical", keywords: ["industrial technical", "blueprint cad", "schematic"] }
+      ];
+
+      for (const sm of styleMatches) {
+        const matchesKey = sm.keywords.some((kw) => lower.includes(kw));
+        if (matchesKey) {
+          return reply.send({
+            success: true,
+            reply: `Calibrating entire visual design system to ${sm.name.toUpperCase()}! 🎨 The typography, surfaces, and visual language have been updated. You can also try saying "switch to aurora", "change to claymorphism", or "apply neobrutalism"!`,
+            actionTag: `STYLE_${sm.id}`,
+            isAiGenerated: true
+          });
+        }
+      }
+
       // 19. SPECIFIC THEME SWITCHES (All 12 Themes)
       const themeMatches = [
         { key: "cyberpunk", tag: "THEME_cyberpunk-neon", name: "CYBERPUNK NEON" },
@@ -497,6 +566,27 @@ async function startServer() {
             isAiGenerated: true
           });
         }
+      }
+
+      
+      // DESIGN SYSTEM & STYLES EXPLANATION
+      if (lower.includes("design system") || lower.includes("what are the styles") || lower.includes("tell me about styles") || lower.includes("how many styles") || lower.includes("theme system")) {
+        return reply.send({
+          success: true,
+          reply: "This portfolio features a token-driven UI engine with 28 complete, distinct design systems—including Vaporwave, Claymorphism, Neobrutalism, Liquid Glass, Bento Grid, and Aurora UI! Each style features unique geometry, surfaces, borders, shadows, and color combinations. You can switch between them using the top marquee or by telling me 'switch to vaporwave'!",
+          actionTag: "DESIGN_SYSTEMS_INFO",
+          isAiGenerated: true
+        });
+      }
+
+      // WHY HIRE ALI
+      if (lower.includes("why hire") || lower.includes("why should i hire") || lower.includes("why ali") || lower.includes("hire muhammad ali")) {
+        return reply.send({
+          success: true,
+          reply: `Why hire Muhammad Ali?\n• Proven commercial delivery: Ivana Studio (video agency), Nexcurex (e-commerce), Arshad Tiles (+40% inquiries surge), and VetCarePlus (+35% appointment bookings).\n• High-performance: Sub-2.1s Core Web Vitals page loads and responsive mobile UX.\n• Full-spectrum skills: React, Next.js, TypeScript, Tailwind, WordPress, and Elementor Pro.\n• Reach him directly on WhatsApp at +92 305 5389967!`,
+          actionTag: "WHY_HIRE_ALI",
+          isAiGenerated: true
+        });
       }
 
       // 20. PROJECTS DEEP-DIVE
@@ -667,6 +757,32 @@ async function startServer() {
           actionTag: "DOWNLOAD_CV",
           isAiGenerated: true
         });
+      }
+
+      
+      // Free AI Agent API integration (Pollinations.ai) for any open-ended conversational questions
+      try {
+        const sysPrompt = encodeURIComponent(
+          "You are Ali AI, the intelligent, polite, and friendly personal portfolio assistant for Muhammad Ali, a Senior Frontend Developer & Creator from Peshawar, Pakistan. Answer conversationally, concisely (2-4 sentences max), and warmly. Never call yourself Jarvis. If asked about projects, mention Ivana Studio, Nexcurex, Arshad Tiles, or VetCarePlus. If asked about contact, mention WhatsApp +92 305 5389967."
+        );
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
+        const aiUrl = "https://text.pollinations.ai/" + encodeURIComponent(message) + "?system=" + sysPrompt;
+        const aiRes = await fetch(aiUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (aiRes.ok) {
+          const aiText = await aiRes.text();
+          if (aiText && aiText.trim().length > 0) {
+            return reply.send({
+              success: true,
+              reply: aiText.trim(),
+              actionTag: "AI_GENERATED",
+              isAiGenerated: true
+            });
+          }
+        }
+      } catch (e) {
+        // Fallback to contextual default below
       }
 
       // Default contextual response

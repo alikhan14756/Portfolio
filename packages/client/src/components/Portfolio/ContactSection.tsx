@@ -126,7 +126,7 @@ export const ContactSection: React.FC = () => {
               href={profile.whatsappUrl}
               target="_blank"
               rel="noreferrer"
-              className="hud-panel p-6 rounded-3xl flex items-center justify-between group hover:border-emerald-400/80 transition-all block"
+              className="style-card p-6 flex items-center justify-between group hover:border-emerald-400/80 transition-all block"
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
@@ -150,7 +150,7 @@ export const ContactSection: React.FC = () => {
             </a>
 
             {/* Email Card */}
-            <div className="hud-panel p-6 rounded-3xl flex items-center justify-between">
+            <div className="style-card p-6 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-[var(--badge-bg)] border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)]">
                   <Mail className="w-6 h-6" />
@@ -177,7 +177,7 @@ export const ContactSection: React.FC = () => {
             </div>
 
             {/* Location & CV Download Card */}
-            <div className="hud-panel p-6 rounded-3xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="style-card p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)]">
                   <MapPin className="w-5 h-5" />
@@ -205,7 +205,7 @@ export const ContactSection: React.FC = () => {
 
           {/* Contact Form Column */}
           <div className="lg:col-span-7">
-            <form onSubmit={handleSubmit} className="hud-panel p-6 sm:p-8 rounded-3xl space-y-4">
+            <form onSubmit={handleSubmit} className="style-card p-6 sm:p-8 space-y-4">
               {/* Status Alert Banner */}
               {statusMessage && (
                 <div
@@ -244,7 +244,7 @@ export const ContactSection: React.FC = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Alex Morgan"
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
+                    className="w-full px-4 py-3 style-input text-xs font-mono placeholder-[var(--surface-input-placeholder)] focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -256,7 +256,7 @@ export const ContactSection: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="alex@company.com"
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
+                    className="w-full px-4 py-3 style-input text-xs font-mono placeholder-[var(--surface-input-placeholder)] focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -266,7 +266,7 @@ export const ContactSection: React.FC = () => {
                 <select
                   value={formData.projectType}
                   onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
+                  className="w-full px-4 py-3 style-input text-xs font-mono focus:outline-none transition-colors"
                 >
                   <option value="WordPress Website">Custom WordPress Development</option>
                   <option value="Landing Page">High-Converting Landing Page</option>
@@ -284,7 +284,7 @@ export const ContactSection: React.FC = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Describe your goals, requirements, desired timeline, or existing site..."
-                  className="w-full px-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors resize-none"
+                  className="w-full px-4 py-3 style-input text-xs font-mono placeholder-[var(--surface-input-placeholder)] focus:outline-none transition-colors resize-none"
                 />
               </div>
 
@@ -292,7 +292,7 @@ export const ContactSection: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 rounded-xl font-mono text-xs font-bold tracking-wider bg-[var(--accent-primary)] text-slate-950 hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[var(--hud-glow)] disabled:opacity-50"
+                  className="w-full py-3.5 style-btn-primary font-mono text-xs font-bold tracking-wider active:scale-95 transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
                 >
                   {loading ? (
                     <>

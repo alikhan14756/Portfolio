@@ -186,16 +186,17 @@ export const PORTFOLIO_DATA = {
     {
       id: "nexcurex",
       title: "Nexcurex (nexcurex.com)",
+      imageUrl: "/assets/project_nexcurex.png",
       category: "Client Work",
       tag: "WordPress & WooCommerce",
-      subtitle: "E-Commerce Fashion & Apparel Storefront",
-      client: "Nexcurex Apparel",
+      subtitle: "Luxury Beauty & Cosmetics E-Commerce Storefront",
+      client: "Nexcurex Botanical Cosmetics",
       date: "2025 – 2026",
       status: "Completed",
       overview:
-        "Nexcurex (nexcurex.com) is an e-commerce fashion storefront featuring seasonal collections, denim apparel, footwear, accessories, and promotional discount funnels.",
+        "Nexcurex (nexcurex.com) is a luxury beauty and cosmetics e-commerce storefront featuring botanical skincare serums, organic lip pigments, vegan formulas, and promotional discount funnels.",
       businessGoals:
-        "Provide a clean, fast shopping experience for apparel customers, with clear promotional coupon visibility (OFF20) and streamlined catalog navigation.",
+        "Deliver an editorial, high-conversion shopping experience for clean cosmetics and skincare buyers, featuring promotional coupon visibility (GLOW20) and streamlined catalog navigation.",
       scopeContribution:
         "E-commerce layout implementation on WordPress with Astra theme foundations, custom WooCommerce catalog integration, responsive product grids, and coupon funnel integration.",
       designDecisions:
@@ -292,15 +293,16 @@ export const PORTFOLIO_DATA = {
     },
     {
       id: "shah-sweet",
-      title: "Shah Sweet — Store Showcase Website",
+      imageUrl: "/assets/project_shah_sweet.png",
+      title: "Shah Sweets — Traditional Mithai & Royal Confectionery",
       category: "Client Work",
       tag: "WordPress & Elementor",
-      subtitle: "Artisanal Sweet Shop Catalog",
+      subtitle: "Traditional Confectionery & Mithai Showcase",
       client: "Shah Sweets Confectionery",
       date: "2025",
       status: "Completed",
       overview:
-        "A modern product showcase website created for a traditional sweet shop, featuring full product catalog presentations with a clean, mobile-first aesthetic.",
+        "A rich, mouth-watering digital catalog and online ordering website crafted for Shah Sweets, celebrating authentic Mughal & Peshawari mithai made in 100% pure desi ghee, saffron ras malai, and bespoke wedding gift hampers.",
       businessGoals:
         "Introduce the sweet shop's confectionery offerings to regional event planners, wedding hosts, and corporate gifting clients.",
       scopeContribution:
@@ -326,41 +328,10 @@ export const PORTFOLIO_DATA = {
       liveUrl: "https://alikhan14756.github.io/Shah-Sweet/",
       githubUrl: "https://github.com/alikhan14756/Shah-Sweet"
     },
-    {
-      id: "aetheria-ecosystem",
-      title: "Aetheria 2.5D Collaborative Biosphere",
-      category: "Engineering Flagship",
-      tag: "Three.js, Fastify & Socket.IO",
-      subtitle: "Spatial Multiplayer & Collective Ecosystem Engine",
-      date: "2026",
-      status: "Active",
-      overview:
-        "A real-time collaborative 2.5D generative ecosystem operating on an unbounded Cartesian plane. Features authoritative physics, spatial Moore neighborhood interest management, synaptic tethers, topological shield detection, and climate entropy state machines.",
-      businessGoals:
-        "Demonstrate high-concurrency real-time systems engineering, WebGL shader programming, and authoritative network synchronization under low-latency constraints.",
-      scopeContribution:
-        "Architected the 25 Hz authoritative Fastify simulation server, 60 WU spatial grid, Hermite spline interpolation, Tarjan/DFS chordless cycle detection, climate state machine, and Web Audio synthesis.",
-      designDecisions:
-        "Holographic sci-fi HUD inspired by advanced tactical telemetry; InstancedMesh GPU rendering with curl-noise shaders and dynamic procedural audio harmonics.",
-      responsiveImplementation:
-        "Adapts from full 4K/8K desktop WebGL canvas down to 60 FPS mobile touchscreen joystick with touch-deadzone safeguards.",
-      accessibilityPerformance:
-        "Includes Master Mute, prefers-reduced-motion immediate compliance, and keyboard accessibility for all HUD telemetry.",
-      challenge:
-        "Maintaining smooth multi-client synchronization and stable server tick rates under high client density and network jitter.",
-      solution:
-        "Developed 60 WU Moore spatial partitioning (3x3 grid culling), Hermite cubic spline interpolation with 100ms jitter buffers, and strict speed clamping (V_max = 22 WU/s).",
-      resultsEvidence:
-        "Automated benchmark verified: Two-client 150ms latency (0.3750 WU smooth midpoint), 100 concurrent clients at 4.64 ms average tick time, 2,500-tick soak test with 4.13 MB net heap growth.",
-      metrics: [
-        { label: "Server Tick Rate", value: "25 Hz (40ms)" },
-        { label: "100-Client Load", value: "4.64 ms/tick" },
-        { label: "Latency Test", value: "150ms Verified" }
-      ],
-      techStack: ["Fastify", "Socket.IO", "React Three Fiber", "GLSL Shaders", "Web Audio API", "Zod", "TypeScript"]
-    },
+        
     {
       id: "css-animation-showcase",
+      imageUrl: "/assets/project_animations.png",
       title: "CSS Animation Showcase",
       category: "Playground",
       tag: "CSS3 & JavaScript",
@@ -384,6 +355,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       id: "ball-physics-engine",
+      imageUrl: "/assets/project_physics.png",
       title: "Ball Physics Engine",
       category: "Playground",
       tag: "HTML5 Canvas Physics",
@@ -407,6 +379,7 @@ export const PORTFOLIO_DATA = {
     },
     {
       id: "qr-code-generator",
+      imageUrl: "/assets/project_qrcode.png",
       title: "QR Code Generator & Scanner",
       category: "Playground",
       tag: "JavaScript Utility Tool",

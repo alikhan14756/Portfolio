@@ -72,7 +72,7 @@ export const ServicesSection: React.FC = () => {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
               whileHover={isMotionEnabled ? { y: -4, transition: { duration: 0.2 } } : {}}
-              className="hud-panel p-6 sm:p-8 rounded-3xl flex flex-col justify-between space-y-6 shadow-xl"
+              className="style-card p-6 sm:p-8 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between border-b border-[var(--border-color)]/60 pb-3">
@@ -126,7 +126,7 @@ export const ServicesSection: React.FC = () => {
           whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-          className="hud-panel p-6 sm:p-10 rounded-3xl space-y-8 text-left shadow-2xl relative overflow-hidden"
+          className="style-card p-6 sm:p-10 space-y-8 text-left relative overflow-hidden"
         >
           <div className="flex items-center gap-3 border-b border-[var(--border-color)]/60 pb-4">
             <div className="p-2.5 rounded-xl bg-[var(--badge-bg)] text-[var(--accent-primary)]">

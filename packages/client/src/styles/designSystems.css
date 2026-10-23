@@ -1,0 +1,3593 @@
+/* ==========================================================================
+   STYLE LAB & UNIFIED DESIGN TOKENS ARCHITECTURE — 28 COMPLETE PRESETS
+   Production CSS design token engine. Restyles entire website consistently.
+   ========================================================================== */
+
+:root {
+  --style-id: "claymorphism";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --page-bg: #f3f0f9;
+  --page-bg-pattern: radial-gradient(at 15% 15%, #fce7f3 0px, transparent 50%), radial-gradient(at 85% 15%, #ede9fe 0px, transparent 50%), radial-gradient(at 50% 85%, #e0e7ff 0px, transparent 55%), #f5f3ff;
+  --page-bg-size: auto;
+  --bg-primary: #f3f0f9;
+  --bg-secondary: #ede9fe;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --border-color: #ddd6fe;
+  --border-glow: #8b5cf6;
+  --hud-glow: 0 10px 25px rgba(139, 92, 246, 0.3);
+  
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --surface-nav: rgba(255, 255, 255, 0.92);
+  --surface-nav-border: 2px solid rgba(255, 255, 255, 0.95);
+  --surface-nav-shadow: 0 10px 30px rgba(165, 155, 200, 0.25);
+  --surface-nav-radius: 32px;
+  
+  --surface-card: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 246, 255, 0.92) 100%);
+  --surface-card-border: 2.5px solid rgba(255, 255, 255, 0.95);
+  --surface-card-shadow: 0 20px 40px -10px rgba(147, 130, 200, 0.25);
+  --surface-card-hover-shadow: 0 28px 50px -10px rgba(139, 92, 246, 0.35);
+  --surface-card-radius: 32px;
+  --surface-card-clip: none;
+  --backdrop-blur: none;
+  
+  --card-radius: 32px;
+  --card-border: 2.5px solid rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 20px 40px -10px rgba(147, 130, 200, 0.25);
+  --card-shadow-hover: 0 28px 50px -10px rgba(139, 92, 246, 0.35);
+  --card-clip: none;
+  
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #ddd6fe;
+  --surface-input-text: #1e1147;
+  --surface-input-placeholder: #8b5cf6;
+  --surface-input-radius: 20px;
+  --surface-input-shadow: inset 0 2px 5px rgba(139, 92, 246, 0.12);
+  
+  --surface-dialog: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
+  --surface-dialog-border: 3px solid #ffffff;
+  --surface-dialog-shadow: 0 30px 60px rgba(139, 92, 246, 0.3);
+  --surface-dialog-radius: 36px;
+  
+  --surface-assistant: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+  --surface-assistant-border: 3px solid #ffffff;
+  --surface-assistant-shadow: 0 25px 60px rgba(139, 92, 246, 0.28);
+  --surface-assistant-radius: 32px;
+  
+  --surface-badge: #ede9fe;
+  --surface-badge-border: 1.5px solid #ddd6fe;
+  --surface-badge-text: #5b21b6;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #ede9fe;
+  
+  --surface-chip: #f5f3ff;
+  --surface-chip-border: 2px solid #ddd6fe;
+  --surface-chip-text: #4c1d95;
+  --surface-chip-active-bg: #7c3aed;
+  --surface-chip-active-text: #ffffff;
+  
+  --btn-primary-bg: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 12px 24px -4px rgba(139, 92, 246, 0.45);
+  --btn-primary-radius: 9999px;
+  --btn-primary-hover-shadow: 0 16px 30px -4px rgba(139, 92, 246, 0.55);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 9999px;
+  
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #4c1d95;
+  --btn-secondary-border: 2px solid #ddd6fe;
+  --btn-secondary-shadow: 0 8px 18px rgba(147, 130, 200, 0.2);
+  --btn-secondary-radius: 9999px;
+  
+  --text-primary: #1e1147;
+  --text-secondary: #4c1d95;
+  --text-muted: #6b7280;
+  
+  --accent-primary: #7c3aed;
+  --accent-secondary: #ec4899;
+  --accent-tertiary: #06b6d4;
+}
+
+/* --- CLAYMORPHISM --- */
+[data-style="claymorphism"],
+[data-theme="claymorphism"] {
+  --style-id: "claymorphism";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #f3f0f9;
+  --page-bg-pattern: radial-gradient(at 15% 15%, #fce7f3 0px, transparent 50%), radial-gradient(at 85% 15%, #ede9fe 0px, transparent 50%), radial-gradient(at 50% 85%, #e0e7ff 0px, transparent 55%), #f5f3ff;
+  --page-bg-size: auto;
+  --bg-primary: #f3f0f9;
+  --bg-pattern: radial-gradient(at 15% 15%, #fce7f3 0px, transparent 50%), radial-gradient(at 85% 15%, #ede9fe 0px, transparent 50%), radial-gradient(at 50% 85%, #e0e7ff 0px, transparent 55%), #f5f3ff;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.92);
+  --surface-nav-border: 2px solid rgba(255, 255, 255, 0.95);
+  --surface-nav-shadow: 0 10px 30px rgba(165, 155, 200, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.9);
+  --surface-nav-radius: 32px;
+  
+  /* Card Surface */
+  --surface-card: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 246, 255, 0.92) 100%);
+  --surface-card-border: 2.5px solid rgba(255, 255, 255, 0.95);
+  --surface-card-shadow: 0 20px 40px -10px rgba(147, 130, 200, 0.25), inset 0 4px 8px rgba(255, 255, 255, 0.95), inset 0 -3px 6px rgba(190, 180, 220, 0.15);
+  --surface-card-hover-shadow: 0 28px 50px -10px rgba(139, 92, 246, 0.35), inset 0 4px 8px rgba(255, 255, 255, 1);
+  --surface-card-radius: 32px;
+  --surface-card-clip: none;
+  --bg-card: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 246, 255, 0.92) 100%);
+  --bg-secondary: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 246, 255, 0.92) 100%);
+  --card-radius: 32px;
+  --card-border: 2.5px solid rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 20px 40px -10px rgba(147, 130, 200, 0.25), inset 0 4px 8px rgba(255, 255, 255, 0.95), inset 0 -3px 6px rgba(190, 180, 220, 0.15);
+  --card-shadow-hover: 0 28px 50px -10px rgba(139, 92, 246, 0.35), inset 0 4px 8px rgba(255, 255, 255, 1);
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #ddd6fe;
+  --surface-input-text: #1e1147;
+  --surface-input-placeholder: #8b5cf6;
+  --surface-input-radius: 20px;
+  --surface-input-shadow: inset 0 2px 5px rgba(139, 92, 246, 0.12);
+  
+  /* Dialog Surface */
+  --surface-dialog: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
+  --surface-dialog-border: 3px solid #ffffff;
+  --surface-dialog-shadow: 0 30px 60px rgba(139, 92, 246, 0.3), inset 0 3px 6px rgba(255, 255, 255, 0.9);
+  --surface-dialog-radius: 36px;
+  
+  /* Assistant Surface */
+  --surface-assistant: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+  --surface-assistant-border: 3px solid #ffffff;
+  --surface-assistant-shadow: 0 25px 60px rgba(139, 92, 246, 0.28), inset 0 3px 6px rgba(255, 255, 255, 0.9);
+  --surface-assistant-radius: 32px;
+  
+  /* Badges & Chips */
+  --surface-badge: #ede9fe;
+  --surface-badge-border: 1.5px solid #ddd6fe;
+  --surface-badge-text: #5b21b6;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #ede9fe;
+  --surface-chip: #f5f3ff;
+  --surface-chip-border: 2px solid #ddd6fe;
+  --surface-chip-text: #4c1d95;
+  --surface-chip-active-bg: #7c3aed;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 12px 24px -4px rgba(139, 92, 246, 0.45), inset 0 2px 3px rgba(255, 255, 255, 0.5);
+  --btn-primary-radius: 9999px;
+  --btn-primary-hover-shadow: 0 16px 30px -4px rgba(139, 92, 246, 0.55), inset 0 2px 3px rgba(255, 255, 255, 0.7);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 9999px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #4c1d95;
+  --btn-secondary-border: 2px solid #ddd6fe;
+  --btn-secondary-shadow: 0 8px 18px rgba(147, 130, 200, 0.2), inset 0 2px 3px rgba(255, 255, 255, 0.9);
+  --btn-secondary-radius: 9999px;
+  
+  /* Typography Colors */
+  --text-primary: #1e1147;
+  --text-secondary: #4c1d95;
+  --text-muted: #6b7280;
+  
+  /* Accent Colors */
+  --accent-primary: #7c3aed;
+  --accent-secondary: #ec4899;
+  --accent-tertiary: #06b6d4;
+  
+  /* Border & Glow */
+  --border-color: #ddd6fe;
+  --border-glow: #a78bfa;
+  --hud-glow: 0 12px 24px -4px rgba(139, 92, 246, 0.45), inset 0 2px 3px rgba(255, 255, 255, 0.5);
+}
+
+/* --- VAPORWAVE --- */
+[data-style="vaporwave"],
+[data-theme="vaporwave"] {
+  --style-id: "vaporwave";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #fce7f3;
+  --page-bg-pattern: linear-gradient(135deg, #fbcfe8 0%, #f3e8ff 35%, #e0e7ff 70%, #cffafe 100%);
+  --page-bg-size: cover;
+  --bg-primary: #fce7f3;
+  --bg-pattern: linear-gradient(135deg, #fbcfe8 0%, #f3e8ff 35%, #e0e7ff 70%, #cffafe 100%);
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.9);
+  --surface-nav-border: 2px solid #f472b6;
+  --surface-nav-shadow: 0 10px 28px rgba(236, 72, 153, 0.25);
+  --surface-nav-radius: 20px;
+  
+  /* Card Surface */
+  --surface-card: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(253, 242, 248, 0.9) 100%);
+  --surface-card-border: 2px solid rgba(244, 114, 182, 0.55);
+  --surface-card-shadow: 0 14px 32px rgba(236, 72, 153, 0.2), 0 0 15px rgba(6, 182, 212, 0.15);
+  --surface-card-hover-shadow: 0 20px 40px rgba(236, 72, 153, 0.3), 0 0 25px rgba(6, 182, 212, 0.25);
+  --surface-card-radius: 20px;
+  --surface-card-clip: none;
+  --bg-card: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(253, 242, 248, 0.9) 100%);
+  --bg-secondary: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(253, 242, 248, 0.9) 100%);
+  --card-radius: 20px;
+  --card-border: 2px solid rgba(244, 114, 182, 0.55);
+  --card-shadow: 0 14px 32px rgba(236, 72, 153, 0.2), 0 0 15px rgba(6, 182, 212, 0.15);
+  --card-shadow-hover: 0 20px 40px rgba(236, 72, 153, 0.3), 0 0 25px rgba(6, 182, 212, 0.25);
+  --card-clip: none;
+  --backdrop-blur: blur(12px);
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #f472b6;
+  --surface-input-text: #1e1147;
+  --surface-input-placeholder: #ec4899;
+  --surface-input-radius: 14px;
+  --surface-input-shadow: 0 2px 8px rgba(236, 72, 153, 0.15);
+  
+  /* Dialog Surface */
+  --surface-dialog: linear-gradient(135deg, #ffffff 0%, #fdf2f8 100%);
+  --surface-dialog-border: 2.5px solid #ec4899;
+  --surface-dialog-shadow: 0 25px 60px rgba(236, 72, 153, 0.35);
+  --surface-dialog-radius: 24px;
+  
+  /* Assistant Surface */
+  --surface-assistant: linear-gradient(135deg, #ffffff 0%, #fdf2f8 100%);
+  --surface-assistant-border: 2.5px solid #ec4899;
+  --surface-assistant-shadow: 0 25px 60px rgba(236, 72, 153, 0.35);
+  --surface-assistant-radius: 22px;
+  
+  /* Badges & Chips */
+  --surface-badge: #fce7f3;
+  --surface-badge-border: 1.5px solid #f472b6;
+  --surface-badge-text: #be185d;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #fce7f3;
+  --surface-chip: #fdf2f8;
+  --surface-chip-border: 2px solid #fbcfe8;
+  --surface-chip-text: #9d174d;
+  --surface-chip-active-bg: #ec4899;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(90deg, #ec4899 0%, #a855f7 50%, #06b6d4 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 8px 24px rgba(236, 72, 153, 0.45);
+  --btn-primary-radius: 14px;
+  --btn-primary-hover-shadow: 0 12px 30px rgba(236, 72, 153, 0.6);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 14px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #9d174d;
+  --btn-secondary-border: 2px solid #f472b6;
+  --btn-secondary-shadow: 0 4px 14px rgba(236, 72, 153, 0.15);
+  --btn-secondary-radius: 14px;
+  
+  /* Typography Colors */
+  --text-primary: #1e1147;
+  --text-secondary: #581c87;
+  --text-muted: #6b7280;
+  
+  /* Accent Colors */
+  --accent-primary: #ec4899;
+  --accent-secondary: #06b6d4;
+  --accent-tertiary: #a855f7;
+  
+  /* Border & Glow */
+  --border-color: #fbcfe8;
+  --border-glow: #ec4899;
+  --hud-glow: 0 8px 24px rgba(236, 72, 153, 0.45);
+}
+
+/* --- ORGANIC-BIOPHILIC --- */
+[data-style="organic-biophilic"],
+[data-theme="organic-biophilic"] {
+  --style-id: "organic-biophilic";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #f0fdf4;
+  --page-bg-pattern: radial-gradient(circle at 10% 20%, #dcfce7 0%, transparent 40%), radial-gradient(circle at 90% 80%, #fef3c7 0%, transparent 35%), #f0fdf4;
+  --page-bg-size: auto;
+  --bg-primary: #f0fdf4;
+  --bg-pattern: radial-gradient(circle at 10% 20%, #dcfce7 0%, transparent 40%), radial-gradient(circle at 90% 80%, #fef3c7 0%, transparent 35%), #f0fdf4;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.94);
+  --surface-nav-border: 1.5px solid #86efac;
+  --surface-nav-shadow: 0 10px 28px rgba(22, 101, 52, 0.1);
+  --surface-nav-radius: 26px;
+  
+  /* Card Surface */
+  --surface-card: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 253, 244, 0.9) 100%);
+  --surface-card-border: 2px solid #bbf7d0;
+  --surface-card-shadow: 0 14px 32px rgba(22, 101, 52, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  --surface-card-hover-shadow: 0 22px 45px rgba(22, 101, 52, 0.16);
+  --surface-card-radius: 28px 12px 28px 12px;
+  --surface-card-clip: none;
+  --bg-card: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 253, 244, 0.9) 100%);
+  --bg-secondary: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 253, 244, 0.9) 100%);
+  --card-radius: 28px 12px 28px 12px;
+  --card-border: 2px solid #bbf7d0;
+  --card-shadow: 0 14px 32px rgba(22, 101, 52, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  --card-shadow-hover: 0 22px 45px rgba(22, 101, 52, 0.16);
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #86efac;
+  --surface-input-text: #064e3b;
+  --surface-input-placeholder: #059669;
+  --surface-input-radius: 20px 8px 20px 8px;
+  --surface-input-shadow: inset 0 2px 4px rgba(22, 101, 52, 0.08);
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 2.5px solid #86efac;
+  --surface-dialog-shadow: 0 25px 60px rgba(22, 101, 52, 0.2);
+  --surface-dialog-radius: 30px 14px 30px 14px;
+  
+  /* Assistant Surface */
+  --surface-assistant: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  --surface-assistant-border: 2.5px solid #86efac;
+  --surface-assistant-shadow: 0 25px 60px rgba(22, 101, 52, 0.2);
+  --surface-assistant-radius: 28px 12px 28px 12px;
+  
+  /* Badges & Chips */
+  --surface-badge: #dcfce7;
+  --surface-badge-border: 1.5px solid #86efac;
+  --surface-badge-text: #15803d;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #dcfce7;
+  --surface-chip: #f0fdf4;
+  --surface-chip-border: 2px solid #bbf7d0;
+  --surface-chip-text: #166534;
+  --surface-chip-active-bg: #10b981;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 10px 24px rgba(16, 185, 129, 0.38);
+  --btn-primary-radius: 24px 8px 24px 8px;
+  --btn-primary-hover-shadow: 0 14px 30px rgba(16, 185, 129, 0.5);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 24px 8px 24px 8px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #065f46;
+  --btn-secondary-border: 2px solid #86efac;
+  --btn-secondary-shadow: 0 6px 16px rgba(22, 101, 52, 0.08);
+  --btn-secondary-radius: 24px 8px 24px 8px;
+  
+  /* Typography Colors */
+  --text-primary: #064e3b;
+  --text-secondary: #065f46;
+  --text-muted: #4b5563;
+  
+  /* Accent Colors */
+  --accent-primary: #10b981;
+  --accent-secondary: #059669;
+  --accent-tertiary: #f59e0b;
+  
+  /* Border & Glow */
+  --border-color: #bbf7d0;
+  --border-glow: #10b981;
+  --hud-glow: 0 10px 24px rgba(16, 185, 129, 0.38);
+}
+
+/* --- BENTO-GRID --- */
+[data-style="bento-grid"],
+[data-theme="bento-grid"] {
+  --style-id: "bento-grid";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #f8fafc;
+  --page-bg-pattern: repeating-linear-gradient(0deg, rgba(226, 232, 240, 0.6) 0px, transparent 1px, transparent 24px), repeating-linear-gradient(90deg, rgba(226, 232, 240, 0.6) 0px, transparent 1px, transparent 24px), #f8fafc;
+  --page-bg-size: 24px 24px;
+  --bg-primary: #f8fafc;
+  --bg-pattern: repeating-linear-gradient(0deg, rgba(226, 232, 240, 0.6) 0px, transparent 1px, transparent 24px), repeating-linear-gradient(90deg, rgba(226, 232, 240, 0.6) 0px, transparent 1px, transparent 24px), #f8fafc;
+  --bg-pattern-size: 24px 24px;
+  
+  /* Navigation Surface */
+  --surface-nav: #ffffff;
+  --surface-nav-border: 1.5px solid #e2e8f0;
+  --surface-nav-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  --surface-nav-radius: 18px;
+  
+  /* Card Surface */
+  --surface-card: #ffffff;
+  --surface-card-border: 1.5px solid #e2e8f0;
+  --surface-card-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  --surface-card-hover-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
+  --surface-card-radius: 18px;
+  --surface-card-clip: none;
+  --bg-card: #ffffff;
+  --bg-secondary: #ffffff;
+  --card-radius: 18px;
+  --card-border: 1.5px solid #e2e8f0;
+  --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 12px 30px rgba(37, 99, 235, 0.12);
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 1.5px solid #cbd5e1;
+  --surface-input-text: #0f172a;
+  --surface-input-placeholder: #64748b;
+  --surface-input-radius: 12px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 1.5px solid #e2e8f0;
+  --surface-dialog-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  --surface-dialog-radius: 22px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 1.5px solid #e2e8f0;
+  --surface-assistant-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  --surface-assistant-radius: 20px;
+  
+  /* Badges & Chips */
+  --surface-badge: #eff6ff;
+  --surface-badge-border: 1px solid #bfdbfe;
+  --surface-badge-text: #1d4ed8;
+  --surface-badge-radius: 8px;
+  --badge-bg: #eff6ff;
+  --surface-chip: #f1f5f9;
+  --surface-chip-border: 1.5px solid #e2e8f0;
+  --surface-chip-text: #334155;
+  --surface-chip-active-bg: #2563eb;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: #2563eb;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+  --btn-primary-radius: 12px;
+  --btn-primary-hover-shadow: 0 10px 24px rgba(37, 99, 235, 0.4);
+  --btn-primary-active-transform: scale(0.97);
+  --btn-radius: 12px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #f8fafc;
+  --btn-secondary-text: #0f172a;
+  --btn-secondary-border: 1.5px solid #cbd5e1;
+  --btn-secondary-shadow: none;
+  --btn-secondary-radius: 12px;
+  
+  /* Typography Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  
+  /* Accent Colors */
+  --accent-primary: #2563eb;
+  --accent-secondary: #06b6d4;
+  --accent-tertiary: #f59e0b;
+  
+  /* Border & Glow */
+  --border-color: #e2e8f0;
+  --border-glow: #2563eb;
+  --hud-glow: 0 6px 18px rgba(37, 99, 235, 0.3);
+}
+
+/* --- Y2K-AESTHETIC --- */
+[data-style="y2k-aesthetic"],
+[data-theme="y2k-aesthetic"] {
+  --style-id: "y2k-aesthetic";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #e0f2fe;
+  --page-bg-pattern: radial-gradient(circle at 20% 20%, #e0f2fe 0%, #fce7f3 40%, #ffffff 80%);
+  --page-bg-size: cover;
+  --bg-primary: #e0f2fe;
+  --bg-pattern: radial-gradient(circle at 20% 20%, #e0f2fe 0%, #fce7f3 40%, #ffffff 80%);
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(224, 242, 254, 0.9) 100%);
+  --surface-nav-border: 2.5px solid #38bdf8;
+  --surface-nav-shadow: 0 10px 28px rgba(56, 189, 248, 0.35);
+  --surface-nav-radius: 28px;
+  
+  /* Card Surface */
+  --surface-card: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 249, 255, 0.9) 100%);
+  --surface-card-border: 2.5px solid #7dd3fc;
+  --surface-card-shadow: 0 14px 32px rgba(14, 165, 233, 0.22), inset 0 2px 4px rgba(255, 255, 255, 0.95);
+  --surface-card-hover-shadow: 0 20px 42px rgba(14, 165, 233, 0.35), inset 0 2px 4px rgba(255, 255, 255, 1);
+  --surface-card-radius: 24px;
+  --surface-card-clip: none;
+  --bg-card: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 249, 255, 0.9) 100%);
+  --bg-secondary: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 249, 255, 0.9) 100%);
+  --card-radius: 24px;
+  --card-border: 2.5px solid #7dd3fc;
+  --card-shadow: 0 14px 32px rgba(14, 165, 233, 0.22), inset 0 2px 4px rgba(255, 255, 255, 0.95);
+  --card-shadow-hover: 0 20px 42px rgba(14, 165, 233, 0.35), inset 0 2px 4px rgba(255, 255, 255, 1);
+  --card-clip: none;
+  --backdrop-blur: blur(8px);
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #38bdf8;
+  --surface-input-text: #0c4a6e;
+  --surface-input-placeholder: #0284c7;
+  --surface-input-radius: 16px;
+  --surface-input-shadow: inset 0 2px 4px rgba(14, 165, 233, 0.15);
+  
+  /* Dialog Surface */
+  --surface-dialog: linear-gradient(180deg, #ffffff 0%, #e0f2fe 100%);
+  --surface-dialog-border: 3px solid #38bdf8;
+  --surface-dialog-shadow: 0 25px 60px rgba(14, 165, 233, 0.35);
+  --surface-dialog-radius: 28px;
+  
+  /* Assistant Surface */
+  --surface-assistant: linear-gradient(180deg, #ffffff 0%, #fce7f3 100%);
+  --surface-assistant-border: 3px solid #f43f5e;
+  --surface-assistant-shadow: 0 25px 60px rgba(244, 63, 94, 0.3);
+  --surface-assistant-radius: 26px;
+  
+  /* Badges & Chips */
+  --surface-badge: #e0f2fe;
+  --surface-badge-border: 1.5px solid #38bdf8;
+  --surface-badge-text: #0369a1;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #e0f2fe;
+  --surface-chip: #f0f9ff;
+  --surface-chip-border: 2px solid #bae6fd;
+  --surface-chip-text: #0284c7;
+  --surface-chip-active-bg: #f43f5e;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(180deg, #f43f5e 0%, #e11d48 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 8px 24px rgba(244, 63, 94, 0.45), inset 0 2px 2px rgba(255, 255, 255, 0.6);
+  --btn-primary-radius: 9999px;
+  --btn-primary-hover-shadow: 0 12px 30px rgba(244, 63, 94, 0.6);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 9999px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+  --btn-secondary-text: #0369a1;
+  --btn-secondary-border: 2px solid #38bdf8;
+  --btn-secondary-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+  --btn-secondary-radius: 9999px;
+  
+  /* Typography Colors */
+  --text-primary: #0c4a6e;
+  --text-secondary: #0369a1;
+  --text-muted: #475569;
+  
+  /* Accent Colors */
+  --accent-primary: #f43f5e;
+  --accent-secondary: #0284c7;
+  --accent-tertiary: #84cc16;
+  
+  /* Border & Glow */
+  --border-color: #bae6fd;
+  --border-glow: #f43f5e;
+  --hud-glow: 0 8px 24px rgba(244, 63, 94, 0.45), inset 0 2px 2px rgba(255, 255, 255, 0.6);
+}
+
+/* --- GRADIENT-MESH --- */
+[data-style="gradient-mesh"],
+[data-theme="gradient-mesh"] {
+  --style-id: "gradient-mesh";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #faf5ff;
+  --page-bg-pattern: radial-gradient(at 10% 10%, #fbcfe8 0px, transparent 50%), radial-gradient(at 90% 15%, #c7d2fe 0px, transparent 50%), radial-gradient(at 50% 50%, #fed7aa 0px, transparent 50%), radial-gradient(at 20% 85%, #a7f3d0 0px, transparent 50%), radial-gradient(at 80% 85%, #bae6fd 0px, transparent 50%), #faf5ff;
+  --page-bg-size: cover;
+  --bg-primary: #faf5ff;
+  --bg-pattern: radial-gradient(at 10% 10%, #fbcfe8 0px, transparent 50%), radial-gradient(at 90% 15%, #c7d2fe 0px, transparent 50%), radial-gradient(at 50% 50%, #fed7aa 0px, transparent 50%), radial-gradient(at 20% 85%, #a7f3d0 0px, transparent 50%), radial-gradient(at 80% 85%, #bae6fd 0px, transparent 50%), #faf5ff;
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.88);
+  --surface-nav-border: 2px solid rgba(255, 255, 255, 0.95);
+  --surface-nav-shadow: 0 12px 32px rgba(124, 58, 237, 0.18);
+  --surface-nav-radius: 26px;
+  
+  /* Card Surface */
+  --surface-card: rgba(255, 255, 255, 0.9);
+  --surface-card-border: 2px solid rgba(255, 255, 255, 0.95);
+  --surface-card-shadow: 0 16px 36px rgba(124, 58, 237, 0.14), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  --surface-card-hover-shadow: 0 24px 50px rgba(124, 58, 237, 0.22);
+  --surface-card-radius: 26px;
+  --surface-card-clip: none;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-secondary: rgba(255, 255, 255, 0.9);
+  --card-radius: 26px;
+  --card-border: 2px solid rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 16px 36px rgba(124, 58, 237, 0.14), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  --card-shadow-hover: 0 24px 50px rgba(124, 58, 237, 0.22);
+  --card-clip: none;
+  --backdrop-blur: blur(16px);
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #ddd6fe;
+  --surface-input-text: #1e1b4b;
+  --surface-input-placeholder: #8b5cf6;
+  --surface-input-radius: 16px;
+  --surface-input-shadow: 0 2px 8px rgba(139, 92, 246, 0.1);
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(255, 255, 255, 0.95);
+  --surface-dialog-border: 2.5px solid #ffffff;
+  --surface-dialog-shadow: 0 28px 65px rgba(124, 58, 237, 0.25);
+  --surface-dialog-radius: 30px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(255, 255, 255, 0.95);
+  --surface-assistant-border: 2.5px solid #ffffff;
+  --surface-assistant-shadow: 0 28px 65px rgba(124, 58, 237, 0.25);
+  --surface-assistant-radius: 28px;
+  
+  /* Badges & Chips */
+  --surface-badge: #f3e8ff;
+  --surface-badge-border: 1.5px solid #d8b4fe;
+  --surface-badge-text: #7e22ce;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #f3e8ff;
+  --surface-chip: #faf5ff;
+  --surface-chip-border: 2px solid #e9d5ff;
+  --surface-chip-text: #6b21a8;
+  --surface-chip-active-bg: #8b5cf6;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 10px 26px rgba(139, 92, 246, 0.4);
+  --btn-primary-radius: 16px;
+  --btn-primary-hover-shadow: 0 14px 34px rgba(139, 92, 246, 0.55);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 16px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #6b21a8;
+  --btn-secondary-border: 2px solid #ddd6fe;
+  --btn-secondary-shadow: 0 4px 14px rgba(139, 92, 246, 0.12);
+  --btn-secondary-radius: 16px;
+  
+  /* Typography Colors */
+  --text-primary: #1e1b4b;
+  --text-secondary: #3730a3;
+  --text-muted: #64748b;
+  
+  /* Accent Colors */
+  --accent-primary: #8b5cf6;
+  --accent-secondary: #ec4899;
+  --accent-tertiary: #06b6d4;
+  
+  /* Border & Glow */
+  --border-color: #ddd6fe;
+  --border-glow: #8b5cf6;
+  --hud-glow: 0 10px 26px rgba(139, 92, 246, 0.4);
+}
+
+/* --- RETRO-PIXEL --- */
+[data-style="retro-pixel"],
+[data-theme="retro-pixel"] {
+  --style-id: "retro-pixel";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #fef9c3;
+  --page-bg-pattern: radial-gradient(circle at 10% 10%, #fef08a 0%, transparent 35%), radial-gradient(circle at 90% 90%, #fed7aa 0%, transparent 35%), #fef9c3;
+  --page-bg-size: auto;
+  --bg-primary: #fef9c3;
+  --bg-pattern: radial-gradient(circle at 10% 10%, #fef08a 0%, transparent 35%), radial-gradient(circle at 90% 90%, #fed7aa 0%, transparent 35%), #fef9c3;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: #ffffff;
+  --surface-nav-border: 3.5px solid #0f172a;
+  --surface-nav-shadow: 4px 4px 0px #0f172a;
+  --surface-nav-radius: 0px;
+  
+  /* Card Surface */
+  --surface-card: #ffffff;
+  --surface-card-border: 3.5px solid #0f172a;
+  --surface-card-shadow: 5px 5px 0px #0f172a;
+  --surface-card-hover-shadow: 8px 8px 0px #0f172a;
+  --surface-card-radius: 0px;
+  --surface-card-clip: none;
+  --bg-card: #ffffff;
+  --bg-secondary: #ffffff;
+  --card-radius: 0px;
+  --card-border: 3.5px solid #0f172a;
+  --card-shadow: 5px 5px 0px #0f172a;
+  --card-shadow-hover: 8px 8px 0px #0f172a;
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 3px solid #0f172a;
+  --surface-input-text: #0f172a;
+  --surface-input-placeholder: #64748b;
+  --surface-input-radius: 0px;
+  --surface-input-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.1);
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 4px solid #0f172a;
+  --surface-dialog-shadow: 8px 8px 0px #0f172a;
+  --surface-dialog-radius: 0px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 4px solid #0f172a;
+  --surface-assistant-shadow: 8px 8px 0px #0f172a;
+  --surface-assistant-radius: 0px;
+  
+  /* Badges & Chips */
+  --surface-badge: #fee2e2;
+  --surface-badge-border: 2.5px solid #0f172a;
+  --surface-badge-text: #b91c1c;
+  --surface-badge-radius: 0px;
+  --badge-bg: #fee2e2;
+  --surface-chip: #fef08a;
+  --surface-chip-border: 2.5px solid #0f172a;
+  --surface-chip-text: #0f172a;
+  --surface-chip-active-bg: #ef4444;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: #ef4444;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: 3px solid #0f172a;
+  --btn-primary-shadow: 4px 4px 0px #0f172a;
+  --btn-primary-radius: 0px;
+  --btn-primary-hover-shadow: 6px 6px 0px #0f172a;
+  --btn-primary-active-transform: translate(2px, 2px);
+  --btn-radius: 0px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #3b82f6;
+  --btn-secondary-text: #ffffff;
+  --btn-secondary-border: 3px solid #0f172a;
+  --btn-secondary-shadow: 4px 4px 0px #0f172a;
+  --btn-secondary-radius: 0px;
+  
+  /* Typography Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #1e293b;
+  --text-muted: #475569;
+  
+  /* Accent Colors */
+  --accent-primary: #ef4444;
+  --accent-secondary: #3b82f6;
+  --accent-tertiary: #eab308;
+  
+  /* Border & Glow */
+  --border-color: #0f172a;
+  --border-glow: #ef4444;
+  --hud-glow: 4px 4px 0px #0f172a;
+}
+
+/* --- LIQUID-GLASS --- */
+[data-style="liquid-glass"],
+[data-theme="liquid-glass"] {
+  --style-id: "liquid-glass";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #ecfeff;
+  --page-bg-pattern: radial-gradient(ellipse at 20% 20%, #cffafe 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, #bae6fd 0%, transparent 50%), linear-gradient(135deg, #e0f2fe 0%, #ecfeff 100%);
+  --page-bg-size: cover;
+  --bg-primary: #ecfeff;
+  --bg-pattern: radial-gradient(ellipse at 20% 20%, #cffafe 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, #bae6fd 0%, transparent 50%), linear-gradient(135deg, #e0f2fe 0%, #ecfeff 100%);
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.85);
+  --surface-nav-border: 2px solid rgba(6, 182, 212, 0.45);
+  --surface-nav-shadow: 0 12px 32px rgba(6, 182, 212, 0.22);
+  --surface-nav-radius: 32px;
+  
+  /* Card Surface */
+  --surface-card: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 242, 254, 0.8) 100%);
+  --surface-card-border: 2.5px solid rgba(255, 255, 255, 0.95);
+  --surface-card-shadow: 0 20px 45px rgba(6, 182, 212, 0.18), inset 0 2px 4px rgba(255, 255, 255, 0.95);
+  --surface-card-hover-shadow: 0 28px 55px rgba(6, 182, 212, 0.28), inset 0 2px 4px rgba(255, 255, 255, 1);
+  --surface-card-radius: 32px;
+  --surface-card-clip: none;
+  --bg-card: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 242, 254, 0.8) 100%);
+  --bg-secondary: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 242, 254, 0.8) 100%);
+  --card-radius: 32px;
+  --card-border: 2.5px solid rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 20px 45px rgba(6, 182, 212, 0.18), inset 0 2px 4px rgba(255, 255, 255, 0.95);
+  --card-shadow-hover: 0 28px 55px rgba(6, 182, 212, 0.28), inset 0 2px 4px rgba(255, 255, 255, 1);
+  --card-clip: none;
+  --backdrop-blur: blur(20px);
+  
+  /* Input & Form Surface */
+  --surface-input: rgba(255, 255, 255, 0.9);
+  --surface-input-border: 2px solid #67e8f9;
+  --surface-input-text: #083344;
+  --surface-input-placeholder: #0891b2;
+  --surface-input-radius: 20px;
+  --surface-input-shadow: inset 0 2px 4px rgba(6, 182, 212, 0.12);
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(255, 255, 255, 0.95);
+  --surface-dialog-border: 3px solid rgba(255, 255, 255, 1);
+  --surface-dialog-shadow: 0 30px 65px rgba(6, 182, 212, 0.28);
+  --surface-dialog-radius: 34px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(255, 255, 255, 0.95);
+  --surface-assistant-border: 3px solid rgba(255, 255, 255, 1);
+  --surface-assistant-shadow: 0 30px 65px rgba(6, 182, 212, 0.28);
+  --surface-assistant-radius: 32px;
+  
+  /* Badges & Chips */
+  --surface-badge: #cffafe;
+  --surface-badge-border: 1.5px solid #67e8f9;
+  --surface-badge-text: #0e7490;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #cffafe;
+  --surface-chip: #e0f2fe;
+  --surface-chip-border: 2px solid #a5f3fc;
+  --surface-chip-text: #0891b2;
+  --surface-chip-active-bg: #06b6d4;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 10px 26px rgba(6, 182, 212, 0.42);
+  --btn-primary-radius: 9999px;
+  --btn-primary-hover-shadow: 0 14px 34px rgba(6, 182, 212, 0.55);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 9999px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(255, 255, 255, 0.9);
+  --btn-secondary-text: #0891b2;
+  --btn-secondary-border: 2px solid #67e8f9;
+  --btn-secondary-shadow: 0 6px 18px rgba(6, 182, 212, 0.15);
+  --btn-secondary-radius: 9999px;
+  
+  /* Typography Colors */
+  --text-primary: #083344;
+  --text-secondary: #0e7490;
+  --text-muted: #475569;
+  
+  /* Accent Colors */
+  --accent-primary: #06b6d4;
+  --accent-secondary: #0284c7;
+  --accent-tertiary: #0d9488;
+  
+  /* Border & Glow */
+  --border-color: #a5f3fc;
+  --border-glow: #06b6d4;
+  --hud-glow: 0 10px 26px rgba(6, 182, 212, 0.42);
+}
+
+/* --- NEOBRUTALISM --- */
+[data-style="neobrutalism"],
+[data-theme="neobrutalism"] {
+  --style-id: "neobrutalism";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #fffbf0;
+  --page-bg-pattern: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.03) 0, rgba(0, 0, 0, 0.03) 1px, transparent 0, transparent 16px);
+  --page-bg-size: auto;
+  --bg-primary: #fffbf0;
+  --bg-pattern: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.03) 0, rgba(0, 0, 0, 0.03) 1px, transparent 0, transparent 16px);
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: #ffffff;
+  --surface-nav-border: 3.5px solid #000000;
+  --surface-nav-shadow: 4px 4px 0px #000000;
+  --surface-nav-radius: 0px;
+  
+  /* Card Surface */
+  --surface-card: #ffffff;
+  --surface-card-border: 3.5px solid #000000;
+  --surface-card-shadow: 6px 6px 0px #000000;
+  --surface-card-hover-shadow: 9px 9px 0px #000000;
+  --surface-card-radius: 0px;
+  --surface-card-clip: none;
+  --bg-card: #ffffff;
+  --bg-secondary: #ffffff;
+  --card-radius: 0px;
+  --card-border: 3.5px solid #000000;
+  --card-shadow: 6px 6px 0px #000000;
+  --card-shadow-hover: 9px 9px 0px #000000;
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 3px solid #000000;
+  --surface-input-text: #000000;
+  --surface-input-placeholder: #4b5563;
+  --surface-input-radius: 0px;
+  --surface-input-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.08);
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 4px solid #000000;
+  --surface-dialog-shadow: 8px 8px 0px #000000;
+  --surface-dialog-radius: 0px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 4px solid #000000;
+  --surface-assistant-shadow: 8px 8px 0px #000000;
+  --surface-assistant-radius: 0px;
+  
+  /* Badges & Chips */
+  --surface-badge: #fef08a;
+  --surface-badge-border: 2.5px solid #000000;
+  --surface-badge-text: #000000;
+  --surface-badge-radius: 0px;
+  --badge-bg: #fef08a;
+  --surface-chip: #ffffff;
+  --surface-chip-border: 2.5px solid #000000;
+  --surface-chip-text: #000000;
+  --surface-chip-active-bg: #fde047;
+  --surface-chip-active-text: #000000;
+  
+  /* Primary Button */
+  --btn-primary-bg: #fde047;
+  --btn-primary-text: #000000;
+  --btn-primary-border: 3px solid #000000;
+  --btn-primary-shadow: 4px 4px 0px #000000;
+  --btn-primary-radius: 0px;
+  --btn-primary-hover-shadow: 6px 6px 0px #000000;
+  --btn-primary-active-transform: translate(2px, 2px);
+  --btn-radius: 0px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #000000;
+  --btn-secondary-border: 3px solid #000000;
+  --btn-secondary-shadow: 4px 4px 0px #000000;
+  --btn-secondary-radius: 0px;
+  
+  /* Typography Colors */
+  --text-primary: #000000;
+  --text-secondary: #1f2937;
+  --text-muted: #4b5563;
+  
+  /* Accent Colors */
+  --accent-primary: #fde047;
+  --accent-secondary: #fb923c;
+  --accent-tertiary: #38bdf8;
+  
+  /* Border & Glow */
+  --border-color: #000000;
+  --border-glow: #fde047;
+  --hud-glow: 4px 4px 0px #000000;
+}
+
+/* --- GLASSMORPHISM --- */
+[data-style="glassmorphism"],
+[data-theme="glassmorphism"] {
+  --style-id: "glassmorphism";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #f8fafc;
+  --page-bg-pattern: radial-gradient(circle at 10% 20%, #e0e7ff 0%, transparent 40%), radial-gradient(circle at 90% 80%, #fce7f3 0%, transparent 45%), radial-gradient(circle at 50% 50%, #cffafe 0%, transparent 40%), #f8fafc;
+  --page-bg-size: cover;
+  --bg-primary: #f8fafc;
+  --bg-pattern: radial-gradient(circle at 10% 20%, #e0e7ff 0%, transparent 40%), radial-gradient(circle at 90% 80%, #fce7f3 0%, transparent 45%), radial-gradient(circle at 50% 50%, #cffafe 0%, transparent 40%), #f8fafc;
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.85);
+  --surface-nav-border: 2px solid rgba(255, 255, 255, 0.95);
+  --surface-nav-shadow: 0 10px 32px rgba(99, 102, 241, 0.15);
+  --surface-nav-radius: 24px;
+  
+  /* Card Surface */
+  --surface-card: rgba(255, 255, 255, 0.85);
+  --surface-card-border: 2px solid rgba(255, 255, 255, 0.95);
+  --surface-card-shadow: 0 16px 36px rgba(99, 102, 241, 0.14);
+  --surface-card-hover-shadow: 0 24px 50px rgba(99, 102, 241, 0.22);
+  --surface-card-radius: 24px;
+  --surface-card-clip: none;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-secondary: rgba(255, 255, 255, 0.85);
+  --card-radius: 24px;
+  --card-border: 2px solid rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 16px 36px rgba(99, 102, 241, 0.14);
+  --card-shadow-hover: 0 24px 50px rgba(99, 102, 241, 0.22);
+  --card-clip: none;
+  --backdrop-blur: blur(20px);
+  
+  /* Input & Form Surface */
+  --surface-input: rgba(255, 255, 255, 0.9);
+  --surface-input-border: 1.5px solid #c7d2fe;
+  --surface-input-text: #1e1b4b;
+  --surface-input-placeholder: #6366f1;
+  --surface-input-radius: 16px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(255, 255, 255, 0.95);
+  --surface-dialog-border: 2px solid #ffffff;
+  --surface-dialog-shadow: 0 25px 60px rgba(99, 102, 241, 0.25);
+  --surface-dialog-radius: 28px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(255, 255, 255, 0.95);
+  --surface-assistant-border: 2px solid #ffffff;
+  --surface-assistant-shadow: 0 25px 60px rgba(99, 102, 241, 0.25);
+  --surface-assistant-radius: 26px;
+  
+  /* Badges & Chips */
+  --surface-badge: #e0e7ff;
+  --surface-badge-border: 1.5px solid #c7d2fe;
+  --surface-badge-text: #4338ca;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #e0e7ff;
+  --surface-chip: #eef2ff;
+  --surface-chip-border: 1.5px solid #c7d2fe;
+  --surface-chip-text: #3730a3;
+  --surface-chip-active-bg: #6366f1;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 8px 24px rgba(99, 102, 241, 0.38);
+  --btn-primary-radius: 14px;
+  --btn-primary-hover-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 14px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(255, 255, 255, 0.9);
+  --btn-secondary-text: #4338ca;
+  --btn-secondary-border: 1.5px solid #c7d2fe;
+  --btn-secondary-shadow: 0 4px 14px rgba(99, 102, 241, 0.12);
+  --btn-secondary-radius: 14px;
+  
+  /* Typography Colors */
+  --text-primary: #1e1b4b;
+  --text-secondary: #312e81;
+  --text-muted: #64748b;
+  
+  /* Accent Colors */
+  --accent-primary: #6366f1;
+  --accent-secondary: #8b5cf6;
+  --accent-tertiary: #06b6d4;
+  
+  /* Border & Glow */
+  --border-color: #c7d2fe;
+  --border-glow: #6366f1;
+  --hud-glow: 0 8px 24px rgba(99, 102, 241, 0.38);
+}
+
+/* --- MINIMALISM --- */
+[data-style="minimalism"],
+[data-theme="minimalism"] {
+  --style-id: "minimalism";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #ffffff;
+  --page-bg-pattern: none;
+  --page-bg-size: auto;
+  --bg-primary: #ffffff;
+  --bg-pattern: none;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: #ffffff;
+  --surface-nav-border: 1px solid #e5e7eb;
+  --surface-nav-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --surface-nav-radius: 8px;
+  
+  /* Card Surface */
+  --surface-card: #ffffff;
+  --surface-card-border: 1px solid #e5e7eb;
+  --surface-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --surface-card-hover-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --surface-card-radius: 8px;
+  --surface-card-clip: none;
+  --bg-card: #ffffff;
+  --bg-secondary: #ffffff;
+  --card-radius: 8px;
+  --card-border: 1px solid #e5e7eb;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 1px solid #d1d5db;
+  --surface-input-text: #09090b;
+  --surface-input-placeholder: #9ca3af;
+  --surface-input-radius: 6px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 1px solid #e5e7eb;
+  --surface-dialog-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --surface-dialog-radius: 10px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 1px solid #e5e7eb;
+  --surface-assistant-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --surface-assistant-radius: 10px;
+  
+  /* Badges & Chips */
+  --surface-badge: #f3f4f6;
+  --surface-badge-border: 1px solid #e5e7eb;
+  --surface-badge-text: #374151;
+  --surface-badge-radius: 6px;
+  --badge-bg: #f3f4f6;
+  --surface-chip: #f9fafb;
+  --surface-chip-border: 1px solid #e5e7eb;
+  --surface-chip-text: #111827;
+  --surface-chip-active-bg: #09090b;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: #09090b;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: none;
+  --btn-primary-radius: 6px;
+  --btn-primary-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --btn-primary-active-transform: scale(0.98);
+  --btn-radius: 6px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #09090b;
+  --btn-secondary-border: 1px solid #e5e7eb;
+  --btn-secondary-shadow: none;
+  --btn-secondary-radius: 6px;
+  
+  /* Typography Colors */
+  --text-primary: #09090b;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  
+  /* Accent Colors */
+  --accent-primary: #2563eb;
+  --accent-secondary: #09090b;
+  --accent-tertiary: #6b7280;
+  
+  /* Border & Glow */
+  --border-color: #e5e7eb;
+  --border-glow: #2563eb;
+  --hud-glow: 0 0 20px #2563eb;
+}
+
+/* --- SWISS-STYLE --- */
+[data-style="swiss-style"],
+[data-theme="swiss-style"] {
+  --style-id: "swiss-style";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #f8f9fa;
+  --page-bg-pattern: none;
+  --page-bg-size: auto;
+  --bg-primary: #f8f9fa;
+  --bg-pattern: none;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: #ffffff;
+  --surface-nav-border: 2px solid #0a0a0a;
+  --surface-nav-shadow: none;
+  --surface-nav-radius: 0px;
+  
+  /* Card Surface */
+  --surface-card: #ffffff;
+  --surface-card-border: 2px solid #0a0a0a;
+  --surface-card-shadow: none;
+  --surface-card-hover-shadow: none;
+  --surface-card-radius: 0px;
+  --surface-card-clip: none;
+  --bg-card: #ffffff;
+  --bg-secondary: #ffffff;
+  --card-radius: 0px;
+  --card-border: 2px solid #0a0a0a;
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #0a0a0a;
+  --surface-input-text: #0a0a0a;
+  --surface-input-placeholder: #525252;
+  --surface-input-radius: 0px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 2.5px solid #0a0a0a;
+  --surface-dialog-shadow: none;
+  --surface-dialog-radius: 0px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 2.5px solid #0a0a0a;
+  --surface-assistant-shadow: none;
+  --surface-assistant-radius: 0px;
+  
+  /* Badges & Chips */
+  --surface-badge: #fee2e2;
+  --surface-badge-border: 1.5px solid #e11d48;
+  --surface-badge-text: #9f1239;
+  --surface-badge-radius: 0px;
+  --badge-bg: #fee2e2;
+  --surface-chip: #ffffff;
+  --surface-chip-border: 1.5px solid #0a0a0a;
+  --surface-chip-text: #0a0a0a;
+  --surface-chip-active-bg: #e11d48;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: #e11d48;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: 2px solid #0a0a0a;
+  --btn-primary-shadow: none;
+  --btn-primary-radius: 0px;
+  --btn-primary-hover-shadow: none;
+  --btn-primary-active-transform: scale(0.98);
+  --btn-radius: 0px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #0a0a0a;
+  --btn-secondary-border: 2px solid #0a0a0a;
+  --btn-secondary-shadow: none;
+  --btn-secondary-radius: 0px;
+  
+  /* Typography Colors */
+  --text-primary: #0a0a0a;
+  --text-secondary: #262626;
+  --text-muted: #525252;
+  
+  /* Accent Colors */
+  --accent-primary: #e11d48;
+  --accent-secondary: #0a0a0a;
+  --accent-tertiary: #2563eb;
+  
+  /* Border & Glow */
+  --border-color: #0a0a0a;
+  --border-glow: #e11d48;
+  --hud-glow: 0 0 20px #e11d48;
+}
+
+/* --- EDITORIAL-LUXURY --- */
+[data-style="editorial-luxury"],
+[data-theme="editorial-luxury"] {
+  --style-id: "editorial-luxury";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #faf7f2;
+  --page-bg-pattern: none;
+  --page-bg-size: auto;
+  --bg-primary: #faf7f2;
+  --bg-pattern: none;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.95);
+  --surface-nav-border: 1px solid #e7dfd5;
+  --surface-nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  --surface-nav-radius: 2px;
+  
+  /* Card Surface */
+  --surface-card: #ffffff;
+  --surface-card-border: 1px solid #e7dfd5;
+  --surface-card-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --surface-card-hover-shadow: 0 14px 40px rgba(197, 168, 128, 0.18);
+  --surface-card-radius: 2px;
+  --surface-card-clip: none;
+  --bg-card: #ffffff;
+  --bg-secondary: #ffffff;
+  --card-radius: 2px;
+  --card-border: 1px solid #e7dfd5;
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 14px 40px rgba(197, 168, 128, 0.18);
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 1px solid #d4c7b8;
+  --surface-input-text: #1c1917;
+  --surface-input-placeholder: #8a7e72;
+  --surface-input-radius: 2px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 1px solid #c5a880;
+  --surface-dialog-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  --surface-dialog-radius: 2px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 1px solid #c5a880;
+  --surface-assistant-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  --surface-assistant-radius: 2px;
+  
+  /* Badges & Chips */
+  --surface-badge: #f5efe6;
+  --surface-badge-border: 1px solid #d4c7b8;
+  --surface-badge-text: #78350f;
+  --surface-badge-radius: 2px;
+  --badge-bg: #f5efe6;
+  --surface-chip: #faf7f2;
+  --surface-chip-border: 1px solid #e7dfd5;
+  --surface-chip-text: #44403c;
+  --surface-chip-active-bg: #1c1917;
+  --surface-chip-active-text: #faf7f2;
+  
+  /* Primary Button */
+  --btn-primary-bg: #1c1917;
+  --btn-primary-text: #faf7f2;
+  --btn-primary-border: 1px solid #c5a880;
+  --btn-primary-shadow: none;
+  --btn-primary-radius: 2px;
+  --btn-primary-hover-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  --btn-primary-active-transform: scale(0.98);
+  --btn-radius: 2px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #1c1917;
+  --btn-secondary-border: 1px solid #c5a880;
+  --btn-secondary-shadow: none;
+  --btn-secondary-radius: 2px;
+  
+  /* Typography Colors */
+  --text-primary: #1c1917;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
+  
+  /* Accent Colors */
+  --accent-primary: #c5a880;
+  --accent-secondary: #b45309;
+  --accent-tertiary: #1c1917;
+  
+  /* Border & Glow */
+  --border-color: #e7dfd5;
+  --border-glow: #c5a880;
+  --hud-glow: 0 0 20px #c5a880;
+}
+
+/* --- HOLOGRAPHIC --- */
+[data-style="holographic"],
+[data-theme="holographic"] {
+  --style-id: "holographic";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #f8fafc;
+  --page-bg-pattern: radial-gradient(at 15% 15%, #fce7f3 0px, transparent 40%), radial-gradient(at 85% 15%, #ede9fe 0px, transparent 40%), radial-gradient(at 50% 85%, #cffafe 0px, transparent 40%), #f8fafc;
+  --page-bg-size: cover;
+  --bg-primary: #f8fafc;
+  --bg-pattern: radial-gradient(at 15% 15%, #fce7f3 0px, transparent 40%), radial-gradient(at 85% 15%, #ede9fe 0px, transparent 40%), radial-gradient(at 50% 85%, #cffafe 0px, transparent 40%), #f8fafc;
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.9);
+  --surface-nav-border: 2px solid #a855f7;
+  --surface-nav-shadow: 0 10px 30px rgba(168, 85, 247, 0.25);
+  --surface-nav-radius: 24px;
+  
+  /* Card Surface */
+  --surface-card: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 243, 255, 0.88) 100%);
+  --surface-card-border: 2px solid rgba(168, 85, 247, 0.45);
+  --surface-card-shadow: 0 16px 36px rgba(168, 85, 247, 0.18);
+  --surface-card-hover-shadow: 0 24px 50px rgba(168, 85, 247, 0.3);
+  --surface-card-radius: 24px;
+  --surface-card-clip: none;
+  --bg-card: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 243, 255, 0.88) 100%);
+  --bg-secondary: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 243, 255, 0.88) 100%);
+  --card-radius: 24px;
+  --card-border: 2px solid rgba(168, 85, 247, 0.45);
+  --card-shadow: 0 16px 36px rgba(168, 85, 247, 0.18);
+  --card-shadow-hover: 0 24px 50px rgba(168, 85, 247, 0.3);
+  --card-clip: none;
+  --backdrop-blur: blur(14px);
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #c084fc;
+  --surface-input-text: #1e1b4b;
+  --surface-input-placeholder: #9333ea;
+  --surface-input-radius: 16px;
+  --surface-input-shadow: 0 2px 6px rgba(168, 85, 247, 0.15);
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(255, 255, 255, 0.95);
+  --surface-dialog-border: 2.5px solid #a855f7;
+  --surface-dialog-shadow: 0 25px 60px rgba(168, 85, 247, 0.3);
+  --surface-dialog-radius: 28px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(255, 255, 255, 0.95);
+  --surface-assistant-border: 2.5px solid #a855f7;
+  --surface-assistant-shadow: 0 25px 60px rgba(168, 85, 247, 0.3);
+  --surface-assistant-radius: 26px;
+  
+  /* Badges & Chips */
+  --surface-badge: #f3e8ff;
+  --surface-badge-border: 1.5px solid #c084fc;
+  --surface-badge-text: #7e22ce;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #f3e8ff;
+  --surface-chip: #faf5ff;
+  --surface-chip-border: 2px solid #e9d5ff;
+  --surface-chip-text: #6b21a8;
+  --surface-chip-active-bg: #a855f7;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #a855f7 0%, #38bdf8 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+  --btn-primary-radius: 14px;
+  --btn-primary-hover-shadow: 0 12px 30px rgba(168, 85, 247, 0.55);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 14px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #7e22ce;
+  --btn-secondary-border: 2px solid #c084fc;
+  --btn-secondary-shadow: 0 4px 14px rgba(168, 85, 247, 0.15);
+  --btn-secondary-radius: 14px;
+  
+  /* Typography Colors */
+  --text-primary: #1e1b4b;
+  --text-secondary: #4c1d95;
+  --text-muted: #64748b;
+  
+  /* Accent Colors */
+  --accent-primary: #a855f7;
+  --accent-secondary: #38bdf8;
+  --accent-tertiary: #ec4899;
+  
+  /* Border & Glow */
+  --border-color: #d8b4fe;
+  --border-glow: #a855f7;
+  --hud-glow: 0 8px 24px rgba(168, 85, 247, 0.4);
+}
+
+/* --- INDUSTRIAL-TECHNICAL --- */
+[data-style="industrial-technical"],
+[data-theme="industrial-technical"] {
+  --style-id: "industrial-technical";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #f0f7ff;
+  --page-bg-pattern: repeating-linear-gradient(0deg, rgba(2, 132, 199, 0.12) 0px, transparent 1px, transparent 20px), repeating-linear-gradient(90deg, rgba(2, 132, 199, 0.12) 0px, transparent 1px, transparent 20px), #f0f7ff;
+  --page-bg-size: 20px 20px;
+  --bg-primary: #f0f7ff;
+  --bg-pattern: repeating-linear-gradient(0deg, rgba(2, 132, 199, 0.12) 0px, transparent 1px, transparent 20px), repeating-linear-gradient(90deg, rgba(2, 132, 199, 0.12) 0px, transparent 1px, transparent 20px), #f0f7ff;
+  --bg-pattern-size: 20px 20px;
+  
+  /* Navigation Surface */
+  --surface-nav: #ffffff;
+  --surface-nav-border: 2px solid #0284c7;
+  --surface-nav-shadow: 0 4px 16px rgba(2, 132, 199, 0.12);
+  --surface-nav-radius: 0px;
+  
+  /* Card Surface */
+  --surface-card: #ffffff;
+  --surface-card-border: 2px solid #0284c7;
+  --surface-card-shadow: 0 6px 18px rgba(2, 132, 199, 0.1);
+  --surface-card-hover-shadow: 0 10px 25px rgba(2, 132, 199, 0.2);
+  --surface-card-radius: 0px;
+  --surface-card-clip: none;
+  --bg-card: #ffffff;
+  --bg-secondary: #ffffff;
+  --card-radius: 0px;
+  --card-border: 2px solid #0284c7;
+  --card-shadow: 0 6px 18px rgba(2, 132, 199, 0.1);
+  --card-shadow-hover: 0 10px 25px rgba(2, 132, 199, 0.2);
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #0284c7;
+  --surface-input-text: #082f49;
+  --surface-input-placeholder: #0284c7;
+  --surface-input-radius: 0px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 3px solid #0284c7;
+  --surface-dialog-shadow: 0 15px 40px rgba(2, 132, 199, 0.2);
+  --surface-dialog-radius: 0px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 3px solid #0284c7;
+  --surface-assistant-shadow: 0 15px 40px rgba(2, 132, 199, 0.2);
+  --surface-assistant-radius: 0px;
+  
+  /* Badges & Chips */
+  --surface-badge: #e0f2fe;
+  --surface-badge-border: 1.5px solid #0284c7;
+  --surface-badge-text: #0369a1;
+  --surface-badge-radius: 0px;
+  --badge-bg: #e0f2fe;
+  --surface-chip: #f0f9ff;
+  --surface-chip-border: 1.5px solid #0284c7;
+  --surface-chip-text: #0369a1;
+  --surface-chip-active-bg: #0284c7;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: #0284c7;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: 2px solid #0369a1;
+  --btn-primary-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  --btn-primary-radius: 0px;
+  --btn-primary-hover-shadow: 0 6px 18px rgba(2, 132, 199, 0.45);
+  --btn-primary-active-transform: scale(0.98);
+  --btn-radius: 0px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #0284c7;
+  --btn-secondary-border: 2px solid #0284c7;
+  --btn-secondary-shadow: none;
+  --btn-secondary-radius: 0px;
+  
+  /* Typography Colors */
+  --text-primary: #082f49;
+  --text-secondary: #0369a1;
+  --text-muted: #475569;
+  
+  /* Accent Colors */
+  --accent-primary: #0284c7;
+  --accent-secondary: #eab308;
+  --accent-tertiary: #ef4444;
+  
+  /* Border & Glow */
+  --border-color: #0284c7;
+  --border-glow: #0284c7;
+  --hud-glow: 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+
+/* --- NEUMORPHISM --- */
+[data-style="neumorphism"],
+[data-theme="neumorphism"] {
+  --style-id: "neumorphism";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #e6ecf5;
+  --page-bg-pattern: none;
+  --page-bg-size: auto;
+  --bg-primary: #e6ecf5;
+  --bg-pattern: none;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: #e6ecf5;
+  --surface-nav-border: 1px solid rgba(255, 255, 255, 0.8);
+  --surface-nav-shadow: -6px -6px 14px #ffffff, 6px 6px 14px #b8c4d6;
+  --surface-nav-radius: 24px;
+  
+  /* Card Surface */
+  --surface-card: #e6ecf5;
+  --surface-card-border: 1px solid rgba(255, 255, 255, 0.8);
+  --surface-card-shadow: -8px -8px 18px #ffffff, 8px 8px 18px #b8c4d6;
+  --surface-card-hover-shadow: -10px -10px 22px #ffffff, 10px 10px 22px #a8b6cb;
+  --surface-card-radius: 24px;
+  --surface-card-clip: none;
+  --bg-card: #e6ecf5;
+  --bg-secondary: #e6ecf5;
+  --card-radius: 24px;
+  --card-border: 1px solid rgba(255, 255, 255, 0.8);
+  --card-shadow: -8px -8px 18px #ffffff, 8px 8px 18px #b8c4d6;
+  --card-shadow-hover: -10px -10px 22px #ffffff, 10px 10px 22px #a8b6cb;
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #e6ecf5;
+  --surface-input-border: none;
+  --surface-input-text: #1e293b;
+  --surface-input-placeholder: #64748b;
+  --surface-input-radius: 16px;
+  --surface-input-shadow: inset -4px -4px 8px #ffffff, inset 4px 4px 8px #b8c4d6;
+  
+  /* Dialog Surface */
+  --surface-dialog: #e6ecf5;
+  --surface-dialog-border: 1px solid rgba(255, 255, 255, 0.9);
+  --surface-dialog-shadow: -12px -12px 28px #ffffff, 12px 12px 28px #b0bece;
+  --surface-dialog-radius: 28px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #e6ecf5;
+  --surface-assistant-border: 1px solid rgba(255, 255, 255, 0.9);
+  --surface-assistant-shadow: -12px -12px 28px #ffffff, 12px 12px 28px #b0bece;
+  --surface-assistant-radius: 26px;
+  
+  /* Badges & Chips */
+  --surface-badge: #e6ecf5;
+  --surface-badge-border: 1px solid rgba(255, 255, 255, 0.6);
+  --surface-badge-text: #2563eb;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #e6ecf5;
+  --surface-chip: #e6ecf5;
+  --surface-chip-border: none;
+  --surface-chip-text: #334155;
+  --surface-chip-active-bg: #3b82f6;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: #3b82f6;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+  --btn-primary-radius: 16px;
+  --btn-primary-hover-shadow: 0 12px 26px rgba(59, 130, 246, 0.45);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 16px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #e6ecf5;
+  --btn-secondary-text: #1e293b;
+  --btn-secondary-border: 1px solid rgba(255, 255, 255, 0.8);
+  --btn-secondary-shadow: -4px -4px 10px #ffffff, 4px 4px 10px #b8c4d6;
+  --btn-secondary-radius: 16px;
+  
+  /* Typography Colors */
+  --text-primary: #1e293b;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  
+  /* Accent Colors */
+  --accent-primary: #3b82f6;
+  --accent-secondary: #2563eb;
+  --accent-tertiary: #06b6d4;
+  
+  /* Border & Glow */
+  --border-color: #cbd5e1;
+  --border-glow: #3b82f6;
+  --hud-glow: 0 8px 20px rgba(59, 130, 246, 0.35);
+}
+
+/* --- GLASS-GRAIN --- */
+[data-style="glass-grain"],
+[data-theme="glass-grain"] {
+  --style-id: "glass-grain";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #f5f2eb;
+  --page-bg-pattern: radial-gradient(circle at 20% 20%, #fef3c7 0%, transparent 45%), radial-gradient(circle at 80% 80%, #fed7aa 0%, transparent 45%), #f5f2eb;
+  --page-bg-size: auto;
+  --bg-primary: #f5f2eb;
+  --bg-pattern: radial-gradient(circle at 20% 20%, #fef3c7 0%, transparent 45%), radial-gradient(circle at 80% 80%, #fed7aa 0%, transparent 45%), #f5f2eb;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.9);
+  --surface-nav-border: 1.5px solid #e7e2d7;
+  --surface-nav-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  --surface-nav-radius: 18px;
+  
+  /* Card Surface */
+  --surface-card: rgba(255, 255, 255, 0.92);
+  --surface-card-border: 1.5px solid #e7e2d7;
+  --surface-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  --surface-card-hover-shadow: 0 16px 40px rgba(194, 65, 12, 0.15);
+  --surface-card-radius: 18px;
+  --surface-card-clip: none;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-secondary: rgba(255, 255, 255, 0.92);
+  --card-radius: 18px;
+  --card-border: 1.5px solid #e7e2d7;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 16px 40px rgba(194, 65, 12, 0.15);
+  --card-clip: none;
+  --backdrop-blur: blur(12px);
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 1.5px solid #d6cfc2;
+  --surface-input-text: #292524;
+  --surface-input-placeholder: #78716c;
+  --surface-input-radius: 12px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 2px solid #e7e2d7;
+  --surface-dialog-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  --surface-dialog-radius: 22px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 2px solid #e7e2d7;
+  --surface-assistant-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  --surface-assistant-radius: 20px;
+  
+  /* Badges & Chips */
+  --surface-badge: #fef3c7;
+  --surface-badge-border: 1px solid #fde68a;
+  --surface-badge-text: #92400e;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #fef3c7;
+  --surface-chip: #f5f2eb;
+  --surface-chip-border: 1.5px solid #e7e2d7;
+  --surface-chip-text: #44403c;
+  --surface-chip-active-bg: #c2410c;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: #c2410c;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 6px 18px rgba(194, 65, 12, 0.35);
+  --btn-primary-radius: 12px;
+  --btn-primary-hover-shadow: 0 10px 24px rgba(194, 65, 12, 0.45);
+  --btn-primary-active-transform: scale(0.97);
+  --btn-radius: 12px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #292524;
+  --btn-secondary-border: 1.5px solid #e7e2d7;
+  --btn-secondary-shadow: none;
+  --btn-secondary-radius: 12px;
+  
+  /* Typography Colors */
+  --text-primary: #292524;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
+  
+  /* Accent Colors */
+  --accent-primary: #c2410c;
+  --accent-secondary: #d97706;
+  --accent-tertiary: #44403c;
+  
+  /* Border & Glow */
+  --border-color: #e7e2d7;
+  --border-glow: #c2410c;
+  --hud-glow: 0 6px 18px rgba(194, 65, 12, 0.35);
+}
+
+/* --- SKEUOMORPHISM --- */
+[data-style="skeuomorphism"],
+[data-theme="skeuomorphism"] {
+  --style-id: "skeuomorphism";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #eef2f6;
+  --page-bg-pattern: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  --page-bg-size: cover;
+  --bg-primary: #eef2f6;
+  --bg-pattern: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+  --surface-nav-border: 1.5px solid #cbd5e1;
+  --surface-nav-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffffff;
+  --surface-nav-radius: 16px;
+  
+  /* Card Surface */
+  --surface-card: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  --surface-card-border: 1.5px solid #cbd5e1;
+  --surface-card-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffffff;
+  --surface-card-hover-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), inset 0 1px 0 #ffffff;
+  --surface-card-radius: 16px;
+  --surface-card-clip: none;
+  --bg-card: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  --bg-secondary: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  --card-radius: 16px;
+  --card-border: 1.5px solid #cbd5e1;
+  --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffffff;
+  --card-shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.12), inset 0 1px 0 #ffffff;
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 1.5px solid #94a3b8;
+  --surface-input-text: #1e293b;
+  --surface-input-placeholder: #64748b;
+  --surface-input-radius: 10px;
+  --surface-input-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  /* Dialog Surface */
+  --surface-dialog: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+  --surface-dialog-border: 2px solid #cbd5e1;
+  --surface-dialog-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), inset 0 1px 0 #ffffff;
+  --surface-dialog-radius: 20px;
+  
+  /* Assistant Surface */
+  --surface-assistant: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+  --surface-assistant-border: 2px solid #cbd5e1;
+  --surface-assistant-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), inset 0 1px 0 #ffffff;
+  --surface-assistant-radius: 18px;
+  
+  /* Badges & Chips */
+  --surface-badge: #fef3c7;
+  --surface-badge-border: 1px solid #d97706;
+  --surface-badge-text: #92400e;
+  --surface-badge-radius: 8px;
+  --badge-bg: #fef3c7;
+  --surface-chip: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  --surface-chip-border: 1px solid #cbd5e1;
+  --surface-chip-text: #334155;
+  --surface-chip-active-bg: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: 1.5px solid #92400e;
+  --btn-primary-shadow: 0 4px 12px rgba(180, 83, 9, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  --btn-primary-radius: 10px;
+  --btn-primary-hover-shadow: 0 6px 16px rgba(180, 83, 9, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --btn-primary-active-transform: scale(0.97);
+  --btn-radius: 10px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+  --btn-secondary-text: #1e293b;
+  --btn-secondary-border: 1.5px solid #cbd5e1;
+  --btn-secondary-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffffff;
+  --btn-secondary-radius: 10px;
+  
+  /* Typography Colors */
+  --text-primary: #1e293b;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  
+  /* Accent Colors */
+  --accent-primary: #d97706;
+  --accent-secondary: #b45309;
+  --accent-tertiary: #3b82f6;
+  
+  /* Border & Glow */
+  --border-color: #cbd5e1;
+  --border-glow: #d97706;
+  --hud-glow: 0 4px 12px rgba(180, 83, 9, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* --- KINETIC-TYPOGRAPHY --- */
+[data-style="kinetic-typography"],
+[data-theme="kinetic-typography"] {
+  --style-id: "kinetic-typography";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #fffef0;
+  --page-bg-pattern: none;
+  --page-bg-size: auto;
+  --bg-primary: #fffef0;
+  --bg-pattern: none;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: #ffffff;
+  --surface-nav-border: 3px solid #000000;
+  --surface-nav-shadow: 4px 4px 0px #000000;
+  --surface-nav-radius: 0px;
+  
+  /* Card Surface */
+  --surface-card: #ffffff;
+  --surface-card-border: 3px solid #000000;
+  --surface-card-shadow: 5px 5px 0px #000000;
+  --surface-card-hover-shadow: 8px 8px 0px #000000;
+  --surface-card-radius: 0px;
+  --surface-card-clip: none;
+  --bg-card: #ffffff;
+  --bg-secondary: #ffffff;
+  --card-radius: 0px;
+  --card-border: 3px solid #000000;
+  --card-shadow: 5px 5px 0px #000000;
+  --card-shadow-hover: 8px 8px 0px #000000;
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2.5px solid #000000;
+  --surface-input-text: #000000;
+  --surface-input-placeholder: #475569;
+  --surface-input-radius: 0px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 3.5px solid #000000;
+  --surface-dialog-shadow: 8px 8px 0px #000000;
+  --surface-dialog-radius: 0px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 3.5px solid #000000;
+  --surface-assistant-shadow: 8px 8px 0px #000000;
+  --surface-assistant-radius: 0px;
+  
+  /* Badges & Chips */
+  --surface-badge: #dbeafe;
+  --surface-badge-border: 2px solid #000000;
+  --surface-badge-text: #1e40af;
+  --surface-badge-radius: 0px;
+  --badge-bg: #dbeafe;
+  --surface-chip: #ffffff;
+  --surface-chip-border: 2px solid #000000;
+  --surface-chip-text: #000000;
+  --surface-chip-active-bg: #1d4ed8;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: #1d4ed8;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: 3px solid #000000;
+  --btn-primary-shadow: 4px 4px 0px #000000;
+  --btn-primary-radius: 0px;
+  --btn-primary-hover-shadow: 6px 6px 0px #000000;
+  --btn-primary-active-transform: translate(2px, 2px);
+  --btn-radius: 0px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #f59e0b;
+  --btn-secondary-text: #000000;
+  --btn-secondary-border: 3px solid #000000;
+  --btn-secondary-shadow: 4px 4px 0px #000000;
+  --btn-secondary-radius: 0px;
+  
+  /* Typography Colors */
+  --text-primary: #000000;
+  --text-secondary: #1e293b;
+  --text-muted: #475569;
+  
+  /* Accent Colors */
+  --accent-primary: #1d4ed8;
+  --accent-secondary: #f59e0b;
+  --accent-tertiary: #ef4444;
+  
+  /* Border & Glow */
+  --border-color: #000000;
+  --border-glow: #1d4ed8;
+  --hud-glow: 4px 4px 0px #000000;
+}
+
+/* --- HIGH-CONTRAST-MONOCHROME --- */
+[data-style="high-contrast-monochrome"],
+[data-theme="high-contrast-monochrome"] {
+  --style-id: "high-contrast-monochrome";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #ffffff;
+  --page-bg-pattern: none;
+  --page-bg-size: auto;
+  --bg-primary: #ffffff;
+  --bg-pattern: none;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: #ffffff;
+  --surface-nav-border: 3px solid #000000;
+  --surface-nav-shadow: none;
+  --surface-nav-radius: 0px;
+  
+  /* Card Surface */
+  --surface-card: #ffffff;
+  --surface-card-border: 3px solid #000000;
+  --surface-card-shadow: none;
+  --surface-card-hover-shadow: none;
+  --surface-card-radius: 0px;
+  --surface-card-clip: none;
+  --bg-card: #ffffff;
+  --bg-secondary: #ffffff;
+  --card-radius: 0px;
+  --card-border: 3px solid #000000;
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 3px solid #000000;
+  --surface-input-text: #000000;
+  --surface-input-placeholder: #404040;
+  --surface-input-radius: 0px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 3.5px solid #000000;
+  --surface-dialog-shadow: none;
+  --surface-dialog-radius: 0px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 3.5px solid #000000;
+  --surface-assistant-shadow: none;
+  --surface-assistant-radius: 0px;
+  
+  /* Badges & Chips */
+  --surface-badge: #000000;
+  --surface-badge-border: 2px solid #000000;
+  --surface-badge-text: #ffffff;
+  --surface-badge-radius: 0px;
+  --badge-bg: #000000;
+  --surface-chip: #ffffff;
+  --surface-chip-border: 2px solid #000000;
+  --surface-chip-text: #000000;
+  --surface-chip-active-bg: #000000;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: #000000;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: 3px solid #000000;
+  --btn-primary-shadow: none;
+  --btn-primary-radius: 0px;
+  --btn-primary-hover-shadow: none;
+  --btn-primary-active-transform: scale(0.97);
+  --btn-radius: 0px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #000000;
+  --btn-secondary-border: 3px solid #000000;
+  --btn-secondary-shadow: none;
+  --btn-secondary-radius: 0px;
+  
+  /* Typography Colors */
+  --text-primary: #000000;
+  --text-secondary: #171717;
+  --text-muted: #404040;
+  
+  /* Accent Colors */
+  --accent-primary: #000000;
+  --accent-secondary: #262626;
+  --accent-tertiary: #525252;
+  
+  /* Border & Glow */
+  --border-color: #000000;
+  --border-glow: #000000;
+  --hud-glow: 0 0 20px #000000;
+}
+
+/* --- MOTION-DRIVEN --- */
+[data-style="motion-driven"],
+[data-theme="motion-driven"] {
+  --style-id: "motion-driven";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #fff1f2;
+  --page-bg-pattern: radial-gradient(ellipse at 15% 15%, #ffe4e6 0%, transparent 50%), radial-gradient(ellipse at 85% 85%, #fce7f3 0%, transparent 50%), #fff1f2;
+  --page-bg-size: auto;
+  --bg-primary: #fff1f2;
+  --bg-pattern: radial-gradient(ellipse at 15% 15%, #ffe4e6 0%, transparent 50%), radial-gradient(ellipse at 85% 85%, #fce7f3 0%, transparent 50%), #fff1f2;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.92);
+  --surface-nav-border: 2px solid #fda4af;
+  --surface-nav-shadow: 0 10px 28px rgba(244, 63, 94, 0.18);
+  --surface-nav-radius: 22px;
+  
+  /* Card Surface */
+  --surface-card: rgba(255, 255, 255, 0.92);
+  --surface-card-border: 2px solid #fecdd3;
+  --surface-card-shadow: 0 14px 34px rgba(244, 63, 94, 0.14);
+  --surface-card-hover-shadow: 0 22px 48px rgba(244, 63, 94, 0.25);
+  --surface-card-radius: 22px;
+  --surface-card-clip: none;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-secondary: rgba(255, 255, 255, 0.92);
+  --card-radius: 22px;
+  --card-border: 2px solid #fecdd3;
+  --card-shadow: 0 14px 34px rgba(244, 63, 94, 0.14);
+  --card-shadow-hover: 0 22px 48px rgba(244, 63, 94, 0.25);
+  --card-clip: none;
+  --backdrop-blur: blur(12px);
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 2px solid #fda4af;
+  --surface-input-text: #0f172a;
+  --surface-input-placeholder: #f43f5e;
+  --surface-input-radius: 14px;
+  --surface-input-shadow: 0 2px 6px rgba(244, 63, 94, 0.1);
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 2.5px solid #fda4af;
+  --surface-dialog-shadow: 0 25px 60px rgba(244, 63, 94, 0.25);
+  --surface-dialog-radius: 26px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 2.5px solid #fda4af;
+  --surface-assistant-shadow: 0 25px 60px rgba(244, 63, 94, 0.25);
+  --surface-assistant-radius: 24px;
+  
+  /* Badges & Chips */
+  --surface-badge: #ffe4e6;
+  --surface-badge-border: 1.5px solid #fda4af;
+  --surface-badge-text: #be123c;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #ffe4e6;
+  --surface-chip: #fff1f2;
+  --surface-chip-border: 2px solid #fecdd3;
+  --surface-chip-text: #9f1239;
+  --surface-chip-active-bg: #f43f5e;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 8px 24px rgba(244, 63, 94, 0.4);
+  --btn-primary-radius: 14px;
+  --btn-primary-hover-shadow: 0 12px 30px rgba(244, 63, 94, 0.55);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 14px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #be123c;
+  --btn-secondary-border: 2px solid #fda4af;
+  --btn-secondary-shadow: 0 4px 14px rgba(244, 63, 94, 0.12);
+  --btn-secondary-radius: 14px;
+  
+  /* Typography Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  
+  /* Accent Colors */
+  --accent-primary: #f43f5e;
+  --accent-secondary: #e11d48;
+  --accent-tertiary: #8b5cf6;
+  
+  /* Border & Glow */
+  --border-color: #fecdd3;
+  --border-glow: #f43f5e;
+  --hud-glow: 0 8px 24px rgba(244, 63, 94, 0.4);
+}
+
+/* --- PARALLAX-SCROLLING --- */
+[data-style="parallax-scrolling"],
+[data-theme="parallax-scrolling"] {
+  --style-id: "parallax-scrolling";
+  --theme-mode: light;
+  --atmosphere-display: none;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #f0f9ff;
+  --page-bg-pattern: radial-gradient(circle at 20% 20%, #e0f2fe 0%, transparent 50%), radial-gradient(circle at 80% 80%, #ede9fe 0%, transparent 50%), #f0f9ff;
+  --page-bg-size: auto;
+  --bg-primary: #f0f9ff;
+  --bg-pattern: radial-gradient(circle at 20% 20%, #e0f2fe 0%, transparent 50%), radial-gradient(circle at 80% 80%, #ede9fe 0%, transparent 50%), #f0f9ff;
+  --bg-pattern-size: auto;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(255, 255, 255, 0.92);
+  --surface-nav-border: 1.5px solid #7dd3fc;
+  --surface-nav-shadow: 0 10px 30px rgba(2, 132, 199, 0.15);
+  --surface-nav-radius: 24px;
+  
+  /* Card Surface */
+  --surface-card: rgba(255, 255, 255, 0.92);
+  --surface-card-border: 1.5px solid #bae6fd;
+  --surface-card-shadow: 0 16px 36px rgba(2, 132, 199, 0.14);
+  --surface-card-hover-shadow: 0 24px 50px rgba(2, 132, 199, 0.22);
+  --surface-card-radius: 24px;
+  --surface-card-clip: none;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-secondary: rgba(255, 255, 255, 0.92);
+  --card-radius: 24px;
+  --card-border: 1.5px solid #bae6fd;
+  --card-shadow: 0 16px 36px rgba(2, 132, 199, 0.14);
+  --card-shadow-hover: 0 24px 50px rgba(2, 132, 199, 0.22);
+  --card-clip: none;
+  --backdrop-blur: blur(14px);
+  
+  /* Input & Form Surface */
+  --surface-input: #ffffff;
+  --surface-input-border: 1.5px solid #7dd3fc;
+  --surface-input-text: #0f172a;
+  --surface-input-placeholder: #0284c7;
+  --surface-input-radius: 16px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: #ffffff;
+  --surface-dialog-border: 2px solid #7dd3fc;
+  --surface-dialog-shadow: 0 25px 60px rgba(2, 132, 199, 0.22);
+  --surface-dialog-radius: 28px;
+  
+  /* Assistant Surface */
+  --surface-assistant: #ffffff;
+  --surface-assistant-border: 2px solid #7dd3fc;
+  --surface-assistant-shadow: 0 25px 60px rgba(2, 132, 199, 0.22);
+  --surface-assistant-radius: 26px;
+  
+  /* Badges & Chips */
+  --surface-badge: #e0f2fe;
+  --surface-badge-border: 1.5px solid #7dd3fc;
+  --surface-badge-text: #0369a1;
+  --surface-badge-radius: 9999px;
+  --badge-bg: #e0f2fe;
+  --surface-chip: #f0f9ff;
+  --surface-chip-border: 1.5px solid #bae6fd;
+  --surface-chip-text: #0284c7;
+  --surface-chip-active-bg: #0284c7;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 8px 22px rgba(2, 132, 199, 0.4);
+  --btn-primary-radius: 16px;
+  --btn-primary-hover-shadow: 0 12px 28px rgba(2, 132, 199, 0.55);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 16px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #0284c7;
+  --btn-secondary-border: 1.5px solid #7dd3fc;
+  --btn-secondary-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
+  --btn-secondary-radius: 16px;
+  
+  /* Typography Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  
+  /* Accent Colors */
+  --accent-primary: #0284c7;
+  --accent-secondary: #6366f1;
+  --accent-tertiary: #8b5cf6;
+  
+  /* Border & Glow */
+  --border-color: #bae6fd;
+  --border-glow: #0284c7;
+  --hud-glow: 0 8px 22px rgba(2, 132, 199, 0.4);
+}
+
+/* --- AURORA --- */
+[data-style="aurora"],
+[data-theme="aurora"] {
+  --style-id: "aurora";
+  --theme-mode: dark;
+  --atmosphere-display: block;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #0c122c;
+  --page-bg-pattern: radial-gradient(ellipse at 20% 20%, rgba(16, 185, 129, 0.45) 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, rgba(168, 85, 247, 0.45) 0%, transparent 55%), radial-gradient(ellipse at 50% 80%, rgba(56, 189, 248, 0.45) 0%, transparent 55%), #0c122c;
+  --page-bg-size: cover;
+  --bg-primary: #0c122c;
+  --bg-pattern: radial-gradient(ellipse at 20% 20%, rgba(16, 185, 129, 0.45) 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, rgba(168, 85, 247, 0.45) 0%, transparent 55%), radial-gradient(ellipse at 50% 80%, rgba(56, 189, 248, 0.45) 0%, transparent 55%), #0c122c;
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(15, 23, 42, 0.88);
+  --surface-nav-border: 1.5px solid rgba(56, 189, 248, 0.5);
+  --surface-nav-shadow: 0 10px 35px rgba(56, 189, 248, 0.25);
+  --surface-nav-radius: 24px;
+  
+  /* Card Surface */
+  --surface-card: rgba(15, 23, 42, 0.82);
+  --surface-card-border: 1.5px solid rgba(56, 189, 248, 0.4);
+  --surface-card-shadow: 0 20px 45px rgba(16, 185, 129, 0.2), 0 0 25px rgba(168, 85, 247, 0.2);
+  --surface-card-hover-shadow: 0 25px 60px rgba(56, 189, 248, 0.35), 0 0 35px rgba(16, 185, 129, 0.3);
+  --surface-card-radius: 24px;
+  --surface-card-clip: none;
+  --bg-card: rgba(15, 23, 42, 0.82);
+  --bg-secondary: rgba(15, 23, 42, 0.82);
+  --card-radius: 24px;
+  --card-border: 1.5px solid rgba(56, 189, 248, 0.4);
+  --card-shadow: 0 20px 45px rgba(16, 185, 129, 0.2), 0 0 25px rgba(168, 85, 247, 0.2);
+  --card-shadow-hover: 0 25px 60px rgba(56, 189, 248, 0.35), 0 0 35px rgba(16, 185, 129, 0.3);
+  --card-clip: none;
+  --backdrop-blur: blur(20px);
+  
+  /* Input & Form Surface */
+  --surface-input: rgba(15, 23, 42, 0.9);
+  --surface-input-border: 1.5px solid #38bdf8;
+  --surface-input-text: #ffffff;
+  --surface-input-placeholder: #94a3b8;
+  --surface-input-radius: 16px;
+  --surface-input-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(15, 23, 42, 0.95);
+  --surface-dialog-border: 2px solid #38bdf8;
+  --surface-dialog-shadow: 0 30px 70px rgba(56, 189, 248, 0.35);
+  --surface-dialog-radius: 28px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(15, 23, 42, 0.95);
+  --surface-assistant-border: 2px solid #38bdf8;
+  --surface-assistant-shadow: 0 30px 70px rgba(56, 189, 248, 0.35);
+  --surface-assistant-radius: 26px;
+  
+  /* Badges & Chips */
+  --surface-badge: rgba(16, 185, 129, 0.2);
+  --surface-badge-border: 1.5px solid #10b981;
+  --surface-badge-text: #34d399;
+  --surface-badge-radius: 9999px;
+  --badge-bg: rgba(16, 185, 129, 0.2);
+  --surface-chip: rgba(15, 23, 42, 0.8);
+  --surface-chip-border: 1.5px solid rgba(56, 189, 248, 0.4);
+  --surface-chip-text: #e2e8f0;
+  --surface-chip-active-bg: #10b981;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #8b5cf6 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 10px 30px rgba(16, 185, 129, 0.45);
+  --btn-primary-radius: 16px;
+  --btn-primary-hover-shadow: 0 14px 40px rgba(16, 185, 129, 0.6);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 16px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(15, 23, 42, 0.85);
+  --btn-secondary-text: #ffffff;
+  --btn-secondary-border: 1.5px solid rgba(56, 189, 248, 0.5);
+  --btn-secondary-shadow: 0 6px 20px rgba(56, 189, 248, 0.2);
+  --btn-secondary-radius: 16px;
+  
+  /* Typography Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  
+  /* Accent Colors */
+  --accent-primary: #10b981;
+  --accent-secondary: #38bdf8;
+  --accent-tertiary: #a855f7;
+  
+  /* Border & Glow */
+  --border-color: rgba(56, 189, 248, 0.4);
+  --border-glow: #10b981;
+  --hud-glow: 0 10px 30px rgba(16, 185, 129, 0.45);
+}
+
+/* --- CYBERPUNK --- */
+[data-style="cyberpunk"],
+[data-theme="cyberpunk"] {
+  --style-id: "cyberpunk";
+  --theme-mode: dark;
+  --atmosphere-display: block;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #0f051d;
+  --page-bg-pattern: radial-gradient(circle at 15% 20%, rgba(252, 238, 10, 0.25) 0%, transparent 40%), radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.25) 0%, transparent 40%), #0f051d;
+  --page-bg-size: cover;
+  --bg-primary: #0f051d;
+  --bg-pattern: radial-gradient(circle at 15% 20%, rgba(252, 238, 10, 0.25) 0%, transparent 40%), radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.25) 0%, transparent 40%), #0f051d;
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(15, 5, 29, 0.95);
+  --surface-nav-border: 2px solid #00f0ff;
+  --surface-nav-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+  --surface-nav-radius: 4px;
+  
+  /* Card Surface */
+  --surface-card: rgba(20, 8, 38, 0.92);
+  --surface-card-border: 2px solid #00f0ff;
+  --surface-card-shadow: 0 0 25px rgba(0, 240, 255, 0.35), inset 0 0 15px rgba(255, 0, 85, 0.15);
+  --surface-card-hover-shadow: 0 0 35px rgba(0, 240, 255, 0.55), inset 0 0 20px rgba(255, 0, 85, 0.25);
+  --surface-card-radius: 4px;
+  --surface-card-clip: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 0 100%);
+  --bg-card: rgba(20, 8, 38, 0.92);
+  --bg-secondary: rgba(20, 8, 38, 0.92);
+  --card-radius: 4px;
+  --card-border: 2px solid #00f0ff;
+  --card-shadow: 0 0 25px rgba(0, 240, 255, 0.35), inset 0 0 15px rgba(255, 0, 85, 0.15);
+  --card-shadow-hover: 0 0 35px rgba(0, 240, 255, 0.55), inset 0 0 20px rgba(255, 0, 85, 0.25);
+  --card-clip: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 0 100%);
+  --backdrop-blur: blur(12px);
+  
+  /* Input & Form Surface */
+  --surface-input: rgba(15, 5, 29, 0.95);
+  --surface-input-border: 2px solid #fcee0a;
+  --surface-input-text: #ffffff;
+  --surface-input-placeholder: #fcee0a;
+  --surface-input-radius: 2px;
+  --surface-input-shadow: 0 0 12px rgba(252, 238, 10, 0.25);
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(15, 5, 29, 0.98);
+  --surface-dialog-border: 2.5px solid #00f0ff;
+  --surface-dialog-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
+  --surface-dialog-radius: 4px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(15, 5, 29, 0.98);
+  --surface-assistant-border: 2.5px solid #00f0ff;
+  --surface-assistant-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
+  --surface-assistant-radius: 4px;
+  
+  /* Badges & Chips */
+  --surface-badge: rgba(252, 238, 10, 0.2);
+  --surface-badge-border: 1.5px solid #fcee0a;
+  --surface-badge-text: #fcee0a;
+  --surface-badge-radius: 0px;
+  --badge-bg: rgba(252, 238, 10, 0.2);
+  --surface-chip: rgba(20, 8, 38, 0.9);
+  --surface-chip-border: 1.5px solid #00f0ff;
+  --surface-chip-text: #00f0ff;
+  --surface-chip-active-bg: #fcee0a;
+  --surface-chip-active-text: #000000;
+  
+  /* Primary Button */
+  --btn-primary-bg: #fcee0a;
+  --btn-primary-text: #000000;
+  --btn-primary-border: 2px solid #00f0ff;
+  --btn-primary-shadow: 0 0 24px rgba(252, 238, 10, 0.65);
+  --btn-primary-radius: 0px;
+  --btn-primary-hover-shadow: 0 0 35px rgba(252, 238, 10, 0.85);
+  --btn-primary-active-transform: scale(0.97);
+  --btn-radius: 0px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(20, 8, 38, 0.9);
+  --btn-secondary-text: #00f0ff;
+  --btn-secondary-border: 2px solid #00f0ff;
+  --btn-secondary-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+  --btn-secondary-radius: 0px;
+  
+  /* Typography Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  
+  /* Accent Colors */
+  --accent-primary: #fcee0a;
+  --accent-secondary: #00f0ff;
+  --accent-tertiary: #ff0055;
+  
+  /* Border & Glow */
+  --border-color: #00f0ff;
+  --border-glow: #fcee0a;
+  --hud-glow: 0 0 24px rgba(252, 238, 10, 0.65);
+}
+
+/* --- RETRO-FUTURISM --- */
+[data-style="retro-futurism"],
+[data-theme="retro-futurism"] {
+  --style-id: "retro-futurism";
+  --theme-mode: dark;
+  --atmosphere-display: block;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #1a0b2e;
+  --page-bg-pattern: radial-gradient(circle at 50% 20%, rgba(255, 122, 0, 0.35) 0%, transparent 60%), radial-gradient(circle at 80% 80%, rgba(244, 63, 94, 0.3) 0%, transparent 50%), #1a0b2e;
+  --page-bg-size: cover;
+  --bg-primary: #1a0b2e;
+  --bg-pattern: radial-gradient(circle at 50% 20%, rgba(255, 122, 0, 0.35) 0%, transparent 60%), radial-gradient(circle at 80% 80%, rgba(244, 63, 94, 0.3) 0%, transparent 50%), #1a0b2e;
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(30, 11, 55, 0.92);
+  --surface-nav-border: 2px solid #ff7a00;
+  --surface-nav-shadow: 0 0 25px rgba(255, 122, 0, 0.35);
+  --surface-nav-radius: 16px;
+  
+  /* Card Surface */
+  --surface-card: rgba(35, 14, 66, 0.88);
+  --surface-card-border: 2px solid #ff7a00;
+  --surface-card-shadow: 0 14px 35px rgba(255, 122, 0, 0.25);
+  --surface-card-hover-shadow: 0 20px 45px rgba(255, 122, 0, 0.4);
+  --surface-card-radius: 16px;
+  --surface-card-clip: none;
+  --bg-card: rgba(35, 14, 66, 0.88);
+  --bg-secondary: rgba(35, 14, 66, 0.88);
+  --card-radius: 16px;
+  --card-border: 2px solid #ff7a00;
+  --card-shadow: 0 14px 35px rgba(255, 122, 0, 0.25);
+  --card-shadow-hover: 0 20px 45px rgba(255, 122, 0, 0.4);
+  --card-clip: none;
+  --backdrop-blur: blur(12px);
+  
+  /* Input & Form Surface */
+  --surface-input: rgba(30, 11, 55, 0.95);
+  --surface-input-border: 2px solid #ff7a00;
+  --surface-input-text: #ffffff;
+  --surface-input-placeholder: #ff7a00;
+  --surface-input-radius: 12px;
+  --surface-input-shadow: 0 0 12px rgba(255, 122, 0, 0.25);
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(30, 11, 55, 0.98);
+  --surface-dialog-border: 2.5px solid #ff7a00;
+  --surface-dialog-shadow: 0 0 45px rgba(255, 122, 0, 0.45);
+  --surface-dialog-radius: 20px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(30, 11, 55, 0.98);
+  --surface-assistant-border: 2.5px solid #ff7a00;
+  --surface-assistant-shadow: 0 0 45px rgba(255, 122, 0, 0.45);
+  --surface-assistant-radius: 18px;
+  
+  /* Badges & Chips */
+  --surface-badge: rgba(255, 122, 0, 0.2);
+  --surface-badge-border: 1.5px solid #ff7a00;
+  --surface-badge-text: #fed7aa;
+  --surface-badge-radius: 9999px;
+  --badge-bg: rgba(255, 122, 0, 0.2);
+  --surface-chip: rgba(35, 14, 66, 0.9);
+  --surface-chip-border: 1.5px solid #ff7a00;
+  --surface-chip-text: #fed7aa;
+  --surface-chip-active-bg: #ff7a00;
+  --surface-chip-active-text: #000000;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #ff7a00 0%, #f43f5e 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 8px 25px rgba(255, 122, 0, 0.5);
+  --btn-primary-radius: 12px;
+  --btn-primary-hover-shadow: 0 12px 35px rgba(255, 122, 0, 0.7);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 12px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(35, 14, 66, 0.9);
+  --btn-secondary-text: #ff7a00;
+  --btn-secondary-border: 2px solid #ff7a00;
+  --btn-secondary-shadow: 0 4px 15px rgba(255, 122, 0, 0.25);
+  --btn-secondary-radius: 12px;
+  
+  /* Typography Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #fed7aa;
+  --text-muted: #cbd5e1;
+  
+  /* Accent Colors */
+  --accent-primary: #ff7a00;
+  --accent-secondary: #f43f5e;
+  --accent-tertiary: #facc15;
+  
+  /* Border & Glow */
+  --border-color: #ff7a00;
+  --border-glow: #ff7a00;
+  --hud-glow: 0 8px 25px rgba(255, 122, 0, 0.5);
+}
+
+/* --- TERMINAL-MATRIX --- */
+[data-style="terminal-matrix"],
+[data-theme="terminal-matrix"] {
+  --style-id: "terminal-matrix";
+  --theme-mode: dark;
+  --atmosphere-display: block;
+  --font-display: 'JetBrains Mono', monospace;
+  --font-body: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #020b05;
+  --page-bg-pattern: radial-gradient(circle at 50% 30%, rgba(34, 197, 94, 0.22) 0%, transparent 60%), #020b05;
+  --page-bg-size: cover;
+  --bg-primary: #020b05;
+  --bg-pattern: radial-gradient(circle at 50% 30%, rgba(34, 197, 94, 0.22) 0%, transparent 60%), #020b05;
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(2, 20, 8, 0.95);
+  --surface-nav-border: 2px solid #22c55e;
+  --surface-nav-shadow: 0 0 20px rgba(34, 197, 94, 0.35);
+  --surface-nav-radius: 4px;
+  
+  /* Card Surface */
+  --surface-card: rgba(3, 24, 10, 0.9);
+  --surface-card-border: 2px solid #22c55e;
+  --surface-card-shadow: 0 0 20px rgba(34, 197, 94, 0.25);
+  --surface-card-hover-shadow: 0 0 30px rgba(34, 197, 94, 0.45);
+  --surface-card-radius: 4px;
+  --surface-card-clip: none;
+  --bg-card: rgba(3, 24, 10, 0.9);
+  --bg-secondary: rgba(3, 24, 10, 0.9);
+  --card-radius: 4px;
+  --card-border: 2px solid #22c55e;
+  --card-shadow: 0 0 20px rgba(34, 197, 94, 0.25);
+  --card-shadow-hover: 0 0 30px rgba(34, 197, 94, 0.45);
+  --card-clip: none;
+  --backdrop-blur: none;
+  
+  /* Input & Form Surface */
+  --surface-input: rgba(2, 20, 8, 0.95);
+  --surface-input-border: 2px solid #22c55e;
+  --surface-input-text: #4ade80;
+  --surface-input-placeholder: #15803d;
+  --surface-input-radius: 2px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(2, 20, 8, 0.98);
+  --surface-dialog-border: 2.5px solid #22c55e;
+  --surface-dialog-shadow: 0 0 35px rgba(34, 197, 94, 0.4);
+  --surface-dialog-radius: 4px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(2, 20, 8, 0.98);
+  --surface-assistant-border: 2.5px solid #22c55e;
+  --surface-assistant-shadow: 0 0 35px rgba(34, 197, 94, 0.4);
+  --surface-assistant-radius: 4px;
+  
+  /* Badges & Chips */
+  --surface-badge: rgba(34, 197, 94, 0.2);
+  --surface-badge-border: 1.5px solid #22c55e;
+  --surface-badge-text: #4ade80;
+  --surface-badge-radius: 0px;
+  --badge-bg: rgba(34, 197, 94, 0.2);
+  --surface-chip: rgba(3, 24, 10, 0.9);
+  --surface-chip-border: 1.5px solid #22c55e;
+  --surface-chip-text: #4ade80;
+  --surface-chip-active-bg: #22c55e;
+  --surface-chip-active-text: #020b05;
+  
+  /* Primary Button */
+  --btn-primary-bg: #22c55e;
+  --btn-primary-text: #020b05;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 0 24px rgba(34, 197, 94, 0.55);
+  --btn-primary-radius: 2px;
+  --btn-primary-hover-shadow: 0 0 35px rgba(34, 197, 94, 0.75);
+  --btn-primary-active-transform: scale(0.97);
+  --btn-radius: 2px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(3, 24, 10, 0.9);
+  --btn-secondary-text: #4ade80;
+  --btn-secondary-border: 2px solid #22c55e;
+  --btn-secondary-shadow: 0 0 15px rgba(34, 197, 94, 0.25);
+  --btn-secondary-radius: 2px;
+  
+  /* Typography Colors */
+  --text-primary: #4ade80;
+  --text-secondary: #22c55e;
+  --text-muted: #15803d;
+  
+  /* Accent Colors */
+  --accent-primary: #22c55e;
+  --accent-secondary: #4ade80;
+  --accent-tertiary: #86efac;
+  
+  /* Border & Glow */
+  --border-color: #22c55e;
+  --border-glow: #22c55e;
+  --hud-glow: 0 0 24px rgba(34, 197, 94, 0.55);
+}
+
+/* --- IMMERSIVE-3D --- */
+[data-style="immersive-3d"],
+[data-theme="immersive-3d"] {
+  --style-id: "immersive-3d";
+  --theme-mode: dark;
+  --atmosphere-display: block;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #0f0a2a;
+  --page-bg-pattern: radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.4) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.35) 0%, transparent 50%), #0f0a2a;
+  --page-bg-size: cover;
+  --bg-primary: #0f0a2a;
+  --bg-pattern: radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.4) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.35) 0%, transparent 50%), #0f0a2a;
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(24, 16, 56, 0.92);
+  --surface-nav-border: 2px solid #a855f7;
+  --surface-nav-shadow: 0 15px 35px rgba(168, 85, 247, 0.35);
+  --surface-nav-radius: 28px;
+  
+  /* Card Surface */
+  --surface-card: rgba(28, 18, 68, 0.88);
+  --surface-card-border: 2px solid rgba(168, 85, 247, 0.5);
+  --surface-card-shadow: 0 25px 50px -10px rgba(168, 85, 247, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.25);
+  --surface-card-hover-shadow: 0 35px 65px -10px rgba(168, 85, 247, 0.55), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  --surface-card-radius: 28px;
+  --surface-card-clip: none;
+  --bg-card: rgba(28, 18, 68, 0.88);
+  --bg-secondary: rgba(28, 18, 68, 0.88);
+  --card-radius: 28px;
+  --card-border: 2px solid rgba(168, 85, 247, 0.5);
+  --card-shadow: 0 25px 50px -10px rgba(168, 85, 247, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.25);
+  --card-shadow-hover: 0 35px 65px -10px rgba(168, 85, 247, 0.55), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  --card-clip: none;
+  --backdrop-blur: blur(18px);
+  
+  /* Input & Form Surface */
+  --surface-input: rgba(24, 16, 56, 0.95);
+  --surface-input-border: 2px solid #a855f7;
+  --surface-input-text: #ffffff;
+  --surface-input-placeholder: #c084fc;
+  --surface-input-radius: 18px;
+  --surface-input-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(24, 16, 56, 0.98);
+  --surface-dialog-border: 2.5px solid #a855f7;
+  --surface-dialog-shadow: 0 30px 70px rgba(168, 85, 247, 0.45);
+  --surface-dialog-radius: 32px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(24, 16, 56, 0.98);
+  --surface-assistant-border: 2.5px solid #a855f7;
+  --surface-assistant-shadow: 0 30px 70px rgba(168, 85, 247, 0.45);
+  --surface-assistant-radius: 30px;
+  
+  /* Badges & Chips */
+  --surface-badge: rgba(168, 85, 247, 0.25);
+  --surface-badge-border: 1.5px solid #a855f7;
+  --surface-badge-text: #d8b4fe;
+  --surface-badge-radius: 9999px;
+  --badge-bg: rgba(168, 85, 247, 0.25);
+  --surface-chip: rgba(28, 18, 68, 0.9);
+  --surface-chip-border: 1.5px solid #a855f7;
+  --surface-chip-text: #e2e8f0;
+  --surface-chip-active-bg: #a855f7;
+  --surface-chip-active-text: #ffffff;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 12px 30px rgba(168, 85, 247, 0.5);
+  --btn-primary-radius: 18px;
+  --btn-primary-hover-shadow: 0 16px 40px rgba(168, 85, 247, 0.65);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 18px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(28, 18, 68, 0.9);
+  --btn-secondary-text: #ffffff;
+  --btn-secondary-border: 2px solid #a855f7;
+  --btn-secondary-shadow: 0 6px 20px rgba(168, 85, 247, 0.25);
+  --btn-secondary-radius: 18px;
+  
+  /* Typography Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  
+  /* Accent Colors */
+  --accent-primary: #a855f7;
+  --accent-secondary: #6366f1;
+  --accent-tertiary: #38bdf8;
+  
+  /* Border & Glow */
+  --border-color: #a855f7;
+  --border-glow: #a855f7;
+  --hud-glow: 0 12px 30px rgba(168, 85, 247, 0.5);
+}
+
+/* --- DARK-MIDNIGHT --- */
+[data-style="dark-midnight"],
+[data-theme="dark-midnight"] {
+  --style-id: "dark-midnight";
+  --theme-mode: dark;
+  --atmosphere-display: block;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Page Background */
+  --page-bg: #030712;
+  --page-bg-pattern: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.25) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.25) 0%, transparent 40%), #030712;
+  --page-bg-size: cover;
+  --bg-primary: #030712;
+  --bg-pattern: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.25) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.25) 0%, transparent 40%), #030712;
+  --bg-pattern-size: cover;
+  
+  /* Navigation Surface */
+  --surface-nav: rgba(15, 23, 42, 0.9);
+  --surface-nav-border: 1.5px solid rgba(56, 189, 248, 0.4);
+  --surface-nav-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  --surface-nav-radius: 22px;
+  
+  /* Card Surface */
+  --surface-card: rgba(15, 23, 42, 0.8);
+  --surface-card-border: 1.5px solid rgba(56, 189, 248, 0.3);
+  --surface-card-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+  --surface-card-hover-shadow: 0 22px 48px rgba(56, 189, 248, 0.3);
+  --surface-card-radius: 22px;
+  --surface-card-clip: none;
+  --bg-card: rgba(15, 23, 42, 0.8);
+  --bg-secondary: rgba(15, 23, 42, 0.8);
+  --card-radius: 22px;
+  --card-border: 1.5px solid rgba(56, 189, 248, 0.3);
+  --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+  --card-shadow-hover: 0 22px 48px rgba(56, 189, 248, 0.3);
+  --card-clip: none;
+  --backdrop-blur: blur(16px);
+  
+  /* Input & Form Surface */
+  --surface-input: rgba(15, 23, 42, 0.9);
+  --surface-input-border: 1.5px solid #38bdf8;
+  --surface-input-text: #f8fafc;
+  --surface-input-placeholder: #94a3b8;
+  --surface-input-radius: 14px;
+  --surface-input-shadow: none;
+  
+  /* Dialog Surface */
+  --surface-dialog: rgba(15, 23, 42, 0.98);
+  --surface-dialog-border: 2px solid #38bdf8;
+  --surface-dialog-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  --surface-dialog-radius: 26px;
+  
+  /* Assistant Surface */
+  --surface-assistant: rgba(15, 23, 42, 0.98);
+  --surface-assistant-border: 2px solid #38bdf8;
+  --surface-assistant-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  --surface-assistant-radius: 24px;
+  
+  /* Badges & Chips */
+  --surface-badge: rgba(56, 189, 248, 0.2);
+  --surface-badge-border: 1.5px solid #38bdf8;
+  --surface-badge-text: #7dd3fc;
+  --surface-badge-radius: 9999px;
+  --badge-bg: rgba(56, 189, 248, 0.2);
+  --surface-chip: rgba(15, 23, 42, 0.85);
+  --surface-chip-border: 1.5px solid rgba(56, 189, 248, 0.35);
+  --surface-chip-text: #cbd5e1;
+  --surface-chip-active-bg: #38bdf8;
+  --surface-chip-active-text: #030712;
+  
+  /* Primary Button */
+  --btn-primary-bg: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: none;
+  --btn-primary-shadow: 0 8px 25px rgba(56, 189, 248, 0.45);
+  --btn-primary-radius: 14px;
+  --btn-primary-hover-shadow: 0 12px 32px rgba(56, 189, 248, 0.6);
+  --btn-primary-active-transform: scale(0.96);
+  --btn-radius: 14px;
+  
+  /* Secondary Button */
+  --btn-secondary-bg: rgba(15, 23, 42, 0.85);
+  --btn-secondary-text: #f8fafc;
+  --btn-secondary-border: 1.5px solid rgba(56, 189, 248, 0.4);
+  --btn-secondary-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --btn-secondary-radius: 14px;
+  
+  /* Typography Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  
+  /* Accent Colors */
+  --accent-primary: #38bdf8;
+  --accent-secondary: #2563eb;
+  --accent-tertiary: #6366f1;
+  
+  /* Border & Glow */
+  --border-color: rgba(56, 189, 248, 0.3);
+  --border-glow: #38bdf8;
+  --hud-glow: 0 8px 25px rgba(56, 189, 248, 0.45);
+}
+
+/* ==========================================================================
+   UNIFIED STYLE COMPONENT UTILITY CLASSES
+   ========================================================================== */
+
+/* 1. Global Page Background System */
+body {
+  background-color: var(--page-bg) !important;
+  background-image: var(--page-bg-pattern) !important;
+  background-size: var(--page-bg-size, cover) !important;
+  background-attachment: fixed !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body, system-ui, sans-serif) !important;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* 2. Style Card Surface */
+.style-card,
+.hud-panel {
+  background: var(--surface-card, var(--bg-card)) !important;
+  border: var(--surface-card-border, var(--card-border, 1px solid var(--border-color))) !important;
+  border-radius: var(--surface-card-radius, var(--card-radius, 24px)) !important;
+  box-shadow: var(--surface-card-shadow, var(--card-shadow, none)) !important;
+  clip-path: var(--surface-card-clip, var(--card-clip, none)) !important;
+  backdrop-filter: var(--backdrop-blur, none) !important;
+  -webkit-backdrop-filter: var(--backdrop-blur, none) !important;
+  color: var(--text-primary) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.style-card:hover,
+.hud-panel:hover {
+  box-shadow: var(--surface-card-hover-shadow, var(--card-shadow-hover, var(--surface-card-shadow))) !important;
+  border-color: var(--border-glow, var(--border-color)) !important;
+}
+
+/* 3. Navigation Surface */
+.style-nav {
+  background: var(--surface-nav) !important;
+  border: var(--surface-nav-border) !important;
+  border-radius: var(--surface-nav-radius) !important;
+  box-shadow: var(--surface-nav-shadow) !important;
+  backdrop-filter: var(--backdrop-blur, none) !important;
+  -webkit-backdrop-filter: var(--backdrop-blur, none) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 4. Buttons */
+.style-btn-primary {
+  background: var(--btn-primary-bg, var(--accent-primary)) !important;
+  color: var(--btn-primary-text, #ffffff) !important;
+  border: var(--btn-primary-border, none) !important;
+  border-radius: var(--btn-primary-radius, 14px) !important;
+  box-shadow: var(--btn-primary-shadow, none) !important;
+  font-weight: 700 !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.style-btn-primary:hover {
+  box-shadow: var(--btn-primary-hover-shadow, var(--btn-primary-shadow)) !important;
+  opacity: 0.95;
+}
+
+.style-btn-primary:active {
+  transform: var(--btn-primary-active-transform, scale(0.97)) !important;
+}
+
+.style-btn-secondary {
+  background: var(--btn-secondary-bg, var(--bg-secondary)) !important;
+  color: var(--btn-secondary-text, var(--text-primary)) !important;
+  border: var(--btn-secondary-border, 1px solid var(--border-color)) !important;
+  border-radius: var(--btn-secondary-radius, 14px) !important;
+  box-shadow: var(--btn-secondary-shadow, none) !important;
+  font-weight: 600 !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.style-btn-secondary:hover {
+  border-color: var(--border-glow, var(--accent-primary)) !important;
+  color: var(--accent-primary) !important;
+}
+
+/* 5. Inputs */
+.style-input {
+  background: var(--surface-input) !important;
+  border: var(--surface-input-border) !important;
+  border-radius: var(--surface-input-radius) !important;
+  color: var(--surface-input-text, var(--text-primary)) !important;
+  box-shadow: var(--surface-input-shadow, none) !important;
+  transition: all 0.2s ease;
+}
+
+.style-input::placeholder {
+  color: var(--surface-input-placeholder, var(--text-muted)) !important;
+}
+
+.style-input:focus {
+  outline: none !important;
+  border-color: var(--accent-primary) !important;
+}
+
+/* 6. Dialogs & Modals */
+.style-dialog {
+  background: var(--surface-dialog) !important;
+  border: var(--surface-dialog-border) !important;
+  border-radius: var(--surface-dialog-radius) !important;
+  box-shadow: var(--surface-dialog-shadow) !important;
+  backdrop-filter: var(--backdrop-blur, none) !important;
+  -webkit-backdrop-filter: var(--backdrop-blur, none) !important;
+}
+
+/* 7. Assistant Panel */
+.style-assistant {
+  background: var(--surface-assistant) !important;
+  border: var(--surface-assistant-border) !important;
+  border-radius: var(--surface-assistant-radius) !important;
+  box-shadow: var(--surface-assistant-shadow) !important;
+  backdrop-filter: var(--backdrop-blur, none) !important;
+  -webkit-backdrop-filter: var(--backdrop-blur, none) !important;
+}
+
+/* 8. Badges & Chips */
+.style-badge {
+  background: var(--surface-badge, var(--badge-bg)) !important;
+  border: var(--surface-badge-border, none) !important;
+  border-radius: var(--surface-badge-radius, 9999px) !important;
+  color: var(--surface-badge-text, var(--accent-primary)) !important;
+}
+
+.style-chip {
+  background: var(--surface-chip) !important;
+  border: var(--surface-chip-border) !important;
+  color: var(--surface-chip-text) !important;
+  border-radius: var(--surface-badge-radius, 9999px) !important;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.style-chip:hover {
+  border-color: var(--accent-primary) !important;
+}
+
+.style-chip.active,
+.style-chip[data-active="true"] {
+  background: var(--surface-chip-active-bg) !important;
+  color: var(--surface-chip-active-text) !important;
+}
+
+/* 9. Headings */
+.style-heading {
+  font-family: var(--font-display, inherit);
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   ATMOSPHERE OVERLAY MANAGEMENT FOR LIGHT / COLORFUL THEMES
+   ========================================================================== */
+html.light .ambient-glow,
+html.light .grid-bg-overlay,
+html.light .scanline-overlay,
+html.light canvas.portfolio-particles,
+[data-theme-mode="light"] .ambient-glow,
+[data-theme-mode="light"] .grid-bg-overlay,
+[data-theme-mode="light"] .scanline-overlay,
+[data-theme-mode="light"] canvas.portfolio-particles,
+[data-style="claymorphism"] .ambient-glow,
+[data-style="claymorphism"] .grid-bg-overlay,
+[data-style="claymorphism"] .scanline-overlay,
+[data-style="claymorphism"] canvas.portfolio-particles,
+[data-style="vaporwave"] .ambient-glow,
+[data-style="vaporwave"] .grid-bg-overlay,
+[data-style="vaporwave"] .scanline-overlay,
+[data-style="vaporwave"] canvas.portfolio-particles,
+[data-style="organic-biophilic"] .ambient-glow,
+[data-style="organic-biophilic"] .grid-bg-overlay,
+[data-style="organic-biophilic"] .scanline-overlay,
+[data-style="organic-biophilic"] canvas.portfolio-particles,
+[data-style="bento-grid"] .ambient-glow,
+[data-style="bento-grid"] .grid-bg-overlay,
+[data-style="bento-grid"] .scanline-overlay,
+[data-style="bento-grid"] canvas.portfolio-particles,
+[data-style="y2k-aesthetic"] .ambient-glow,
+[data-style="y2k-aesthetic"] .grid-bg-overlay,
+[data-style="y2k-aesthetic"] .scanline-overlay,
+[data-style="y2k-aesthetic"] canvas.portfolio-particles,
+[data-style="gradient-mesh"] .ambient-glow,
+[data-style="gradient-mesh"] .grid-bg-overlay,
+[data-style="gradient-mesh"] .scanline-overlay,
+[data-style="gradient-mesh"] canvas.portfolio-particles,
+[data-style="retro-pixel"] .ambient-glow,
+[data-style="retro-pixel"] .grid-bg-overlay,
+[data-style="retro-pixel"] .scanline-overlay,
+[data-style="retro-pixel"] canvas.portfolio-particles,
+[data-style="liquid-glass"] .ambient-glow,
+[data-style="liquid-glass"] .grid-bg-overlay,
+[data-style="liquid-glass"] .scanline-overlay,
+[data-style="liquid-glass"] canvas.portfolio-particles,
+[data-style="neobrutalism"] .ambient-glow,
+[data-style="neobrutalism"] .grid-bg-overlay,
+[data-style="neobrutalism"] .scanline-overlay,
+[data-style="neobrutalism"] canvas.portfolio-particles,
+[data-style="glassmorphism"] .ambient-glow,
+[data-style="glassmorphism"] .grid-bg-overlay,
+[data-style="glassmorphism"] .scanline-overlay,
+[data-style="glassmorphism"] canvas.portfolio-particles,
+[data-style="minimalism"] .ambient-glow,
+[data-style="minimalism"] .grid-bg-overlay,
+[data-style="minimalism"] .scanline-overlay,
+[data-style="minimalism"] canvas.portfolio-particles,
+[data-style="swiss-style"] .ambient-glow,
+[data-style="swiss-style"] .grid-bg-overlay,
+[data-style="swiss-style"] .scanline-overlay,
+[data-style="swiss-style"] canvas.portfolio-particles,
+[data-style="editorial-luxury"] .ambient-glow,
+[data-style="editorial-luxury"] .grid-bg-overlay,
+[data-style="editorial-luxury"] .scanline-overlay,
+[data-style="editorial-luxury"] canvas.portfolio-particles,
+[data-style="holographic"] .ambient-glow,
+[data-style="holographic"] .grid-bg-overlay,
+[data-style="holographic"] .scanline-overlay,
+[data-style="holographic"] canvas.portfolio-particles,
+[data-style="industrial-technical"] .ambient-glow,
+[data-style="industrial-technical"] .grid-bg-overlay,
+[data-style="industrial-technical"] .scanline-overlay,
+[data-style="industrial-technical"] canvas.portfolio-particles,
+[data-style="neumorphism"] .ambient-glow,
+[data-style="neumorphism"] .grid-bg-overlay,
+[data-style="neumorphism"] .scanline-overlay,
+[data-style="neumorphism"] canvas.portfolio-particles,
+[data-style="glass-grain"] .ambient-glow,
+[data-style="glass-grain"] .grid-bg-overlay,
+[data-style="glass-grain"] .scanline-overlay,
+[data-style="glass-grain"] canvas.portfolio-particles,
+[data-style="skeuomorphism"] .ambient-glow,
+[data-style="skeuomorphism"] .grid-bg-overlay,
+[data-style="skeuomorphism"] .scanline-overlay,
+[data-style="skeuomorphism"] canvas.portfolio-particles,
+[data-style="kinetic-typography"] .ambient-glow,
+[data-style="kinetic-typography"] .grid-bg-overlay,
+[data-style="kinetic-typography"] .scanline-overlay,
+[data-style="kinetic-typography"] canvas.portfolio-particles,
+[data-style="high-contrast-monochrome"] .ambient-glow,
+[data-style="high-contrast-monochrome"] .grid-bg-overlay,
+[data-style="high-contrast-monochrome"] .scanline-overlay,
+[data-style="high-contrast-monochrome"] canvas.portfolio-particles,
+[data-style="motion-driven"] .ambient-glow,
+[data-style="motion-driven"] .grid-bg-overlay,
+[data-style="motion-driven"] .scanline-overlay,
+[data-style="motion-driven"] canvas.portfolio-particles,
+[data-style="parallax-scrolling"] .ambient-glow,
+[data-style="parallax-scrolling"] .grid-bg-overlay,
+[data-style="parallax-scrolling"] .scanline-overlay,
+[data-style="parallax-scrolling"] canvas.portfolio-particles {
+  display: none !important;
+}
+
+/* ==========================================================================
+   THEME-SPECIFIC UI ARCHETYPE STYLES & ANIMATIONS
+   ========================================================================== */
+
+@keyframes floatBouncy {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-10px) scale(1.02); }
+}
+
+@keyframes radarSpin360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes scanlineSweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(800%); }
+}
+
+@keyframes arcadeBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes hazardStripeMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+@keyframes liquidPrismPulse {
+  0%, 100% { filter: drop-shadow(0 0 25px var(--accent-primary)) hue-rotate(0deg); }
+  50% { filter: drop-shadow(0 0 45px var(--accent-secondary)) hue-rotate(25deg); }
+}
+
+@keyframes synthGridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 60px; }
+}
+
+@keyframes hazardTapeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes terminalCursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes audioBarJump1 {
+  0%, 100% { height: 6px; }
+  50% { height: 26px; }
+}
+@keyframes audioBarJump2 {
+  0%, 100% { height: 18px; }
+  50% { height: 8px; }
+}
+@keyframes audioBarJump3 {
+  0%, 100% { height: 10px; }
+  50% { height: 28px; }
+}
+@keyframes audioBarJump4 {
+  0%, 100% { height: 24px; }
+  50% { height: 12px; }
+}
+
+@keyframes orbitalFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(15px, -20px) scale(1.08); }
+}
+@keyframes orbitalFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 15px) scale(0.92); }
+}
+@keyframes orbitalFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(12px, 18px) scale(1.05); }
+}
+
+@keyframes neonSunPulse {
+  0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 35px #ec4899); }
+  50% { opacity: 1; filter: drop-shadow(0 0 60px #ec4899) drop-shadow(0 0 100px #8b5cf6); }
+}
+
+.synthwave-grid-floor {
+  position: absolute;
+  bottom: 0;
+  left: -20%;
+  right: -20%;
+  height: 220px;
+  background-image: 
+    linear-gradient(to right, rgba(236, 72, 153, 0.45) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(236, 72, 153, 0.45) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(300px) rotateX(65deg);
+  transform-origin: bottom center;
+  animation: synthGridMove 2s linear infinite;
+  mask-image: linear-gradient(to top, rgba(0,0,0,1) 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 30%, transparent 100%);
+  pointer-events: none;
+}
+
+.synthwave-neon-sun {
+  animation: neonSunPulse 4s ease-in-out infinite;
+}
+
+.hazard-tape-track {
+  display: flex;
+  white-space: nowrap;
+  animation: hazardTapeScroll 18s linear infinite;
+}
+
+.hazard-tape-track:hover {
+  animation-play-state: paused;
+}
+
+.terminal-cursor {
+  animation: terminalCursorBlink 0.8s infinite;
+}
+
+.eq-bar-1 { animation: audioBarJump1 0.7s ease-in-out infinite; }
+.eq-bar-2 { animation: audioBarJump2 0.5s ease-in-out infinite 0.15s; }
+.eq-bar-3 { animation: audioBarJump3 0.8s ease-in-out infinite 0.3s; }
+.eq-bar-4 { animation: audioBarJump4 0.6s ease-in-out infinite 0.1s; }
+
+.clay-orb-1 { animation: orbitalFloat1 5s ease-in-out infinite; }
+.clay-orb-2 { animation: orbitalFloat2 6s ease-in-out infinite; }
+.clay-orb-3 { animation: orbitalFloat3 5.5s ease-in-out infinite; }
+
+.cad-blueprint-grid {
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.18) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.clay-hero-pedestal {
+  background: var(--bg-card);
+  box-shadow: 12px 18px 36px var(--inner-shadow, rgba(0,0,0,0.12)),
+              inset 4px 4px 12px rgba(255,255,255,0.7),
+              inset -4px -4px 12px rgba(0,0,0,0.08);
+  border-radius: 40px;
+  animation: floatBouncy 6s ease-in-out infinite;
+}
+
+.brutalist-hero-frame {
+  border: 4px solid var(--border-color, #000);
+  box-shadow: 10px 10px 0px var(--border-color, #000);
+  background: var(--bg-card);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.brutalist-hero-frame:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 14px 14px 0px var(--border-color, #000);
+}
+
+.brutalist-hazard-fill {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--accent-primary),
+    var(--accent-primary) 10px,
+    var(--bg-secondary) 10px,
+    var(--bg-secondary) 20px
+  );
+  animation: hazardStripeMove 3s linear infinite;
+}
+
+.cyber-radar-ring {
+  border: 1.5px dashed var(--accent-primary);
+  border-radius: 50%;
+  animation: radarSpin360 16s linear infinite;
+}
+
+.arcade-blink {
+  animation: arcadeBlink 1s infinite;
+}
+
+.liquid-prism-glow {
+  animation: liquidPrismPulse 5s ease-in-out infinite;
+}
+
+@keyframes cdSpin360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes holoGlareSweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes auroraRibbonFloat {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.7; }
+  50% { transform: translateY(-20px) scale(1.08) rotate(4deg); opacity: 1; }
+}
+
+@keyframes kineticMarqueeL {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes kineticMarqueeR {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.y2k-cd-disc {
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #ff007f, #00f0ff, #ffff00, #ff007f);
+  animation: cdSpin360 8s linear infinite;
+}
+
+.holo-foil-sheen {
+  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.4) 40%, rgba(255, 0, 255, 0.4) 50%, rgba(0, 255, 255, 0.4) 60%, transparent 80%);
+  background-size: 200% 100%;
+  animation: holoGlareSweep 4s linear infinite;
+}
+
+.aurora-ribbon {
+  animation: auroraRibbonFloat 7s ease-in-out infinite;
+}
+
+.win98-window-frame {
+  background: #c0c0c0;
+  border-top: 3px solid #dfdfdf;
+  border-left: 3px solid #dfdfdf;
+  border-right: 3px solid #404040;
+  border-bottom: 3px solid #404040;
+  box-shadow: 6px 6px 0px #000;
+}
+
+.win98-title-bar {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: #ffffff;
+}
+
+.win98-btn {
+  background: #c0c0c0;
+  border-top: 2px solid #dfdfdf;
+  border-left: 2px solid #dfdfdf;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+}
+.win98-btn:active {
+  border-top: 2px solid #404040;
+  border-left: 2px solid #404040;
+  border-right: 2px solid #dfdfdf;
+  border-bottom: 2px solid #dfdfdf;
+}
+
+.swiss-hero-frame {
+  border: 3px solid var(--text-primary);
+  background: var(--bg-card);
+  box-shadow: none;
+}
+
+.monochrome-hero-frame {
+  border: 3px solid var(--text-primary);
+  background: var(--bg-card);
+  box-shadow: 8px 8px 0px var(--text-primary);
+}
+
+.editorial-hero-frame {
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
+}
+
+.stealth-hero-frame {
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: rgba(10, 15, 30, 0.95);
+  box-shadow: 0 0 35px rgba(59, 130, 246, 0.2);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+[data-motion="off"] *,
+[data-motion="off"] ::before,
+[data-motion="off"] ::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

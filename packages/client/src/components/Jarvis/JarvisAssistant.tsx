@@ -65,6 +65,17 @@ export const JarvisAssistant: React.FC = () => {
     window.speechSynthesis.speak(utterance);
   };
 
+  // Close on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isJarvisOpen) {
+        setJarvisOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isJarvisOpen, setJarvisOpen]);
+
   // Auto-scroll to latest message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -124,17 +135,16 @@ export const JarvisAssistant: React.FC = () => {
     }
   };
 
-  const samplePrompts = [
-    "👋 Assalam-o-Alaikum",
+    const samplePrompts = [
+    "👋 Assalamu Alaikum",
+    "😊 How are you?",
+    "🤖 What is your name?",
+    "👨‍💻 Who made you?",
+    "🎨 What is your favorite theme?",
+    "✨ Switch to Vaporwave",
+    "🌿 Switch to Organic Biophilic",
     "💼 Tell me about client projects",
-    "🛍️ What was Ali's role on Nexcurex?",
-    "🎥 Tell me about Ivana Studio",
     "💰 What are Ali's website pricing rates?",
-    "⚡ How fast can Ali deliver a site?",
-    "⏰ What time is it?",
-    "💡 Can you explain WordPress simply?",
-    "🎨 Switch theme to Cyberpunk",
-    "📄 Make it lighter",
     "📱 How can I contact Ali directly?"
   ];
 
@@ -144,15 +154,15 @@ export const JarvisAssistant: React.FC = () => {
       {!isJarvisOpen && (
         <button
           onClick={() => setJarvisOpen(true)}
-          className="fixed bottom-6 right-6 z-40 p-4 rounded-2xl bg-[var(--accent-primary)] text-slate-950 font-bold shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2.5 shadow-[var(--hud-glow)] group"
-          title="Open ALI JARVIS AI Assistant"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9990] p-3 sm:p-4 style-btn-primary shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group"
+          title="Open Ali AI Assistant"
         >
           <div className="relative">
             <Bot className="w-5 h-5" />
             <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
           </div>
           <span className="text-xs font-mono tracking-wider font-extrabold hidden sm:inline">
-            TALK TO ALI JARVIS
+            TALK TO ALI AI
           </span>
         </button>
       )}
@@ -161,18 +171,18 @@ export const JarvisAssistant: React.FC = () => {
       {isJarvisOpen && (
         <div
           role="region"
-          aria-label="ALI JARVIS AI Command Panel"
-          className={`fixed z-50 hud-panel rounded-3xl shadow-2xl flex flex-col transition-all duration-300 ${
+          aria-label="Ali AI Assistant Panel"
+          className={`fixed z-[9999] style-assistant shadow-2xl flex flex-col transition-all duration-300 overflow-hidden ${
             isMaximized
-              ? "inset-4 sm:inset-8"
-              : "bottom-4 right-4 sm:bottom-6 sm:right-6 w-[calc(100vw-32px)] sm:w-[460px] h-[640px] max-h-[88vh]"
+              ? "inset-2 sm:inset-6"
+              : "bottom-3 sm:bottom-6 sm:right-6 sm:w-[450px] h-[min(640px,calc(100dvh-24px))] max-h-[calc(100dvh-24px)]"
           }`}
         >
           {/* Header Bar */}
-          <div className="p-4 sm:px-6 border-b border-[var(--border-color)] flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="shrink-0 p-3 sm:px-5 border-b border-[var(--border-color)] flex items-center justify-between gap-2 min-w-0">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
               {/* Dynamic Status Orb */}
-              <div className="relative w-8 h-8 rounded-xl bg-[var(--badge-bg)] border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)]">
+              <div className="relative w-8 h-8 rounded-xl bg-[var(--badge-bg)] border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)] shrink-0">
                 {isListening ? (
                   <Mic className="w-4 h-4 text-rose-400 animate-pulse" />
                 ) : isSpeaking ? (
@@ -195,28 +205,29 @@ export const JarvisAssistant: React.FC = () => {
                 />
               </div>
 
-              <div>
-                <div className="text-xs font-mono font-black text-[var(--text-primary)] flex items-center gap-1.5">
-                  <span>ALI JARVIS // PORTFOLIO COPILOT</span>
+              <div className="min-w-0 flex-1">
+                <div className="text-xs font-mono font-black text-[var(--text-primary)] flex items-center gap-1.5 truncate">
+                  <span className="truncate">ALI AI // ASSISTANT</span>
                 </div>
-                <div className="text-[10px] font-mono text-[var(--text-muted)]">
+                <div className="text-[10px] font-mono text-[var(--text-muted)] truncate">
                   {isListening
                     ? "LISTENING TO MICROPHONE..."
                     : isSpeaking
                     ? "SYNTHESIZING SPEECH..."
                     : isAiGenerating
                     ? "THINKING & EXECUTING..."
-                    : "STANDBY // READY FOR QUERY"}
+                    : "ONLINE // READY TO ASSIST"}
                 </div>
               </div>
             </div>
 
             {/* Header Controls */}
-            <div className="flex items-center gap-1.5 text-[var(--text-secondary)]">
+            <div className="flex items-center gap-1 text-[var(--text-secondary)] shrink-0">
               <button
                 onClick={() => setShowPrivacyNotice(!showPrivacyNotice)}
-                className="p-1.5 rounded-lg hover:text-[var(--text-primary)] transition-colors"
+                className="hidden sm:inline-flex p-1.5 rounded-lg hover:text-[var(--text-primary)] transition-colors"
                 title="Privacy & AI Notice"
+                aria-label="Privacy & AI Notice"
               >
                 <HelpCircle className="w-4 h-4" />
               </button>
@@ -259,7 +270,7 @@ export const JarvisAssistant: React.FC = () => {
 
           {/* Privacy & AI Disclosure Banner */}
           {showPrivacyNotice && (
-            <div className="p-3.5 bg-[var(--badge-bg)] border-b border-[var(--border-color)] text-[11px] font-mono text-[var(--text-secondary)] space-y-1 text-left animate-in slide-in-from-top-2">
+            <div className="shrink-0 p-3.5 bg-[var(--badge-bg)] border-b border-[var(--border-color)] text-[11px] font-mono text-[var(--text-secondary)] space-y-1 text-left animate-in slide-in-from-top-2">
               <div className="flex items-center justify-between font-bold text-[var(--accent-primary)]">
                 <span className="flex items-center gap-1.5">
                   <Shield className="w-3.5 h-3.5" />
@@ -276,7 +287,7 @@ export const JarvisAssistant: React.FC = () => {
           )}
 
           {/* Conversation Message List */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 text-left font-mono">
+          <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 space-y-4 text-left font-mono overscroll-contain">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -287,11 +298,11 @@ export const JarvisAssistant: React.FC = () => {
                 <div
                   className={`max-w-[85%] p-3.5 rounded-2xl text-xs leading-relaxed relative group ${
                     msg.sender === "user"
-                      ? "bg-[var(--accent-primary)] text-slate-950 font-medium"
-                      : "bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)]"
+                      ? "bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-semibold shadow-md"
+                      : "bg-[var(--surface-input)] border border-[var(--surface-input-border)] text-[var(--text-primary)] shadow-sm"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap">{msg.text}</p>
+                  <p className="whitespace-pre-wrap break-words [overflow-wrap:anywhere]">{msg.text}</p>
 
                   {/* Action Pill if Action Tag present */}
                   {msg.sender === "jarvis" && msg.actionTag && (
@@ -312,7 +323,7 @@ export const JarvisAssistant: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => openCaseStudy(proj)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[var(--badge-bg)] text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-slate-950 text-[10px] font-bold transition-all"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[var(--badge-bg)] text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-[var(--btn-primary-text)] text-[10px] font-bold transition-all"
                           >
                             <ExternalLink className="w-3 h-3" />
                             <span>View {proj.title} Case Study</span>
@@ -332,7 +343,7 @@ export const JarvisAssistant: React.FC = () => {
                           href="/Muhammad_Ali_CV.pdf"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[var(--badge-bg)] text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-slate-950 text-[10px] font-bold transition-all"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[var(--badge-bg)] text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-[var(--btn-primary-text)] text-[10px] font-bold transition-all"
                         >
                           <FileText className="w-3 h-3" />
                           <span>Download CV (PDF)</span>
@@ -344,7 +355,7 @@ export const JarvisAssistant: React.FC = () => {
                           href="https://wa.me/923055389967"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 text-[10px] font-bold transition-all"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-[var(--btn-primary-text)] text-[10px] font-bold transition-all"
                         >
                           <ArrowUpRight className="w-3 h-3" />
                           <span>WhatsApp (+92 305 5389967)</span>
@@ -390,7 +401,7 @@ export const JarvisAssistant: React.FC = () => {
             {isAiGenerating && (
               <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-primary)] p-2">
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                <span>ALI JARVIS analyzing query parameters...</span>
+                <span>Ali AI thinking...</span>
               </div>
             )}
 
@@ -398,12 +409,12 @@ export const JarvisAssistant: React.FC = () => {
           </div>
 
           {/* Prompt Chips Bar */}
-          <div className="px-4 py-2 border-t border-[var(--border-color)]/60 flex items-center gap-1.5 overflow-x-auto text-[11px] font-mono no-scrollbar">
+          <div className="shrink-0 px-3 sm:px-4 py-2 border-t border-[var(--border-color)]/60 flex items-center gap-1.5 overflow-x-auto text-[11px] font-mono no-scrollbar">
             {samplePrompts.map((p, idx) => (
               <button
                 key={idx}
                 onClick={() => sendJarvisMessage(p)}
-                className="px-2.5 py-1 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] transition-all whitespace-nowrap shrink-0"
+                className="px-3 py-1.5 style-chip text-xs font-mono whitespace-nowrap shrink-0"
               >
                 {p}
               </button>
@@ -411,7 +422,7 @@ export const JarvisAssistant: React.FC = () => {
           </div>
 
           {/* Input Footer */}
-          <form onSubmit={handleSend} className="p-4 border-t border-[var(--border-color)] flex items-center gap-2">
+          <form onSubmit={handleSend} className="shrink-0 p-3 sm:p-4 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] border-t border-[var(--border-color)] flex items-center gap-2 bg-[var(--surface-assistant)]">
             <button
               type="button"
               onClick={toggleListening}
@@ -420,7 +431,7 @@ export const JarvisAssistant: React.FC = () => {
                   ? "bg-rose-500/20 text-rose-400 border-rose-500 animate-pulse"
                   : "bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border-[var(--border-color)]"
               }`}
-              title={isListening ? "Listening... click to stop" : "Speak to ALI JARVIS"}
+              title={isListening ? "Listening... click to stop" : "Speak to Ali AI"}
             >
               {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
             </button>
@@ -429,14 +440,14 @@ export const JarvisAssistant: React.FC = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask ALI JARVIS about projects, skills, pricing, or commands..."
-              className="flex-1 px-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
+              placeholder="Ask Ali anything (e.g. 'What is your favorite theme?', 'Switch to vaporwave')..."
+              className="flex-1 min-w-0 px-3 sm:px-4 py-2.5 style-input text-xs font-mono placeholder-[var(--surface-input-placeholder)] focus:outline-none transition-colors"
             />
 
             <button
               type="submit"
               disabled={!input.trim() || isAiGenerating}
-              className="p-2.5 rounded-xl bg-[var(--accent-primary)] text-slate-950 font-bold hover:opacity-90 active:scale-95 transition-all disabled:opacity-40"
+              className="p-2.5 style-btn-primary font-bold hover:opacity-90 active:scale-95 transition-all disabled:opacity-40"
               title="Send Message"
             >
               <Send className="w-4 h-4" />

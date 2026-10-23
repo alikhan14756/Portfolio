@@ -2,14 +2,13 @@
 
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
-import { usePortfolioStore, loadUserPrefs } from "../stores/usePortfolioStore";
+import { usePortfolioStore, loadUserPrefs, applyStyleToDOM } from "../stores/usePortfolioStore";
 import { Preloader } from "../components/Portfolio/Preloader";
 import { Navbar } from "../components/Portfolio/Navbar";
 import { QuickThemeBar } from "../components/Portfolio/QuickThemeBar";
 import { ScrollTelemetryBar } from "../components/Portfolio/ScrollTelemetryBar";
 import { HeroSection } from "../components/Portfolio/HeroSection";
 import { AboutSection } from "../components/Portfolio/AboutSection";
-import { FlagshipRoadmapSection } from "../components/Portfolio/FlagshipRoadmapSection";
 import { ProjectsSection } from "../components/Portfolio/ProjectsSection";
 import { SkillsSection } from "../components/Portfolio/SkillsSection";
 import { ServicesSection } from "../components/Portfolio/ServicesSection";
@@ -20,6 +19,8 @@ import { ContactSection } from "../components/Portfolio/ContactSection";
 import { FAQSection } from "../components/Portfolio/FAQSection";
 import { CaseStudyDrawer } from "../components/Portfolio/CaseStudyDrawer";
 import { ThemeCustomizerModal } from "../components/Portfolio/ThemeCustomizerModal";
+import { StyleLabModal } from "../components/Portfolio/StyleLabModal";
+import { FloatingThemeWidget } from "../components/Portfolio/FloatingThemeWidget";
 import { JarvisAssistant } from "../components/Jarvis/JarvisAssistant";
 import { PortfolioParticleBackground } from "../components/Canvas/PortfolioParticleBackground";
 
@@ -46,10 +47,44 @@ export default function Home() {
   const layout = usePortfolioStore((s) => s.layout);
   const showScanlines = usePortfolioStore((s) => s.showScanlines);
   const showGridLines = usePortfolioStore((s) => s.showGridLines);
+  const styleId = usePortfolioStore((s) => s.styleId);
+  const previewStyleId = usePortfolioStore((s) => s.previewStyleId);
+  const accentOverride = usePortfolioStore((s) => s.accentOverride);
 
   // Restore persisted preferences & sync theme attributes
   useEffect(() => {
     loadUserPrefs();
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const urlStyle = params.get("style");
+      if (urlStyle) {
+        usePortfolioStore.getState().setStyleId(urlStyle);
+      }
+      const urlTheme = params.get("theme");
+      if (urlTheme) {
+        usePortfolioStore.getState().setTheme(urlTheme as any);
+      }
+      const urlAssistant = params.get("assistant") || params.get("jarvis");
+      if (urlAssistant === "open" || urlAssistant === "1" || urlAssistant === "true") {
+        usePortfolioStore.getState().setJarvisOpen(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const active = previewStyleId || styleId || "jarvis-hologram";
+    applyStyleToDOM(active, accentOverride);
+  }, [styleId, previewStyleId, accentOverride]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.altKey && (e.key === "s" || e.key === "S")) {
+        e.preventDefault();
+        usePortfolioStore.getState().setStyleLabOpen(!usePortfolioStore.getState().isStyleLabOpen);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   useEffect(() => {
@@ -57,9 +92,8 @@ export default function Home() {
     if (theme === "paper-studio") {
       document.documentElement.classList.remove("dark");
       document.documentElement.classList.add("light");
-    } else {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
+      document.documentElement.setAttribute("data-theme-mode", "light");
+      document.documentElement.setAttribute("data-atmosphere", "none");
     }
   }, [theme]);
 
@@ -116,7 +150,6 @@ export default function Home() {
             <HeroSection />
             <AboutSection />
             <ProjectsSection />
-            <FlagshipRoadmapSection />
             <SkillsSection />
             <ServicesSection />
             <WorkflowSection />
@@ -174,9 +207,13 @@ export default function Home() {
         </div>
       )}
 
+      {/* Persistent Floating Theme & Style Launcher */}
+      <FloatingThemeWidget />
+
       {/* Global Interactive Overlays */}
       <CaseStudyDrawer />
       <ThemeCustomizerModal />
+      <StyleLabModal />
       <JarvisAssistant />
     </main>
   );

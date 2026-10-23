@@ -44,7 +44,7 @@ export const WorkflowSection: React.FC = () => {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
               whileHover={isMotionEnabled ? { y: -5, transition: { duration: 0.2 } } : {}}
-              className="hud-panel p-6 sm:p-7 rounded-3xl text-left space-y-4 flex flex-col justify-between relative group hover:border-[var(--accent-primary)] transition-all shadow-xl"
+              className="style-card p-6 sm:p-7 text-left space-y-4 flex flex-col justify-between relative group hover:border-[var(--accent-primary)] transition-all"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">

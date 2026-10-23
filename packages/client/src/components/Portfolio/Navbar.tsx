@@ -1,86 +1,60 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePortfolioStore, ThemeType } from "../../stores/usePortfolioStore";
-import { useBiosphereStore } from "../../stores/useBiosphereStore";
+import { usePortfolioStore } from "../../stores/usePortfolioStore";
 import {
   Sparkles,
-  Sliders,
   Bot,
-  Radio,
-  Volume2,
-  VolumeX,
-  Compass,
-  Code2,
   Menu,
   X,
-  Cpu,
-  Layers,
-  Send,
-  User
+  Cpu
 } from "lucide-react";
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const theme = usePortfolioStore((s) => s.theme);
-  const viewMode = usePortfolioStore((s) => s.viewMode);
   const isJarvisOpen = usePortfolioStore((s) => s.isJarvisOpen);
-  const masterMute = usePortfolioStore((s) => s.masterMute);
-  const setMasterMute = usePortfolioStore((s) => s.setMasterMute);
-  const setViewMode = usePortfolioStore((s) => s.setViewMode);
-  const setCustomizerOpen = usePortfolioStore((s) => s.setCustomizerOpen);
   const setJarvisOpen = usePortfolioStore((s) => s.setJarvisOpen);
+  const setStyleLabOpen = usePortfolioStore((s) => s.setStyleLabOpen);
 
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false);
-    if (viewMode !== "portfolio") {
-      setViewMode("portfolio");
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-      }, 150);
-    } else {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-xl border-b border-[var(--border-color)] bg-[var(--bg-primary)]/80 transition-colors duration-300 select-none">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full select-none transition-colors duration-300 style-nav">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
         {/* Left: Brand Identity */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0">
           <button
-            onClick={() => setViewMode("portfolio")}
             className="flex items-center gap-2.5 text-left group"
           >
-            <div className="relative w-8 h-8 rounded-xl bg-[var(--badge-bg)] border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)] font-black text-sm shadow-md group-hover:border-[var(--accent-primary)] transition-all">
-              <span className="animate-pulse">A</span>
-              <div className="absolute inset-0 rounded-xl bg-[var(--accent-primary)] opacity-0 group-hover:opacity-10 transition-opacity" />
+            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--surface-badge)] to-[var(--bg-secondary)] border-2 border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)] font-black text-xs sm:text-sm tracking-tighter shadow-sm group-hover:border-[var(--accent-primary)] group-hover:shadow-[0_0_12px_var(--accent-primary)] transition-all">
+              <span className="font-mono font-black tracking-tight">MA</span>
+              <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-white" />
             </div>
             <div>
-              <div className="font-extrabold text-sm tracking-widest text-[var(--text-primary)] flex items-center gap-1.5 font-mono">
-                <span>ALI.BUILD</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)]">
-                  JARVIS
+              <div className="font-extrabold text-xs sm:text-sm tracking-wide text-[var(--text-primary)] flex items-center gap-1.5 font-display">
+                <span className="text-sm sm:text-base font-black">Muhammad Ali</span>
+                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded style-badge font-bold">
+                  CREATOR
                 </span>
               </div>
-              <div className="text-[10px] text-[var(--text-muted)] font-mono">
-                MUHAMMAD ALI // PESHAWAR 🇵🇰
+              <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] font-mono hidden xs:block">
+                FRONTEND DEVELOPER // PESHAWAR
               </div>
             </div>
           </button>
         </div>
 
-        {/* Center: Navigation Links (Desktop) */}
-        <nav className="hidden lg:flex items-center gap-5 text-xs font-mono text-[var(--text-secondary)]">
+        {/* Center: Navigation Links (Desktop >= 1024px) */}
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-5 text-xs font-mono text-[var(--text-secondary)]">
           <button onClick={() => scrollTo("about")} className="hover:text-[var(--accent-primary)] transition-colors">
             ABOUT
           </button>
           <button onClick={() => scrollTo("projects")} className="hover:text-[var(--accent-primary)] transition-colors">
             PROJECTS
-          </button>
-          <button onClick={() => scrollTo("architecture")} className="hover:text-[var(--accent-primary)] transition-colors flex items-center gap-1 text-[var(--accent-primary)]">
-            <Cpu className="w-3 h-3" />
-            <span>FLAGSHIP</span>
           </button>
           <button onClick={() => scrollTo("skills")} className="hover:text-[var(--accent-primary)] transition-colors">
             SKILLS
@@ -97,90 +71,54 @@ export const Navbar: React.FC = () => {
           <button onClick={() => scrollTo("faq")} className="hover:text-[var(--accent-primary)] transition-colors">
             FAQ
           </button>
-          <button onClick={() => scrollTo("contact")} className="hover:text-[var(--accent-primary)] transition-colors">
+          <button onClick={() => scrollTo("contact")} className="hover:text-[var(--accent-primary)] transition-colors font-bold text-[var(--accent-primary)]">
             CONTACT
           </button>
         </nav>
 
-        {/* Right: Mode & Tool Controls */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
-          {/* View Mode Toggle: Portfolio vs Aetheria Biosphere */}
+        {/* Right: Controls & Actions */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {/* Primary Style Lab Button (Always accessible) */}
           <button
-            onClick={() => setViewMode(viewMode === "portfolio" ? "biosphere" : "portfolio")}
-            className={`px-3 py-1.5 rounded-xl border text-xs font-mono font-semibold flex items-center gap-1.5 transition-all shadow-md active:scale-95 ${
-              viewMode === "biosphere"
-                ? "bg-[var(--accent-primary)] text-slate-950 border-[var(--accent-primary)]"
-                : "bg-[var(--bg-card)] border-[var(--border-color)] text-[var(--accent-primary)] hover:border-[var(--accent-primary)]"
-            }`}
-            title="Toggle between Developer Portfolio and Real-Time 2.5D Biosphere"
+            onClick={() => setStyleLabOpen(true)}
+            className="px-2.5 sm:px-3 py-1.5 rounded-xl style-btn-primary text-xs font-mono font-bold flex items-center gap-1.5 shadow-md active:scale-95"
+            title="Open Style Lab: Switch between 28+ Modern Design Systems (Alt + S)"
           >
-            {viewMode === "biosphere" ? (
-              <>
-                <Code2 className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">PORTFOLIO</span>
-              </>
-            ) : (
-              <>
-                <Radio className="w-3.5 h-3.5 animate-pulse text-[var(--accent-primary)]" />
-                <span className="hidden sm:inline">2.5D BIOSPHERE</span>
-              </>
-            )}
+            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+            <span className="font-bold hidden xs:inline">STYLE LAB</span><span className="font-bold xs:hidden">STYLES</span>
+            <span className="text-[10px] px-1 py-0.2 rounded bg-black/20 text-current font-black">28</span>
           </button>
 
-          {/* Theme Studio Button (Alt + T) */}
-          <button
-            onClick={() => setCustomizerOpen(true)}
-            className="p-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:border-[var(--accent-primary)] transition-all flex items-center gap-1.5"
-            title="Open Theme Studio (Alt + T)"
-          >
-            <Sliders className="w-4 h-4" />
-            <span className="hidden xl:inline text-xs font-mono">STUDIO</span>
-          </button>
-
-          {/* Master Mute Toggle */}
-          <button
-            onClick={() => setMasterMute(!masterMute)}
-            className={`p-2 rounded-xl border transition-all ${
-              masterMute
-                ? "bg-rose-500/15 border-rose-500/40 text-rose-300"
-                : "bg-[var(--bg-card)] border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)]"
-            }`}
-            title={masterMute ? "Unmute Audio" : "Mute All Audio"}
-          >
-            {masterMute ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-          </button>
-
-          {/* JARVIS Assistant Trigger */}
+          {/* ALI AI Launcher Button */}
           <button
             onClick={() => setJarvisOpen(!isJarvisOpen)}
-            className="px-3 py-1.5 rounded-xl font-mono text-xs font-bold bg-[var(--badge-bg)] border border-[var(--accent-primary)] text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-slate-950 transition-all flex items-center gap-1.5 shadow-[var(--hud-glow)]"
+            className="px-2.5 sm:px-3 py-1.5 rounded-xl font-mono text-xs font-bold style-btn-secondary flex items-center gap-1.5 shadow-sm active:scale-95"
+            title="Toggle Ali AI Assistant"
           >
-            <Bot className="w-4 h-4" />
-            <span className="hidden sm:inline">JARVIS</span>
+            <Bot className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
+            <span className="hidden sm:inline">ALI AI</span>
           </button>
 
-          {/* Mobile Menu Hamburger */}
+          {/* Mobile Menu Hamburger (< 1024px) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-secondary)]"
-            title="Toggle Menu"
+            className="lg:hidden p-2 rounded-xl bg-[var(--surface-input)] border border-[var(--border-color)] text-[var(--text-primary)]"
+            title="Toggle Navigation Menu"
+            aria-label="Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Accessible Mobile Menu Drawer (< 1024px) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-[var(--border-color)] bg-[var(--bg-primary)] px-4 py-4 space-y-2 text-left font-mono text-xs">
+        <div className="lg:hidden border-b border-[var(--border-color)] bg-[var(--surface-nav)] backdrop-blur-2xl px-4 py-4 space-y-2 text-left font-mono text-xs animate-in slide-in-from-top-2">
           <button onClick={() => scrollTo("about")} className="block w-full py-2 hover:text-[var(--accent-primary)]">
             ABOUT MUHAMMAD ALI
           </button>
           <button onClick={() => scrollTo("projects")} className="block w-full py-2 hover:text-[var(--accent-primary)]">
             CLIENT PROJECTS &amp; WORK
-          </button>
-          <button onClick={() => scrollTo("architecture")} className="block w-full py-2 text-[var(--accent-primary)] font-bold">
-            FLAGSHIP 2.5D MULTIPLAYER ROADMAP
           </button>
           <button onClick={() => scrollTo("skills")} className="block w-full py-2 hover:text-[var(--accent-primary)]">
             SKILLS &amp; TECHNOLOGIES
@@ -194,10 +132,10 @@ export const Navbar: React.FC = () => {
           <button onClick={() => scrollTo("experience")} className="block w-full py-2 hover:text-[var(--accent-primary)]">
             EXPERIENCE TIMELINE
           </button>
-          <button onClick={() => scrollTo("testimonials")} className="block w-full py-2 hover:text-[var(--accent-primary)]">
-            CLIENT TESTIMONIALS
+          <button onClick={() => scrollTo("faq")} className="block w-full py-2 hover:text-[var(--accent-primary)]">
+            FAQ &amp; QUESTIONS
           </button>
-          <button onClick={() => scrollTo("contact")} className="block w-full py-2 hover:text-[var(--accent-primary)] font-bold">
+          <button onClick={() => scrollTo("contact")} className="block w-full py-2 text-[var(--accent-primary)] font-bold">
             CONTACT &amp; WHATSAPP
           </button>
         </div>
@@ -205,4 +143,3 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
-

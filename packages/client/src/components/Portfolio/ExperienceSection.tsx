@@ -54,7 +54,7 @@ export const ExperienceSection: React.FC = () => {
                 }`}
               />
 
-              <div className="hud-panel p-5 sm:p-6 rounded-2xl space-y-2 shadow-lg">
+              <div className="style-card p-5 sm:p-6 space-y-2">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <span className="text-xs font-black font-mono px-2.5 py-0.5 rounded-full bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)]">
                     {item.year}

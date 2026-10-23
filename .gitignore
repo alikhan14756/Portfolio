@@ -5,3 +5,7 @@ dist
 .turbo
 *.log
 .DS_Store
+*.tsbuildinfo
+.env.local
+.env
+

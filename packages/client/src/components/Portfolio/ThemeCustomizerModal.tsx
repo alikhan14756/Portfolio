@@ -89,6 +89,17 @@ export const ThemeCustomizerModal: React.FC = () => {
 
   const [importStatus, setImportStatus] = useState<string | null>(null);
 
+  // Prevent background scrolling while modal is open
+  useEffect(() => {
+    if (isCustomizerOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isCustomizerOpen]);
+
   // Keyboard shortcut listener (Alt + T or Escape)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -150,11 +161,11 @@ export const ThemeCustomizerModal: React.FC = () => {
       role="dialog"
       aria-modal="true"
       aria-label="JARVIS Theme Studio"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md select-none animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200 overscroll-contain"
       onClick={() => setCustomizerOpen(false)}
     >
       <div
-        className="relative max-w-3xl w-full max-h-[92vh] overflow-y-auto hud-panel rounded-3xl p-6 sm:p-8 space-y-6 text-left shadow-2xl"
+        className="relative max-w-3xl w-full max-h-[88vh] overflow-y-auto scroll-smooth style-card p-5 sm:p-8 space-y-6 text-left overscroll-contain"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

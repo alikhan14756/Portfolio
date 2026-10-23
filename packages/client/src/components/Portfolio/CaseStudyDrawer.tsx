@@ -32,7 +32,7 @@ export const CaseStudyDrawer: React.FC = () => {
       onClick={closeCaseStudy}
     >
       <div
-        className="relative max-w-3xl w-full max-h-[90vh] overflow-y-auto hud-panel rounded-3xl p-6 sm:p-8 space-y-6 text-left shadow-2xl"
+        className="relative max-w-3xl w-full max-h-[90vh] overflow-y-auto style-card p-6 sm:p-8 space-y-6 text-left"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}
@@ -126,7 +126,7 @@ export const CaseStudyDrawer: React.FC = () => {
 
         {/* Challenge & Solution Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="hud-panel p-4 rounded-xl space-y-2">
+          <div className="style-card p-4 rounded-xl space-y-2">
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-amber-400">
               <AlertCircle className="w-3.5 h-3.5" />
               <span>THE CORE CHALLENGE</span>
@@ -136,7 +136,7 @@ export const CaseStudyDrawer: React.FC = () => {
             </p>
           </div>
 
-          <div className="hud-panel p-4 rounded-xl space-y-2">
+          <div className="style-card p-4 rounded-xl space-y-2">
             <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400">
               <Lightbulb className="w-3.5 h-3.5" />
               <span>THE ENGINEERING SOLUTION</span>
@@ -161,7 +161,7 @@ export const CaseStudyDrawer: React.FC = () => {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {activeProject.metrics.map((m, i) => (
-              <div key={i} className="hud-panel p-3.5 rounded-xl text-center space-y-1">
+              <div key={i} className="style-card p-3.5 rounded-xl text-center space-y-1">
                 <div className="text-xl sm:text-2xl font-black font-mono text-[var(--accent-primary)]">
                   {m.value}
                 </div>

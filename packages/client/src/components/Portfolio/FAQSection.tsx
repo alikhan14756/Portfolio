@@ -162,7 +162,7 @@ export const FAQSection: React.FC = () => {
                 whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.4, delay: idx * 0.04 }}
-                className="hud-panel rounded-2xl overflow-hidden border border-[var(--border-color)]/80 transition-all duration-300"
+                className="style-card overflow-hidden border border-[var(--border-color)]/80 transition-all duration-300"
               >
                 <button
                   onClick={() => toggleItem(faq.id)}

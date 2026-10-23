@@ -1,11 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&family=Syne:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700;800;900&display=swap');
 @import "../styles/themes.css";
+@import "../styles/designSystems.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 html {
+  max-width: 100%;
+  overflow-x: hidden;
   overflow-y: scroll !important;
   scroll-behavior: smooth;
   scrollbar-width: auto;
@@ -29,19 +32,19 @@ body {
 
 /* Glassmorphic & 4K Surface Panel Styling with Morphic Archetypes */
 .hud-panel {
-  background: var(--bg-card);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: var(--card-border, 1px solid var(--border-color));
-  border-radius: var(--card-radius, 24px);
-  box-shadow: var(--card-shadow, var(--hud-glow));
-  clip-path: var(--card-clip, none);
+  background: var(--surface-card, var(--bg-card));
+  backdrop-filter: var(--backdrop-blur, none);
+  -webkit-backdrop-filter: var(--backdrop-blur, none);
+  border: var(--surface-card-border, var(--card-border, 1px solid var(--border-color)));
+  border-radius: var(--surface-card-radius, var(--card-radius, 24px));
+  box-shadow: var(--surface-card-shadow, var(--card-shadow, var(--hud-glow)));
+  clip-path: var(--surface-card-clip, var(--card-clip, none));
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hud-panel:hover {
   border-color: var(--border-glow);
-  box-shadow: var(--hud-glow-hover, var(--card-shadow, var(--hud-glow)));
+  box-shadow: var(--surface-card-hover-shadow, var(--hud-glow-hover, var(--card-shadow, var(--hud-glow))));
 }
 
 /* Light Runner Border Effect */
@@ -70,6 +73,15 @@ body {
 @keyframes border-runner {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
+}
+
+html.light .border-beam::after,
+[data-theme-mode="light"] .border-beam::after,
+[data-style="claymorphism"] .border-beam::after,
+[data-style="neobrutalism"] .border-beam::after,
+[data-style="swiss-style"] .border-beam::after,
+[data-style="editorial-luxury"] .border-beam::after {
+  display: none !important;
 }
 
 /* High-Tech JARVIS 4K Prominent Visible Scrollbar */
@@ -120,4 +132,8 @@ body {
   .text-4k-sharp {
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
   }
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
 }

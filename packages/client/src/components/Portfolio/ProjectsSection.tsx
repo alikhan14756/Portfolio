@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 export const ProjectsSection: React.FC = () => {
-  const [filter, setFilter] = useState<"All" | "Client Work" | "Engineering Flagship" | "Playground">("All");
+  const [filter, setFilter] = useState<"All" | "Client Work" | "Playground">("All");
   const openCaseStudy = usePortfolioStore((s) => s.openCaseStudy);
   const setViewMode = usePortfolioStore((s) => s.setViewMode);
   const animationIntensity = usePortfolioStore((s) => s.animationIntensity);
@@ -47,13 +47,13 @@ export const ProjectsSection: React.FC = () => {
 
           {/* Filter Tabs */}
           <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] font-mono text-xs">
-            {(["All", "Client Work", "Engineering Flagship", "Playground"] as const).map((tab) => (
+            {(["All", "Client Work", "Playground"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setFilter(tab)}
                 className={`px-3.5 py-1.5 rounded-xl font-semibold transition-all ${
                   filter === tab
-                    ? "bg-[var(--accent-primary)] text-slate-950 shadow-sm"
+                    ? "style-btn-primary shadow-sm"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
@@ -73,16 +73,16 @@ export const ProjectsSection: React.FC = () => {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
               whileHover={isMotionEnabled ? { y: -5, transition: { duration: 0.2 } } : {}}
-              className="hud-panel rounded-3xl p-6 flex flex-col justify-between group relative overflow-hidden shadow-xl"
+              className="style-card p-6 flex flex-col justify-between group relative overflow-hidden min-w-0 max-w-full"
             >
               <div className="space-y-4">
                 {/* Visual Asset if available */}
                 {project.imageUrl && (
-                  <div className="relative w-full h-44 rounded-2xl overflow-hidden border border-[var(--border-color)]/60 bg-[var(--bg-secondary)] shadow-inner">
+                  <div className="relative w-full max-w-full h-44 rounded-2xl overflow-hidden border border-[var(--border-color)]/60 bg-[var(--bg-secondary)] shadow-inner">
                     <img
                       src={project.imageUrl}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full max-w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       onError={(e) => {
                         (e.target as HTMLElement).style.display = "none";
                       }}
@@ -154,16 +154,6 @@ export const ProjectsSection: React.FC = () => {
                 </button>
 
                 <div className="flex items-center gap-2">
-                  {project.id === "aetheria-ecosystem" && (
-                    <button
-                      onClick={() => setViewMode("biosphere")}
-                      className="p-2 rounded-xl bg-[var(--accent-primary)] text-slate-950 font-bold hover:opacity-90 transition-all shadow-sm"
-                      title="Launch Canvas"
-                    >
-                      <Compass className="w-4 h-4" />
-                    </button>
-                  )}
-
                   {project.liveUrl && (
                     <a
                       href={project.liveUrl}
