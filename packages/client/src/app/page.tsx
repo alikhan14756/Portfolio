@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
@@ -163,9 +163,9 @@ export default function Home() {
           <footer className="border-t border-[var(--border-color)] py-8 px-4 text-center text-xs font-mono text-[var(--text-muted)] bg-[var(--bg-secondary)]/50 relative z-20">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                © 2026 MUHAMMAD ALI. ALL RIGHTS RESERVED. // SOURCE OF TRUTH: ALIBUILD.SITE
+                Â© 2026 MUHAMMAD ALI. ALL RIGHTS RESERVED. // SOURCE OF TRUTH: ALIBUILD.SITE
               </div>
-              <div className="flex items-center gap-4 text-[var(--text-secondary)]">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[var(--text-secondary)]">
                 <a
                   href="https://github.com/alikhan14756"
                   target="_blank"
@@ -174,7 +174,7 @@ export default function Home() {
                 >
                   GITHUB (@alikhan14756)
                 </a>
-                <span>•</span>
+                <span>â€¢</span>
                 <a
                   href="https://wa.me/923055389967"
                   target="_blank"
@@ -183,7 +183,7 @@ export default function Home() {
                 >
                   WHATSAPP DIRECT
                 </a>
-                <span>•</span>
+                <span>â€¢</span>
                 <a
                   href="https://instagram.com/codevibe.anim"
                   target="_blank"
@@ -192,8 +192,8 @@ export default function Home() {
                 >
                   @CODEVIBE.ANIM
                 </a>
-                <span>•</span>
-                <span>PESHAWAR, PAKISTAN 🇵🇰</span>
+                <span>â€¢</span>
+                <span>PESHAWAR, PAKISTAN ðŸ‡µðŸ‡°</span>
               </div>
             </div>
           </footer>

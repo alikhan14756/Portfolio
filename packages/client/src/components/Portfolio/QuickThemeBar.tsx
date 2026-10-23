@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 import { usePortfolioStore } from "../../stores/usePortfolioStore";
@@ -18,7 +18,7 @@ export const QuickThemeBar: React.FC = () => {
   const setStyleId = usePortfolioStore((s) => s.setStyleId);
 
   return (
-    <div className="w-full border-b border-[var(--border-color)] bg-[var(--bg-secondary)]/70 backdrop-blur-md transition-colors duration-300 overflow-hidden">
+    <div className="w-full max-w-full border-b border-[var(--border-color)] bg-[var(--bg-secondary)]/70 backdrop-blur-md transition-colors duration-300 overflow-hidden [contain:paint]">
       {/* Inject keyframes */}
       <style>{marqueeKeyframes}</style>
 

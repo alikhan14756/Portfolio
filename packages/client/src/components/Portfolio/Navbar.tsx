@@ -24,24 +24,26 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full select-none transition-colors duration-300 style-nav">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+      <div className="max-w-7xl mx-auto px-2.5 sm:px-6 h-16 flex items-center justify-between gap-1.5 sm:gap-2">
         {/* Left: Brand Identity */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <button
-            className="flex items-center gap-2.5 text-left group"
+            onClick={() => scrollTo("home")}
+            className="flex items-center gap-2 sm:gap-2.5 text-left group min-w-0"
+            aria-label="Muhammad Ali Home"
           >
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--surface-badge)] to-[var(--bg-secondary)] border-2 border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)] font-black text-xs sm:text-sm tracking-tighter shadow-sm group-hover:border-[var(--accent-primary)] group-hover:shadow-[0_0_12px_var(--accent-primary)] transition-all">
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-[var(--surface-badge)] to-[var(--bg-secondary)] border-2 border-[var(--border-color)] flex items-center justify-center text-[var(--accent-primary)] font-black text-xs sm:text-sm tracking-tighter shadow-sm group-hover:border-[var(--accent-primary)] group-hover:shadow-[0_0_12px_var(--accent-primary)] transition-all shrink-0">
               <span className="font-mono font-black tracking-tight">MA</span>
               <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-white" />
             </div>
-            <div>
-              <div className="font-extrabold text-xs sm:text-sm tracking-wide text-[var(--text-primary)] flex items-center gap-1.5 font-display">
-                <span className="text-sm sm:text-base font-black">Muhammad Ali</span>
-                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded style-badge font-bold">
+            <div className="min-w-0">
+              <div className="font-extrabold text-xs sm:text-sm tracking-wide text-[var(--text-primary)] flex items-center gap-1 sm:gap-1.5 font-display min-w-0">
+                <span className="text-xs sm:text-base font-black truncate">Muhammad Ali</span>
+                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded style-badge font-bold shrink-0 hidden sm:inline-block">
                   CREATOR
                 </span>
               </div>
-              <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] font-mono hidden xs:block">
+              <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] font-mono hidden md:block truncate">
                 FRONTEND DEVELOPER // PESHAWAR
               </div>
             </div>
@@ -77,36 +79,37 @@ export const Navbar: React.FC = () => {
         </nav>
 
         {/* Right: Controls & Actions */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           {/* Primary Style Lab Button (Always accessible) */}
           <button
             onClick={() => setStyleLabOpen(true)}
-            className="px-2.5 sm:px-3 py-1.5 rounded-xl style-btn-primary text-xs font-mono font-bold flex items-center gap-1.5 shadow-md active:scale-95"
+            className="px-2 sm:px-3 py-1.5 rounded-xl style-btn-primary text-xs font-mono font-bold flex items-center gap-1 sm:gap-1.5 shadow-md active:scale-95 shrink-0"
             title="Open Style Lab: Switch between 28+ Modern Design Systems (Alt + S)"
           >
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-            <span className="font-bold hidden xs:inline">STYLE LAB</span><span className="font-bold xs:hidden">STYLES</span>
+            <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
+            <span className="font-bold hidden xs:inline">STYLE LAB</span>
+            <span className="font-bold xs:hidden">STYLES</span>
             <span className="text-[10px] px-1 py-0.2 rounded bg-black/20 text-current font-black">28</span>
           </button>
 
           {/* ALI AI Launcher Button */}
           <button
             onClick={() => setJarvisOpen(!isJarvisOpen)}
-            className="px-2.5 sm:px-3 py-1.5 rounded-xl font-mono text-xs font-bold style-btn-secondary flex items-center gap-1.5 shadow-sm active:scale-95"
+            className="px-2 sm:px-3 py-1.5 rounded-xl font-mono text-xs font-bold style-btn-secondary flex items-center gap-1 sm:gap-1.5 shadow-sm active:scale-95 shrink-0"
             title="Toggle Ali AI Assistant"
           >
-            <Bot className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
+            <Bot className="w-3.5 h-3.5 text-[var(--accent-primary)] shrink-0" />
             <span className="hidden sm:inline">ALI AI</span>
           </button>
 
           {/* Mobile Menu Hamburger (< 1024px) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl bg-[var(--surface-input)] border border-[var(--border-color)] text-[var(--text-primary)]"
+            className="lg:hidden p-2 rounded-xl bg-[var(--surface-input)] border border-[var(--border-color)] text-[var(--text-primary)] shrink-0"
             title="Toggle Navigation Menu"
             aria-label="Navigation Menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
         </div>
       </div>
