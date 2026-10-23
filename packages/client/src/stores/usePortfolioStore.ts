@@ -464,7 +464,7 @@ export const usePortfolioStore = create<PortfolioStore>((set, get) => ({
         // 2. For open-ended or unrecognized queries, attempt the server endpoint
         const serverUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000";
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const timeoutId = setTimeout(() => controller.abort(), 12000);
 
         const historyPayload = get().messages.slice(-6).map((m) => ({
           sender: m.sender,

@@ -9,4 +9,6 @@ dist
 *.tsbuildinfo
 .env.local
 .env
+.env.*
+packages/server/.env
 
