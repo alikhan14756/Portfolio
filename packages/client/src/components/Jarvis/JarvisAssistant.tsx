@@ -149,7 +149,7 @@ export const JarvisAssistant: React.FC = () => {
       {!isJarvisOpen && (
         <button
           onClick={() => setJarvisOpen(true)}
-          className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-[9990] p-3 sm:p-4 style-btn-primary shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group"
+          className="fixed bottom-16 right-3 sm:bottom-20 sm:right-6 z-[9990] p-3 sm:p-3.5 style-btn-primary shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group"
           title="Open Ali AI Assistant"
           aria-label="Open Ali AI Assistant"
         >

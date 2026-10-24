@@ -39,9 +39,9 @@ export const ScrollTelemetryBar: React.FC = () => {
         />
       </div>
 
-      {/* 2. Floating JARVIS Scroll Telemetry Pill at Bottom Right */}
+      {/* 2. Floating Scroll Telemetry Pill at Bottom Right (Aligned with Bottom Left Sticky Widget) */}
       {isVisible && (
-        <div className="fixed bottom-6 right-6 z-40 flex items-center gap-2">
+        <div className="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2 select-none print:hidden pointer-events-auto">
           <button
             onClick={scrollToTop}
             className="hud-panel px-3.5 py-2 rounded-2xl flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)] hover:border-[var(--accent-primary)] active:scale-95 transition-all shadow-xl backdrop-blur-xl group"

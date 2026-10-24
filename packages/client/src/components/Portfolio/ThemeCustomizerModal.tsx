@@ -165,36 +165,37 @@ export const ThemeCustomizerModal: React.FC = () => {
       onClick={() => setCustomizerOpen(false)}
     >
       <div
-        className="relative max-w-3xl w-full max-h-[88vh] overflow-y-auto scroll-smooth style-card p-5 sm:p-8 space-y-6 text-left overscroll-contain"
+        className="relative max-w-3xl w-full max-h-[88vh] overflow-y-auto scroll-smooth style-card p-4 sm:p-8 space-y-6 text-left overscroll-contain"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-[var(--border-color)] pb-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-[var(--badge-bg)] text-[var(--accent-primary)] shadow-sm">
-              <Sliders className="w-5 h-5" />
+        <div className="flex items-start sm:items-center justify-between border-b border-[var(--border-color)] pb-3.5 sm:pb-4 gap-2 w-full min-w-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+            <div className="p-2 sm:p-2.5 rounded-2xl bg-[var(--badge-bg)] text-[var(--accent-primary)] shadow-sm shrink-0">
+              <Sliders className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-xl sm:text-2xl font-black text-[var(--text-primary)] font-mono">
-                  JARVIS THEME STUDIO
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <h2 className="text-base sm:text-2xl font-black text-[var(--text-primary)] font-mono truncate">
+                  THEME STUDIO
                 </h2>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)]">
+                <span className="text-[9px] sm:text-[10px] font-mono px-1.5 sm:px-2 py-0.5 rounded-md bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)] shrink-0">
                   ALT + T
                 </span>
               </div>
-              <p className="text-xs text-[var(--text-secondary)] font-mono mt-0.5">
-                Centralized design system engine, animation calibration &amp; appearance presets
+              <p className="text-[11px] sm:text-xs text-[var(--text-secondary)] font-mono truncate mt-0.5 hidden xs:block">
+                12 Working Themes &amp; Calibration
               </p>
             </div>
           </div>
 
           <button
             onClick={() => setCustomizerOpen(false)}
-            className="p-2 rounded-xl bg-[var(--bg-secondary)] text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border-color)] transition-all"
-            title="Close Customizer"
+            className="p-2 rounded-xl bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--badge-bg)] border border-[var(--border-color)] transition-all shrink-0 active:scale-95 shadow-sm"
+            title="Close Theme Studio"
+            aria-label="Close Theme Studio"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 text-[var(--text-primary)]" />
           </button>
         </div>
 
@@ -517,9 +518,9 @@ export const ThemeCustomizerModal: React.FC = () => {
 
           <button
             onClick={() => setCustomizerOpen(false)}
-            className="px-5 py-2 rounded-xl bg-[var(--accent-primary)] text-slate-950 font-bold hover:opacity-90 active:scale-95 transition-all shadow-md"
+            className="px-5 py-2.5 rounded-xl bg-[var(--accent-primary)] text-slate-950 font-bold hover:opacity-90 active:scale-95 transition-all shadow-md w-full sm:w-auto text-xs font-mono text-center flex items-center justify-center gap-2"
           >
-            APPLY CONFIGURATION
+            <span>APPLY &amp; MINIMIZE STUDIO</span>
           </button>
         </div>
       </div>

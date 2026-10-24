@@ -184,32 +184,47 @@ export const StyleLabModal: React.FC = () => {
         )}
 
         {/* Modal Header */}
-        <div className="p-4 sm:px-6 sm:py-5 border-b border-[var(--border-color)] flex flex-wrap items-center justify-between gap-3 shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)]">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 id="style-lab-title" className="text-base sm:text-lg font-bold font-mono tracking-tight">
-                  STYLE LAB // 28 DESIGN SYSTEMS
-                </h2>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--badge-bg)] text-[var(--accent-primary)] font-bold">
-                  AUTONOMOUS ARCHITECTURE
-                </span>
+        <div className="p-3 sm:px-6 sm:py-5 border-b border-[var(--border-color)] flex flex-col gap-3 shrink-0">
+          <div className="flex items-center justify-between gap-2 w-full">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+              <div className="p-2 sm:p-2.5 rounded-2xl bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)] shrink-0">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <p className="text-xs text-[var(--text-muted)] font-mono hidden sm:block">
-                Switch between 28 complete design systems with authentic layouts, materials, fonts, and motion profiles.
-              </p>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                  <h2 id="style-lab-title" className="text-sm sm:text-lg font-bold font-mono tracking-tight truncate">
+                    STYLE LAB // 28 STYLES
+                  </h2>
+                  <span className="text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--badge-bg)] text-[var(--accent-primary)] font-bold shrink-0">
+                    AUTONOMOUS
+                  </span>
+                </div>
+                <p className="text-xs text-[var(--text-muted)] font-mono hidden sm:block truncate mt-0.5">
+                  Switch between 28 complete design systems with authentic layouts, materials, and fonts.
+                </p>
+              </div>
             </div>
+
+            {/* Close / Minimize Button: shrink-0 so it NEVER overflows offscreen */}
+            <button
+              onClick={() => {
+                if (previewStyleId) setPreviewStyleId(null);
+                setStyleLabOpen(false);
+              }}
+              className="p-2 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition-all shrink-0 active:scale-95 shadow-sm"
+              title="Close Style Lab (ESC)"
+              aria-label="Close Style Lab"
+            >
+              <X className="w-5 h-5 text-[var(--text-primary)]" />
+            </button>
           </div>
 
-          {/* Navigation Tabs & Close */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="flex items-center p-1 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)] text-xs font-mono">
+          {/* Navigation Tabs (Smooth horizontal scrolling on mobile, full flex on desktop) */}
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar w-full pb-0.5">
+            <div className="flex items-center p-1 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)] text-xs font-mono shrink-0">
               <button
                 onClick={() => setActiveTab("gallery")}
-                className={`px-3 py-1.5 rounded-lg transition-all font-medium ${
+                className={`px-3 py-1.5 rounded-lg transition-all font-medium whitespace-nowrap ${
                   activeTab === "gallery"
                     ? "bg-[var(--accent-primary)] text-slate-950 font-bold shadow"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -219,7 +234,7 @@ export const StyleLabModal: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab("controls")}
-                className={`px-3 py-1.5 rounded-lg transition-all font-medium ${
+                className={`px-3 py-1.5 rounded-lg transition-all font-medium whitespace-nowrap ${
                   activeTab === "controls"
                     ? "bg-[var(--accent-primary)] text-slate-950 font-bold shadow"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -229,7 +244,7 @@ export const StyleLabModal: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab("mixer")}
-                className={`px-3 py-1.5 rounded-lg transition-all font-medium ${
+                className={`px-3 py-1.5 rounded-lg transition-all font-medium whitespace-nowrap ${
                   activeTab === "mixer"
                     ? "bg-[var(--accent-primary)] text-slate-950 font-bold shadow"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -239,7 +254,7 @@ export const StyleLabModal: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab("io")}
-                className={`px-3 py-1.5 rounded-lg transition-all font-medium ${
+                className={`px-3 py-1.5 rounded-lg transition-all font-medium whitespace-nowrap ${
                   activeTab === "io"
                     ? "bg-[var(--accent-primary)] text-slate-950 font-bold shadow"
                     : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -248,17 +263,6 @@ export const StyleLabModal: React.FC = () => {
                 Import/Export
               </button>
             </div>
-
-            <button
-              onClick={() => {
-                if (previewStyleId) setPreviewStyleId(null);
-                setStyleLabOpen(false);
-              }}
-              className="p-2 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition-all"
-              title="Close Style Lab (ESC)"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
         </div>
 

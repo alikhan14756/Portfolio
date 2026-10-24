@@ -287,36 +287,93 @@ export const AboutSection: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Right: Languages Card (Span 5) */}
+            {/* Right: Languages Card with Proficiency Graph & Global Telemetry (Span 5) */}
             <motion.div
               initial={isMotionEnabled ? { opacity: 0, y: 20 } : false}
               whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: 0.16 }}
-              className="lg:col-span-5 style-card p-6 flex flex-col justify-between text-left h-full"
+              className="lg:col-span-5 style-card p-6 flex flex-col justify-between text-left h-full space-y-4"
             >
-              <div className="flex items-center justify-between pb-2 border-b border-[var(--border-color)]/60">
-                <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)]">
-                  <Globe2 className="w-4 h-4" />
-                  <span>COMMUNICATION LANGUAGES</span>
+              <div>
+                <div className="flex items-center justify-between pb-2.5 border-b border-[var(--border-color)]/60">
+                  <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)]">
+                    <Globe2 className="w-4 h-4" />
+                    <span>COMMUNICATION &amp; FLUENCY GRAPH</span>
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)] font-bold">
+                    3 LANGUAGES
+                  </span>
                 </div>
-                <span className="text-[10px] font-mono text-[var(--text-muted)]">3 FLUENT</span>
-              </div>
 
-              <div className="grid grid-cols-3 gap-2.5 pt-2">
-                {languages.map((lang, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-color)]/60 text-center space-y-1"
-                  >
-                    <div className="text-sm font-bold font-mono text-[var(--text-primary)]">
-                      {lang.language}
+                {/* Visual Proficiency Graph & Bars */}
+                <div className="space-y-3 pt-3">
+                  {/* English */}
+                  <div className="p-3 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-color)]/60 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold font-mono text-[var(--text-primary)]">English</span>
+                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-[var(--accent-primary)] font-bold">C1 / ADVANCED</span>
+                      </div>
+                      <span className="text-xs font-mono font-bold text-[var(--accent-primary)]">92%</span>
                     </div>
-                    <div className="text-[11px] font-mono text-[var(--accent-primary)] font-semibold">
-                      {lang.proficiency}
+                    {/* Visual Progress Bar */}
+                    <div className="w-full h-2 rounded-full bg-[var(--surface-input)] overflow-hidden">
+                      <div className="h-full rounded-full bg-gradient-to-r from-[var(--accent-primary)] to-emerald-400 transition-all duration-1000" style={{ width: "92%" }} />
+                    </div>
+                    <div className="text-[10px] font-mono text-[var(--text-muted)] flex items-center justify-between">
+                      <span>Professional &amp; Technical Working Proficiency</span>
+                      <span className="text-[var(--text-secondary)]">US / UK / EU Clients</span>
                     </div>
                   </div>
-                ))}
+
+                  {/* Urdu */}
+                  <div className="p-3 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-color)]/60 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold font-mono text-[var(--text-primary)]">Urdu</span>
+                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-sky-400 font-bold">BILINGUAL</span>
+                      </div>
+                      <span className="text-xs font-mono font-bold text-sky-400">98%</span>
+                    </div>
+                    {/* Visual Progress Bar */}
+                    <div className="w-full h-2 rounded-full bg-[var(--surface-input)] overflow-hidden">
+                      <div className="h-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 transition-all duration-1000" style={{ width: "98%" }} />
+                    </div>
+                    <div className="text-[10px] font-mono text-[var(--text-muted)] flex items-center justify-between">
+                      <span>National Bilingual Fluency</span>
+                      <span className="text-[var(--text-secondary)]">Full Professional Native</span>
+                    </div>
+                  </div>
+
+                  {/* Pashto */}
+                  <div className="p-3 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-color)]/60 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold font-mono text-[var(--text-primary)]">Pashto</span>
+                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[var(--badge-bg)] text-rose-400 font-bold">MOTHER TONGUE</span>
+                      </div>
+                      <span className="text-xs font-mono font-bold text-rose-400">100%</span>
+                    </div>
+                    {/* Visual Progress Bar */}
+                    <div className="w-full h-2 rounded-full bg-[var(--surface-input)] overflow-hidden">
+                      <div className="h-full rounded-full bg-gradient-to-r from-rose-500 to-amber-400 transition-all duration-1000" style={{ width: "100%" }} />
+                    </div>
+                    <div className="text-[10px] font-mono text-[var(--text-muted)] flex items-center justify-between">
+                      <span>Native Regional Fluency</span>
+                      <span className="text-[var(--text-secondary)]">Peshawar, KPK</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Communication Telemetry Footer */}
+              <div className="pt-2 border-t border-[var(--border-color)]/50 flex flex-wrap items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono text-[var(--text-muted)]">
+                <span className="flex items-center gap-1.5 text-[var(--accent-primary)] font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Response: &lt;15 mins on WhatsApp</span>
+                </span>
+                <span>Timezone: PKT (UTC+5)</span>
               </div>
             </motion.div>
 
