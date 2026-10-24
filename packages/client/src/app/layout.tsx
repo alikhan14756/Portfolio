@@ -43,7 +43,8 @@ export const metadata: Metadata = {
     "High-Performance Web Design",
     "Tailwind CSS Expert",
     "Modern Web Architecture",
-    "CodeVibe",
+    "BS Nursing Developer",
+    "Healthcare and Web Engineering",
     "Freelance Frontend Developer Pakistan",
     "Interactive Portfolio",
     "Speed Optimization 98+"
@@ -62,8 +63,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "Muhammad Ali — Senior Frontend Developer & Creator",
-    title: "Muhammad Ali — Senior Frontend Developer & WordPress Specialist",
+    siteName: "Muhammad Ali — Frontend Developer & WordPress Specialist",
+    title: "Muhammad Ali — Frontend Developer & WordPress Specialist",
     description:
       "Crafting high-converting WordPress, Elementor Pro, WooCommerce stores, and fluid modern React web apps. Based in Peshawar, Pakistan.",
     images: [
@@ -71,17 +72,17 @@ export const metadata: Metadata = {
         url: "/muhammad_ali_hero.png",
         width: 1200,
         height: 630,
-        alt: "Muhammad Ali - Senior Frontend Developer & Creator",
+        alt: "Muhammad Ali - Frontend Developer & Creator",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Muhammad Ali — Senior Frontend Developer & WordPress Specialist",
+    title: "Muhammad Ali — Frontend Developer & WordPress Specialist",
     description:
       "Crafting high-converting WordPress, Elementor Pro, WooCommerce stores, and fluid modern React web apps. Based in Peshawar, Pakistan.",
     images: ["/muhammad_ali_hero.png"],
-    creator: "@codevibe_anim",
+    creator: "@alikhan14756",
   },
   robots: {
     index: true,
@@ -134,7 +135,7 @@ export default function RootLayout({
         },
         sameAs: [
           "https://github.com/alikhan14756",
-          "https://instagram.com/codevibe.anim",
+          "https://wa.me/923055389967",
         ],
         knowsAbout: [
           "WordPress",

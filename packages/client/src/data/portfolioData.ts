@@ -75,15 +75,15 @@ export const PORTFOLIO_DATA = {
     callsign: "ALI.BUILD // JARVIS-CORE",
     headline: "I Build Websites That Convert.",
     subheadline:
-      "Frontend developer based in Peshawar, Pakistan with 2+ years of hands-on experience crafting fast, modern, and responsive websites. Specialized in WordPress, Elementor, and vanilla web technologies.",
+      "Frontend developer and BS Nursing scholar based in Peshawar, Pakistan with 2+ years of hands-on experience building modern, fast, and high-converting websites. Specialized in WordPress, Elementor Pro, and modern web architectures.",
     availability: "Available for Projects",
     location: "Peshawar, Pakistan 🇵🇰",
     email: "alikhanwebdeveloper@gmail.com",
     whatsapp: "+92 305 5389967",
     whatsappUrl: "https://wa.me/923055389967?text=Hi%20Ali,%20I%20am%20interested%20in%20working%20with%20you!",
     github: "https://github.com/alikhan14756",
-    codevibe: "@codevibe.anim",
-    codevibeUrl: "https://instagram.com/codevibe.anim",
+    codevibe: "BS Nursing Scholar",
+    codevibeUrl: "https://wa.me/923055389967",
     portfolioSource: "https://alibuild.site/",
     cvUrl: "/assets/Muhammad_Ali_CV.pdf",
     stats: [
@@ -96,8 +96,8 @@ export const PORTFOLIO_DATA = {
 
   education: [
     {
-      degree: "Diploma of Information Technology (DIT)",
-      institution: "Government Polytechnic Institute / Technical Board",
+      degree: "BS Nursing (BSN)",
+      institution: "Bachelor of Science in Nursing",
       period: "2025 – Present",
       status: "In Progress",
       location: "Peshawar, KPK"
@@ -107,6 +107,13 @@ export const PORTFOLIO_DATA = {
       institution: "Peshawar Model Degree College",
       period: "Graduated 2025",
       status: "Completed",
+      location: "Peshawar, KPK"
+    },
+    {
+      degree: "Diploma of Information Technology (DIT)",
+      institution: "Government Polytechnic Institute / Technical Board",
+      period: "2025 – Present",
+      status: "In Progress",
       location: "Peshawar, KPK"
     }
   ] as EducationItem[],
@@ -118,11 +125,11 @@ export const PORTFOLIO_DATA = {
   ] as LanguageItem[],
 
   contentBrand: {
-    name: "CodeVibe",
-    handle: "@codevibe.anim",
-    platforms: "Instagram & TikTok",
-    focus: "Creative CSS Animations, JavaScript Micro-Interactions, and Web Experiments",
-    url: "https://instagram.com/codevibe.anim"
+    name: "BS Nursing & Web Craft",
+    handle: "Dual-Discipline Developer",
+    platforms: "Healthcare Science × Web Engineering",
+    focus: "Bridging Medical Precision and Empathy with High-Converting Web Development",
+    url: "https://wa.me/923055389967"
   },
 
   skills: [
@@ -537,16 +544,16 @@ export const PORTFOLIO_DATA = {
     },
     {
       year: "2025 – Present",
-      title: "Pursuing DIT & Growing Content Brand CodeVibe",
+      title: "Pursuing BS Nursing (BSN) & Web Engineering Mastery",
       description:
-        "Pursuing Diploma of Information Technology while expanding @codevibe.anim coding tutorials on CSS animations and JavaScript.",
+        "Enrolled in Bachelor of Science in Nursing (BSN), bridging healthcare-grade clinical discipline with advanced web engineering, DIT studies, and commercial client delivery.",
       status: "Current"
     },
     {
       year: "2026",
-      title: "Advanced Full-Stack Engineering & Aetheria Biosphere",
+      title: "Modern Full-Stack Development & High-Converting Web Platforms",
       description:
-        "Building next-generation interactive applications, mastering React 19, Next.js 15, Three.js shaders, Fastify real-time websockets, and 2.5D biospheres.",
+        "Engineering high-speed commercial websites with React 19, Next.js 15, Tailwind CSS, custom WordPress architectures, and AI-assisted user experiences.",
       status: "Current"
     }
   ] as ExperienceItem[],

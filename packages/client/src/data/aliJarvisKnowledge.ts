@@ -36,6 +36,7 @@ export interface AliJarvisKnowledgeBase {
     title: string;
     location: string;
     yearsOfExperience: string;
+    medicalBackground?: string;
     education: {
       degree: string;
       institution: string;
@@ -48,7 +49,8 @@ export interface AliJarvisKnowledgeBase {
       whatsappUrl: string;
       email: string;
       github: string;
-      instagram: string;
+      instagram?: string;
+      portfolio?: string;
     };
   };
   clientProjects: ProjectFact[];
@@ -78,21 +80,28 @@ export const ALI_JARVIS_KNOWLEDGE: AliJarvisKnowledgeBase = {
 
   owner: {
     name: "Muhammad Ali",
-    title: "Frontend Developer & Digital Creator",
+    title: "Frontend Developer & BS Nursing Scholar",
     location: "Peshawar, Khyber Pakhtunkhwa, Pakistan 🇵🇰",
     yearsOfExperience: "2+ years of verified commercial client delivery",
+    medicalBackground: "Currently studying Bachelor of Science in Nursing (BSN) in Peshawar. His formal education is in medical science and healthcare, while coding and web development is his dedicated craft and specialized hobby. He brings clinical precision, rigorous discipline, and user-first empathy to web engineering.",
     education: [
       {
-        degree: "Diploma in Information Technology (DIT)",
-        institution: "Government Polytechnic Institute / Technical Board",
+        degree: "Bachelor of Science in Nursing (BSN)",
+        institution: "Bachelor of Science in Nursing",
         period: "2025 – Present",
-        status: "In Progress"
+        status: "In Progress (Primary Medical Field)"
       },
       {
         degree: "FSc (Pre-Medical)",
         institution: "Peshawar Model Degree College",
         period: "2023 – 2025",
-        status: "Completed"
+        status: "Completed (Graduated 2025)"
+      },
+      {
+        degree: "Diploma in Information Technology (DIT)",
+        institution: "Government Polytechnic Institute / Technical Board",
+        period: "2025 – Present",
+        status: "In Progress (Technical Track)"
       }
     ],
     languages: [
@@ -105,7 +114,7 @@ export const ALI_JARVIS_KNOWLEDGE: AliJarvisKnowledgeBase = {
       whatsappUrl: "https://wa.me/923055389967",
       email: "alikhanwebdeveloper@gmail.com",
       github: "https://github.com/alikhan14756",
-      instagram: "https://instagram.com/codevibe.anim"
+      portfolio: "https://alibuild.site"
     }
   },
 

@@ -9,15 +9,15 @@ import {
   User,
   GraduationCap,
   Globe2,
-  Video,
   Download,
   MapPin,
   Terminal,
-  Instagram,
   Sparkles,
   Star,
   BookOpen,
-  Award
+  Award,
+  HeartPulse,
+  Activity
 } from "lucide-react";
 
 export const AboutSection: React.FC = () => {
@@ -131,10 +131,10 @@ export const AboutSection: React.FC = () => {
 
                 <div className="space-y-3.5 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans pt-5">
                   <p>
-                    I have spent the last 2+ years delivering client websites across commercial retail, healthcare, and digital media. From custom WordPress builds with Elementor Pro to dynamic JavaScript applications, my work bridges visual storytelling with sub-2.5s page load performance.
+                    I am a dedicated frontend developer based in Peshawar with 2+ years of hands-on experience building modern, fast, and high-converting websites. Specializing in WordPress, Elementor Pro, responsive UI/UX, and modern web architectures, I build digital experiences that deliver real business growth.
                   </p>
                   <p>
-                    In addition to client engagements, I actively publish coding tutorials on CSS keyframe micro-interactions and JavaScript under my content brand <strong className="text-[var(--text-primary)] font-semibold">CodeVibe</strong>, helping fellow developers build engaging interfaces.
+                    Currently studying <strong className="text-[var(--text-primary)] font-semibold">Bachelor of Science in Nursing (BSN)</strong>, my academic foundation is in medical science and healthcare, while coding and software engineering is my passionate craft and creative hobby. This dual discipline provides a rare advantage: I bring hospital-grade precision, patient-centered empathy, and rigorous attention to detail into engineering high-performance web applications.
                   </p>
                 </div>
               </div>
@@ -208,45 +208,83 @@ export const AboutSection: React.FC = () => {
               </div>
 
               <div className="text-[11px] font-mono text-[var(--text-muted)] pt-3 border-t border-[var(--border-color)]/50 flex items-center justify-between">
-                <span>Formal Technical Education</span>
-                <span className="text-[var(--accent-primary)] font-bold">DIT 2025–Present</span>
+                <span>Formal Education Tracks</span>
+                <span className="text-[var(--accent-primary)] font-bold">BSN &amp; DIT (In Progress)</span>
               </div>
             </motion.div>
           </div>
 
-          {/* Row 2: Content Brand & Global Communication Languages (Matching Heights) */}
+          {/* Row 2: Dual Discipline Progress & Global Communication Languages */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
-            {/* Left: CodeVibe Content Brand Card (Span 7) */}
+            {/* Left: Dual Discipline & Medical Progress Card (Span 7) */}
             <motion.div
               initial={isMotionEnabled ? { opacity: 0, y: 20 } : false}
               whileInView={isMotionEnabled ? { opacity: 1, y: 0 } : undefined}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: 0.12 }}
-              className="lg:col-span-7 style-card p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-left h-full"
+              className="lg:col-span-7 style-card p-6 flex flex-col justify-between gap-4 text-left h-full"
             >
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)]">
-                  <Video className="w-4 h-4" />
-                  <span>CONTENT CREATION BRAND</span>
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)]">
+                    <HeartPulse className="w-4 h-4 text-rose-500 animate-pulse" />
+                    <span>DUAL DISCIPLINE // HEALTHCARE &amp; WEB CRAFT</span>
+                  </div>
+                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/30 font-bold">
+                    BS NURSING PROGRESS
+                  </span>
                 </div>
-                <h4 className="text-lg font-bold font-mono text-[var(--text-primary)]">
-                  {contentBrand.name} ({contentBrand.handle})
+
+                <h4 className="text-base sm:text-lg font-bold font-mono text-[var(--text-primary)]">
+                  Medical Science Background × Web Engineering Passion
                 </h4>
-                <p className="text-xs text-[var(--text-secondary)] font-sans max-w-md">
-                  {contentBrand.focus} on {contentBrand.platforms}. Tutorials on CSS keyframes &amp; JavaScript micro-interactions.
+
+                <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
+                  I am actively pursuing a <strong className="text-[var(--text-primary)] font-semibold">Bachelor of Science in Nursing (BSN)</strong> in Peshawar. Studying healthcare has ingrained in me clinical patience, deep empathy, and zero tolerance for error. While medical science is my academic field, <strong className="text-[var(--text-primary)] font-semibold">coding and web development is my dedicated craft &amp; specialized hobby</strong> where I bring hospital-grade precision to building high-converting client websites.
                 </p>
+
+                {/* 3 Discipline Strengths */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+                  <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)]/60 text-left space-y-1">
+                    <div className="text-[11px] font-mono font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                      <span>🩺</span>
+                      <span>Clinical Care</span>
+                    </div>
+                    <div className="text-[10px] text-[var(--text-muted)] font-sans">
+                      Patient empathy &amp; extreme attention to detail
+                    </div>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)]/60 text-left space-y-1">
+                    <div className="text-[11px] font-mono font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                      <span>⚡</span>
+                      <span>Web Craft</span>
+                    </div>
+                    <div className="text-[10px] text-[var(--text-muted)] font-sans">
+                      WordPress, Elementor Pro &amp; modern React
+                    </div>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)]/60 text-left space-y-1">
+                    <div className="text-[11px] font-mono font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                      <span>🎯</span>
+                      <span>Precision</span>
+                    </div>
+                    <div className="text-[10px] text-[var(--text-muted)] font-sans">
+                      Sub-2.5s speed &amp; high-converting UX
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <a
-                href={contentBrand.url}
-                target="_blank"
-                rel="noreferrer"
-                className="px-4 py-2.5 rounded-xl text-xs font-mono font-semibold bg-[var(--badge-bg)] text-[var(--accent-primary)] border border-[var(--border-color)] hover:border-[var(--accent-primary)] transition-all flex items-center gap-2 shrink-0 shadow-sm"
-              >
-                <Instagram className="w-3.5 h-3.5" />
-                <span>FOLLOW @CODEVIBE.ANIM</span>
-              </a>
+              <div className="pt-2 border-t border-[var(--border-color)]/50 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-muted)]">
+                <span className="flex items-center gap-1.5 text-[var(--accent-primary)] font-semibold">
+                  <Activity className="w-3.5 h-3.5 text-rose-500" />
+                  <span>Status: Active BSN Undergraduate · Peshawar, KPK</span>
+                </span>
+                <span className="text-[var(--text-secondary)] font-medium">Delivering Commercial Projects Worldwide</span>
+              </div>
             </motion.div>
 
             {/* Right: Languages Card (Span 5) */}

@@ -299,11 +299,13 @@ async function callGeminiDirectly(
 
   const sysInstruction =
     "You are Ali AI, the intelligent, friendly, and expert AI assistant for Muhammad Ali's developer portfolio (alibuild.site). " +
-    "About Muhammad Ali: Senior Frontend Developer and WordPress & Elementor Pro Specialist based in Peshawar, Pakistan with 2+ years of verified commercial delivery. " +
+    "About Muhammad Ali: Frontend Developer and BS Nursing (BSN) scholar based in Peshawar, Pakistan with 2+ years of verified commercial delivery. " +
+    "Dual Discipline: His formal academic field is medical science (BS Nursing), which instills clinical precision, zero tolerance for errors, and deep user empathy. Coding and web development is his passionate craft & specialized hobby where he excels at engineering fast, modern, and high-converting client websites. " +
     "Real client projects: Ivana Studio (luxury fashion boutique e-commerce), Nexcurex (crypto fintech trading platform), Arshad Tiles (commercial ceramics distributor), VetCarePlus (veterinary clinic management portal), and Shah Sweet (artisan confectionery store). " +
     "Services & Pricing: High-Converting Landing Pages ($150-$350, 2-4 days), Custom Business WordPress Sites with Elementor Pro ($300-$600, 5-9 days), Full WooCommerce E-Commerce Stores ($500-$1,200+, 10-14 days), Speed & Core Web Vitals Optimization ($100-$250, 1-3 days). Hourly rate: $25-$40/hr. WhatsApp: +92 305 5389967. Email: alikhanwebdeveloper@gmail.com. " +
     "Core Skills: React 19, Next.js 15, TypeScript, Tailwind CSS, WordPress, Elementor Pro, WooCommerce, Framer Motion, GSAP, Three.js, REST APIs, and 98+ PageSpeed optimization. " +
-    "CRITICAL CAPABILITY: You are ALSO a brilliant, versatile, general-purpose AI assistant! You CAN and MUST answer ANY question the user asks — including smart glasses & wearable tech (like Ray-Ban Meta smart glasses, Apple Vision Pro), programming in any language, science, history, general knowledge, design advice, or life questions! " +
+    "Education: BS Nursing (BSN) in Progress (2025-Present), FSc Pre-Medical (Graduated 2025), Diploma in Information Technology (DIT, 2025-Present). " +
+    "CRITICAL CAPABILITY: You are ALSO a brilliant, versatile, general-purpose AI assistant! You CAN and MUST answer ANY question the user asks — including smart glasses & wearable tech (like Ray-Ban Meta smart glasses, Apple Vision Pro), programming in any language, science, medical science, history, general knowledge, design advice, or life questions! " +
     "Style: Be engaging, warm, professional, and direct. Keep answers concise (2 to 4 sentences maximum) so they are easy to read in a portfolio chat popup. Never refer to yourself as Jarvis.";
 
   const historyPayload = history.slice(-4).map((m) => ({
@@ -1142,7 +1144,7 @@ function generateDeterministicAnswer(
       }
     }
     return {
-      text: "Muhammad Ali has 2+ years of verified commercial client delivery, working with both international creators (such as video director Ivana Alexx on Fiverr) and local retail enterprises (Nexcurex and Arshad Tiles). He also runs CodeVibe (@codevibe.anim) sharing creative frontend tutorials. Would you like to review his services, check pricing, or see specific project case studies?",
+      text: "Muhammad Ali has 2+ years of verified commercial client delivery, working with both international creators (such as video director Ivana Alexx on Fiverr) and local retail enterprises (Nexcurex and Arshad Tiles). He is currently pursuing BS Nursing (BSN), bridging medical science discipline and empathy with passionate web engineering. Would you like to review his services, check pricing, or see specific project case studies?",
       actionTag: "TELL_ME_MORE",
       isAiGenerated: false
     };
@@ -1604,18 +1606,18 @@ function generateDeterministicAnswer(
     };
   }
 
-  if (p.includes("education") || p.includes("dit") || p.includes("college") || p.includes("degree")) {
+  if (p.includes("education") || p.includes("nursing") || p.includes("bsn") || p.includes("medical") || p.includes("dit") || p.includes("college") || p.includes("degree")) {
     return {
-      text: "Muhammad Ali completed his FSc (Pre-Medical) at Peshawar Model Degree College (2023–2025) and is currently completing his Diploma in Information Technology (DIT, 2025–Present) at the Government Polytechnic Institute.",
+      text: "Muhammad Ali is actively pursuing his Bachelor of Science in Nursing (BSN, 2025–Present) in Peshawar, building on his FSc (Pre-Medical) completed at Peshawar Model Degree College (2023–2025). He is also completing a Diploma in Information Technology (DIT, 2025–Present). Medical science is his formal field, while web development is his dedicated craft and creative passion.",
       actionTag: "SHOW_EDUCATION",
       isAiGenerated: false
     };
   }
 
-  if (p.includes("codevibe") || p.includes("instagram") || p.includes("social") || p.includes("content")) {
+  if (p.includes("codevibe") || p.includes("dual") || p.includes("hobby") || p.includes("craft")) {
     return {
-      text: "Muhammad Ali runs CodeVibe (@codevibe.anim on Instagram), creating visual coding tutorials focused on creative CSS animations, JavaScript micro-interactions, and 2.5D web experiments.",
-      actionTag: "SHOW_CODEVIBE",
+      text: "Muhammad Ali is a dual-discipline talent: while his formal studies are in medical science (BS Nursing), coding and web development is his specialized craft and creative hobby. He applies hospital-grade precision, patient-first empathy, and meticulous attention to detail to building high-converting websites.",
+      actionTag: "SHOW_DUAL_DISCIPLINE",
       isAiGenerated: false
     };
   }

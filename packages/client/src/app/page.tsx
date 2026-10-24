@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
@@ -163,7 +163,7 @@ export default function Home() {
           <footer className="border-t border-[var(--border-color)] py-8 px-4 text-center text-xs font-mono text-[var(--text-muted)] bg-[var(--bg-secondary)]/50 relative z-20">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                Â© 2026 MUHAMMAD ALI. ALL RIGHTS RESERVED. // SOURCE OF TRUTH: ALIBUILD.SITE
+                © 2026 MUHAMMAD ALI. ALL RIGHTS RESERVED. // SOURCE OF TRUTH: ALIBUILD.SITE
               </div>
               <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[var(--text-secondary)]">
                 <a
@@ -174,26 +174,24 @@ export default function Home() {
                 >
                   GITHUB (@alikhan14756)
                 </a>
-                <span>â€¢</span>
+                <span>•</span>
                 <a
                   href="https://wa.me/923055389967"
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-[var(--accent-primary)] transition-colors"
                 >
-                  WHATSAPP DIRECT
+                  WHATSAPP DIRECT (+92 305 5389967)
                 </a>
-                <span>â€¢</span>
+                <span>•</span>
                 <a
-                  href="https://instagram.com/codevibe.anim"
-                  target="_blank"
-                  rel="noreferrer"
+                  href="mailto:alikhanwebdeveloper@gmail.com"
                   className="hover:text-[var(--accent-primary)] transition-colors"
                 >
-                  @CODEVIBE.ANIM
+                  EMAIL INQUIRY
                 </a>
-                <span>â€¢</span>
-                <span>PESHAWAR, PAKISTAN ðŸ‡µðŸ‡°</span>
+                <span>•</span>
+                <span>PESHAWAR, PAKISTAN 🇵🇰</span>
               </div>
             </div>
           </footer>

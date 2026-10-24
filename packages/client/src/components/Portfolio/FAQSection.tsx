@@ -25,8 +25,8 @@ const FAQ_DATA: FAQItem[] = [
   {
     id: "faq-1",
     question: "Who is Muhammad Ali and what is his core background?",
-    shortAnswer: "Frontend Developer & Digital Creator based in Peshawar, Pakistan with 2+ years of verified commercial experience.",
-    detailedAnswer: "Muhammad Ali is a frontend specialist delivering high-converting client websites across commercial retail, healthcare, and digital media. He specializes in WordPress with Elementor Pro, responsive UI/UX, and modern web applications with sub-2s load speeds. He also creates coding tutorials under the CodeVibe brand (@codevibe.anim).",
+    shortAnswer: "Frontend Developer & BS Nursing scholar based in Peshawar, Pakistan with 2+ years of verified commercial experience.",
+    detailedAnswer: "Muhammad Ali is a frontend specialist and healthcare scholar currently pursuing a Bachelor of Science in Nursing (BSN) in Peshawar. While medical science is his formal field of study, coding and web development is his dedicated craft and specialized hobby. He specializes in WordPress with Elementor Pro, responsive UI/UX, and modern web applications with sub-2s load speeds. He brings clinical precision, rigorous attention to detail, and deep empathy to every client project.",
     category: "General"
   },
   {
